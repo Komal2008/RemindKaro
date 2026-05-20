@@ -3,10 +3,12 @@ import prisma from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
+export const dynamic = 'force-dynamic';
+
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-dev';
 
 async function authenticate() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('auth_token')?.value;
 
   if (!token) return null;
@@ -19,7 +21,7 @@ async function authenticate() {
   }
 }
 
-export async function GET(req) {
+export async function GET() {
   try {
     const userId = await authenticate();
     if (!userId) {
@@ -27,14 +29,14 @@ export async function GET(req) {
     }
 
     const tasks = await prisma.task.findMany({
-      where: { userId },
+      where: { userId: Number(userId) },
       orderBy: { deadline: 'asc' }
     });
 
     return NextResponse.json({ tasks });
   } catch (error) {
     console.error('Fetch tasks error:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal Server Error', details: error.message }, { status: 500 });
   }
 }
 
@@ -54,28 +56,19 @@ export async function POST(req) {
 
     const task = await prisma.task.create({
       data: {
-        userId,
+        userId: Number(userId),
         title,
-        description,
+        description: description || null,
         deadline: new Date(deadline),
         priority: priority || 'medium',
         category: category || 'General',
-        recurring,
+        recurring: recurring || null,
       }
     });
-
-    // Create an audit log asynchronously (fire and forget for now)
-    prisma.auditLog.create({
-      data: {
-        userId,
-        action: 'CREATED_TASK',
-        details: `Task "${title}" created`
-      }
-    }).catch(console.error);
 
     return NextResponse.json({ task }, { status: 201 });
   } catch (error) {
     console.error('Create task error:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal Server Error', details: error.message }, { status: 500 });
   }
 }

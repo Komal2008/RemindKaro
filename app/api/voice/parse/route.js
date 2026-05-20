@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import * as chrono from 'chrono-node';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req) {
   try {
     const { text } = await req.json();
@@ -15,62 +17,50 @@ export async function POST(req) {
     let title = text;
 
     if (parsedDateResults.length > 0) {
-      // Use the first detected date
       deadline = parsedDateResults[0].start.date();
-      
-      // Attempt to clean the title by removing the detected date string
-      // e.g. "Remind me to call John tomorrow at 5pm" -> "Remind me to call John"
       title = text.replace(parsedDateResults[0].text, '').trim();
     } else {
-      // Default to end of today if no date found
       const defaultDate = new Date();
       defaultDate.setHours(23, 59, 59, 999);
       deadline = defaultDate;
     }
 
-    // Optional: further cleanup like removing "Remind me to" from the title
-    title = title.replace(/^remind me to /i, '');
-    // Capitalize first letter
+    // Remove filler phrases from title
+    title = title.replace(/^(remind me to|remind|task:|note:)\s*/i, '');
+    title = title.replace(/,\s*$/, '').trim();
     title = title.charAt(0).toUpperCase() + title.slice(1);
 
     // 2. Determine Priority
     let priority = 'medium';
     const lowerText = text.toLowerCase();
-    
-    if (
-      lowerText.includes('urgent') || 
-      lowerText.includes('asap') || 
-      lowerText.includes('immediately') ||
-      lowerText.includes('critical') ||
-      lowerText.includes('high priority')
-    ) {
+
+    if (lowerText.match(/\b(urgent|asap|immediately|critical|high priority|important)\b/)) {
       priority = 'high';
-      // Clean up priority keywords from title
-      title = title.replace(/\b(urgent|asap|immediately|critical|high priority)\b/gi, '').trim();
-    } else if (
-      lowerText.includes('low priority') ||
-      lowerText.includes('whenever') ||
-      lowerText.includes('no rush')
-    ) {
+      title = title.replace(/\b(urgent|asap|immediately|critical|high priority|important)\b/gi, '').trim();
+    } else if (lowerText.match(/\b(low priority|whenever|no rush|eventually)\b/)) {
       priority = 'low';
-      title = title.replace(/\b(low priority|whenever|no rush)\b/gi, '').trim();
+      title = title.replace(/\b(low priority|whenever|no rush|eventually)\b/gi, '').trim();
     }
 
-    // Remove any trailing or extra spaces/punctuation
-    title = title.replace(/,\s*$/, '').trim();
-
-    // 3. Determine Category (Basic keyword matching)
+    // 3. Determine Category
     let category = 'General';
-    if (lowerText.includes('assignment') || lowerText.includes('homework') || lowerText.includes('project')) {
+    if (lowerText.match(/\b(assignment|homework|project|submit|submission)\b/)) {
       category = 'Assignment';
-    } else if (lowerText.includes('meeting') || lowerText.includes('call') || lowerText.includes('sync')) {
+    } else if (lowerText.match(/\b(meeting|call|sync|standup|interview)\b/)) {
       category = 'Meeting';
-    } else if (lowerText.includes('work') || lowerText.includes('boss')) {
+    } else if (lowerText.match(/\b(hackathon|contest|competition|coding test)\b/)) {
+      category = 'Hackathon';
+    } else if (lowerText.match(/\b(work|boss|client|office)\b/)) {
       category = 'Work';
+    } else if (lowerText.match(/\b(personal|home|family|doctor|gym)\b/)) {
+      category = 'Personal';
     }
+
+    // Final cleanup
+    title = title.replace(/\s+/g, ' ').trim() || 'Untitled Task';
 
     return NextResponse.json({
-      title: title || 'Untitled Task',
+      title,
       deadline: deadline.toISOString(),
       priority,
       category,
@@ -79,6 +69,6 @@ export async function POST(req) {
 
   } catch (error) {
     console.error('NLP Parse Error:', error);
-    return NextResponse.json({ error: 'Failed to parse text' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to parse text', details: error.message }, { status: 500 });
   }
 }
