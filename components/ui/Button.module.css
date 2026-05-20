@@ -1,0 +1,105 @@
+/* components/ui/Button.module.css */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Sizes */
+.btn--sm { padding: 6px 14px; font-size: 12px; }
+.btn--md { padding: 10px 20px; font-size: 14px; }
+.btn--lg { padding: 14px 28px; font-size: 16px; }
+.btn--full { width: 100%; }
+
+/* Variants */
+.btn--primary {
+  background: var(--color-info);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 0 0 0 rgba(99,102,241,0);
+}
+.btn--primary:hover:not(:disabled) {
+  background: #818cf8;
+  box-shadow: 0 0 20px rgba(99,102,241,0.4);
+  transform: translateY(-1px);
+}
+
+.btn--secondary {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-medium);
+}
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-bg-quaternary);
+  border-color: var(--color-border-strong);
+}
+
+.btn--danger {
+  background: rgba(244,63,94,0.15);
+  color: var(--color-urgent-400);
+  border-color: rgba(244,63,94,0.3);
+}
+.btn--danger:hover:not(:disabled) {
+  background: rgba(244,63,94,0.25);
+  border-color: var(--color-urgent-600);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-color: transparent;
+}
+.btn--ghost:hover:not(:disabled) {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.btn--success {
+  background: rgba(16,185,129,0.15);
+  color: var(--color-low-400);
+  border-color: rgba(16,185,129,0.3);
+}
+.btn--success:hover:not(:disabled) {
+  background: rgba(16,185,129,0.25);
+}
+
+/* Disabled & Loading */
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn--loading .label {
+  opacity: 0.6;
+}
+
+/* Spinner */
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
