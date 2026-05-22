@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: var(--color-bg-primary);
+  background: #f1f5f9;
   position: relative;
   overflow: hidden;
 }
@@ -18,7 +18,7 @@
   left: -10%;
   width: 50vw;
   height: 50vw;
-  background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
   z-index: 0;
 }
 .container::after {
@@ -28,20 +28,20 @@
   right: -10%;
   width: 40vw;
   height: 40vw;
-  background: radial-gradient(circle, rgba(244,63,94,0.05) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.05) 0%, transparent 60%);
   z-index: 0;
 }
 
 .card {
   width: 100%;
   max-width: 420px;
-  background: rgba(23,23,23,0.7);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-border-medium);
-  border-radius: var(--radius-2xl);
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 1;
   animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -55,14 +55,14 @@
 .title {
   font-size: 28px;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: #0f172a;
   margin-bottom: 8px;
   letter-spacing: -0.02em;
 }
 
 .subtitle {
   font-size: 14px;
-  color: var(--color-text-secondary);
+  color: #64748b;
 }
 
 .form {
@@ -85,7 +85,7 @@
   margin-top: 24px;
   text-align: center;
   font-size: 14px;
-  color: var(--color-text-secondary);
+  color: #64748b;
 }
 
 .link {

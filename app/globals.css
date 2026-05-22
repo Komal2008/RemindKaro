@@ -226,3 +226,8 @@ a:hover {
   animation: shimmer 1.5s infinite linear;
   border-radius: var(--radius-md);
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.33%); }
+}
