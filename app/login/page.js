@@ -160,6 +160,11 @@ export default function LoginPage() {
                 required
                 icon={<Lock size={16} />}
               />
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-12px' }}>
+                <Link href="/forgot-password" style={{ color: '#3b82f6', fontSize: '13px', fontWeight: 600, textDecoration: 'none' }}>
+                  Forgot Password?
+                </Link>
+              </div>
 
               <button
                 type="submit"
