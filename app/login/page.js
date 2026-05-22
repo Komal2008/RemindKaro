@@ -27,7 +27,13 @@ export default function LoginPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Login failed');
-      router.push('/dashboard');
+
+      // If user hasn't completed onboarding, send them there first
+      if (!data.user?.onboardingCompleted) {
+        router.push('/onboarding');
+      } else {
+        router.push('/dashboard');
+      }
       router.refresh();
     } catch (err) {
       setError(err.message);
