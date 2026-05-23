@@ -12,3 +12,4 @@ const nextConfig = {
 };
 
 export default nextConfig;
+// Trigger Vercel rebuild for env vars
