@@ -107,7 +107,7 @@ export default function LandingClient({ isLoggedIn }) {
         </div>
 
         {/* Main Content Area (White Rounded Container like video) */}
-        <main style={{
+        <main className="main-container" style={{
           position: 'relative', zIndex: 1, margin: '2vw', minHeight: '96vh',
           backgroundColor: '#ffffff', borderRadius: '40px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)',
@@ -115,8 +115,8 @@ export default function LandingClient({ isLoggedIn }) {
           display: 'flex', flexDirection: 'column'
         }}>
           {/* Header inside the white container */}
-          <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '80px' }}>
-            <div style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-1px' }}>RemindKaro</div>
+          <header className="main-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '80px' }}>
+            <div className="header-logo" style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-1px' }}>RemindKaro</div>
             <Link href={isLoggedIn ? "/dashboard" : "/signup"} style={{
               padding: '12px 24px', backgroundColor: '#3b82f6', color: '#fff',
               borderRadius: '30px', fontWeight: 600, fontSize: '14px',
@@ -128,27 +128,27 @@ export default function LandingClient({ isLoggedIn }) {
           </header>
 
           {/* Hero Layout exactly like video */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', flex: 1, gap: '40px' }}>
+          <div className="hero-layout" style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', flex: 1, gap: '40px' }}>
 
             {/* Left Column: Clock and Copy */}
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '60px' }}>
-              <div style={{ maxWidth: '300px' }}>
+            <div className="hero-col-left" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '60px' }}>
+              <div className="hero-desc" style={{ maxWidth: '300px' }}>
                 <p style={{ fontSize: '16px', color: '#64748b', lineHeight: 1.6, marginBottom: '20px' }}>
                   [RemindKaro. Track deadlines effortlessly.] Stay ahead of your coding tests, assignments, and hackathons.
                 </p>
-                <div style={{ height: '2px', width: '40px', backgroundColor: '#e2e8f0' }} />
+                <div className="hero-desc-divider" style={{ height: '2px', width: '40px', backgroundColor: '#e2e8f0' }} />
               </div>
-              <Clock />
+              <div className="clock-container"><Clock /></div>
             </div>
 
             {/* Center Column: Phone Mockup */}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="hero-col-center" style={{ display: 'flex', justifyContent: 'center' }}>
               <PhoneMockup />
             </div>
 
             {/* Right Column: Vertical Nav list */}
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', paddingLeft: '40px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div className="hero-col-right" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', paddingLeft: '40px' }}>
+              <div className="nav-list" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 {navItems.map((item, idx) => (
                   <div key={idx} style={{
                     display: 'flex', alignItems: 'center', gap: '16px',
@@ -165,8 +165,8 @@ export default function LandingClient({ isLoggedIn }) {
           </div>
 
           {/* Feature Folders Section (Sliding up) */}
-          <div style={{ marginTop: '120px', padding: '40px 0' }}>
-            <h2 style={{ fontSize: '48px', fontWeight: 800, marginBottom: '60px', textAlign: 'center', color: '#0f172a', letterSpacing: '-1px' }}>
+          <div className="feature-section" style={{ marginTop: '120px', padding: '40px 0' }}>
+            <h2 className="feature-title" style={{ fontSize: '48px', fontWeight: 800, marginBottom: '60px', textAlign: 'center', color: '#0f172a', letterSpacing: '-1px' }}>
               Simple Steps to<br />Deadline Success
             </h2>
 
@@ -226,8 +226,8 @@ export default function LandingClient({ isLoggedIn }) {
           </div>
 
           {/* Testimonials Marquee Section */}
-          <div style={{ marginTop: '120px', padding: '80px 0', backgroundColor: '#f8fafc', borderRadius: '40px', overflow: 'hidden' }}>
-            <h2 style={{ fontSize: '36px', fontWeight: 800, marginBottom: '40px', textAlign: 'center', color: '#0f172a' }}>
+          <div className="testimonials-section" style={{ marginTop: '120px', padding: '80px 0', backgroundColor: '#f8fafc', borderRadius: '40px', overflow: 'hidden' }}>
+            <h2 className="testimonials-title" style={{ fontSize: '36px', fontWeight: 800, marginBottom: '40px', textAlign: 'center', color: '#0f172a' }}>
               Trusted by the best
             </h2>
 
@@ -283,11 +283,11 @@ export default function LandingClient({ isLoggedIn }) {
           </div>
 
           {/* Bottom Banner Section */}
-          <div style={{ marginTop: '80px', textAlign: 'center', padding: '60px 0', borderTop: '1px solid #e2e8f0' }}>
-            <h2 style={{ fontSize: '32px', fontWeight: 700, marginBottom: '24px', color: '#0f172a' }}>
+          <div className="bottom-banner" style={{ marginTop: '80px', textAlign: 'center', padding: '60px 0', borderTop: '1px solid #e2e8f0' }}>
+            <h2 className="bottom-banner-title" style={{ fontSize: '32px', fontWeight: 700, marginBottom: '24px', color: '#0f172a' }}>
               Ready to take control of your deadlines?
             </h2>
-            <p style={{ color: '#64748b', fontSize: '18px', marginBottom: '40px' }}>
+            <p className="bottom-banner-desc" style={{ color: '#64748b', fontSize: '18px', marginBottom: '40px' }}>
               Join thousands of students and professionals using RemindKaro.
             </p>
             <Link href="/signup" style={{
