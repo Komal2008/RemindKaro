@@ -3,13 +3,21 @@ import "./globals.css";
 
 export const metadata = {
   title: "RemindKaro — Smart AI Deadline & Reminders Dashboard",
-  description: "Intelligent AI-powered deadline scheduler and reminder assistant. Track coding tests, assignments, interviews, and hackathons with native voice entry and smart urgency escalation.",
-  keywords: ["remindkaro", "reminder", "deadline tracker", "ai scheduler", "assignment reminder", "hackathon submission tracker"],
-  authors: [{ name: "RemindKaro Team" }]
+  description:
+    "Intelligent AI-powered deadline scheduler and reminder assistant. Track coding tests, assignments, interviews, and hackathons with native voice entry and smart urgency escalation.",
+  keywords: [
+    "remindkaro",
+    "reminder",
+    "deadline tracker",
+    "ai scheduler",
+    "assignment reminder",
+    "hackathon submission tracker",
+  ],
+  authors: [{ name: "RemindKaro Team" }],
 };
 
 export const viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 1,
 };

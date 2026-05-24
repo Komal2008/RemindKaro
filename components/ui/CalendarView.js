@@ -30,7 +30,7 @@ export default function CalendarView({ tasks = [], onDateSelect }) {
 
   const taskMap = useMemo(() => {
     const map = {};
-    tasks.forEach(t => {
+    tasks.forEach((t) => {
       if (t.status === 'completed') return;
       const tDate = new Date(t.deadline);
       const dateStr = tDate.toDateString();
@@ -51,23 +51,43 @@ export default function CalendarView({ tasks = [], onDateSelect }) {
     <div className={styles.calendar}>
       <header className={styles.header}>
         <div className={styles.controls}>
-          <button className={styles.navBtn} onClick={prevMonth} aria-label="Previous Month">‹</button>
-          <button className={styles.navBtn} onClick={nextMonth} aria-label="Next Month">›</button>
-          <button className={styles.todayBtn} onClick={goToToday}>Today</button>
+          <button
+            className={styles.navBtn}
+            onClick={prevMonth}
+            aria-label="Previous Month"
+          >
+            ‹
+          </button>
+          <button
+            className={styles.navBtn}
+            onClick={nextMonth}
+            aria-label="Next Month"
+          >
+            ›
+          </button>
+          <button className={styles.todayBtn} onClick={goToToday}>
+            Today
+          </button>
         </div>
         <h2 className={styles.monthTitle}>
-          {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
+          {currentDate.toLocaleString('default', {
+            month: 'long',
+            year: 'numeric',
+          })}
         </h2>
       </header>
 
       <div className={styles.grid}>
-        {weekDays.map(d => (
-          <div key={d} className={styles.weekDay}>{d}</div>
+        {weekDays.map((d) => (
+          <div key={d} className={styles.weekDay}>
+            {d}
+          </div>
         ))}
-        
+
         {days.map((date, i) => {
-          if (!date) return <div key={`empty-${i}`} className={styles.emptyDay} />;
-          
+          if (!date)
+            return <div key={`empty-${i}`} className={styles.emptyDay} />;
+
           const dateStr = date.toDateString();
           const dayTasks = taskMap[dateStr] || [];
           const isToday = dateStr === todayStr;
@@ -82,12 +102,14 @@ export default function CalendarView({ tasks = [], onDateSelect }) {
               {dayTasks.length > 0 && (
                 <div className={styles.markers}>
                   {dayTasks.slice(0, 3).map((t, idx) => (
-                    <span 
-                      key={idx} 
+                    <span
+                      key={idx}
                       className={`${styles.marker} ${styles[`marker--${t.priority}`]}`}
                     />
                   ))}
-                  {dayTasks.length > 3 && <span className={styles.moreMarker}>+</span>}
+                  {dayTasks.length > 3 && (
+                    <span className={styles.moreMarker}>+</span>
+                  )}
                 </div>
               )}
             </button>

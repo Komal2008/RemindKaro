@@ -1,9 +1,11 @@
 # RemindKaro — Advanced Aesthetics & Security Guide
+
 ## Premium UI/UX + Enterprise Security Standards
 
 ---
 
 ## TABLE OF CONTENTS
+
 1. [Premium Aesthetic Design System](#1-premium-aesthetic-design-system)
 2. [Advanced UI/UX Patterns](#2-advanced-uiux-patterns)
 3. [Micro-Interactions & Animation](#3-micro-interactions--animation)
@@ -23,56 +25,56 @@
 
 ### 1.1 Color Psychology for Urgency
 
-RemindKaro must communicate urgency visually. Your color system should make users *feel* the deadline pressure.
+RemindKaro must communicate urgency visually. Your color system should make users _feel_ the deadline pressure.
 
 #### Primary Color Hierarchy
 
 ```css
 /* ===== URGENT (High Priority) ===== */
---color-urgent-50: #FEF2F2;      /* Subtle background */
---color-urgent-100: #FEE2E2;     /* Light tint */
---color-urgent-200: #FECACA;     /* Medium tint */
---color-urgent-400: #F87171;     /* Interactive */
---color-urgent-600: #E11D48;     /* Primary button */
---color-urgent-700: #BE123C;     /* Hover state */
---color-urgent-900: #831843;     /* Text on light */
+--color-urgent-50: #fef2f2; /* Subtle background */
+--color-urgent-100: #fee2e2; /* Light tint */
+--color-urgent-200: #fecaca; /* Medium tint */
+--color-urgent-400: #f87171; /* Interactive */
+--color-urgent-600: #e11d48; /* Primary button */
+--color-urgent-700: #be123c; /* Hover state */
+--color-urgent-900: #831843; /* Text on light */
 
 /* ===== MEDIUM PRIORITY ===== */
---color-medium-50: #FFFBEB;
---color-medium-100: #FEF3C7;
---color-medium-200: #FDE68A;
---color-medium-400: #FBBF24;
---color-medium-600: #D97706;
---color-medium-700: #B45309;
---color-medium-900: #78350F;
+--color-medium-50: #fffbeb;
+--color-medium-100: #fef3c7;
+--color-medium-200: #fde68a;
+--color-medium-400: #fbbf24;
+--color-medium-600: #d97706;
+--color-medium-700: #b45309;
+--color-medium-900: #78350f;
 
 /* ===== LOW PRIORITY ===== */
---color-low-50: #F0FDF4;
---color-low-100: #DCFCE7;
---color-low-200: #BBF7D0;
---color-low-400: #4ADE80;
---color-low-600: #16A34A;
---color-low-700: #15803D;
+--color-low-50: #f0fdf4;
+--color-low-100: #dcfce7;
+--color-low-200: #bbf7d0;
+--color-low-400: #4ade80;
+--color-low-600: #16a34a;
+--color-low-700: #15803d;
 --color-low-900: #166534;
 
 /* ===== NEUTRAL BASE ===== */
---color-bg-primary: #0F0E17;      /* Pure dark - main background */
---color-bg-secondary: #1A1927;    /* Slightly lighter surface */
---color-bg-tertiary: #2A2935;     /* Hover/active state */
---color-bg-quaternary: #383742;   /* Deepest secondary */
+--color-bg-primary: #0f0e17; /* Pure dark - main background */
+--color-bg-secondary: #1a1927; /* Slightly lighter surface */
+--color-bg-tertiary: #2a2935; /* Hover/active state */
+--color-bg-quaternary: #383742; /* Deepest secondary */
 
 /* ===== TEXT HIERARCHY ===== */
---color-text-primary: #F5F5F5;    /* Main content - almost white */
---color-text-secondary: #B8B8C8;  /* Secondary info */
---color-text-tertiary: #8A8A9E;   /* Disabled/hints */
---color-text-danger: #FF6B6B;     /* Error text */
---color-text-success: #4ECDC4;    /* Success text */
+--color-text-primary: #f5f5f5; /* Main content - almost white */
+--color-text-secondary: #b8b8c8; /* Secondary info */
+--color-text-tertiary: #8a8a9e; /* Disabled/hints */
+--color-text-danger: #ff6b6b; /* Error text */
+--color-text-success: #4ecdc4; /* Success text */
 
 /* ===== SEMANTIC COLORS ===== */
---color-success: #4ECDC4;         /* Completed tasks */
---color-error: #FF6B6B;           /* Errors/warnings */
---color-warning: #FFB703;         /* Caution state */
---color-info: #4F46E5;            /* Information */
+--color-success: #4ecdc4; /* Completed tasks */
+--color-error: #ff6b6b; /* Errors/warnings */
+--color-warning: #ffb703; /* Caution state */
+--color-info: #4f46e5; /* Information */
 
 /* ===== BORDERS ===== */
 --color-border-light: rgba(255, 255, 255, 0.05);
@@ -92,18 +94,18 @@ RemindKaro must communicate urgency visually. Your color system should make user
 
 ```css
 /* ===== FONT FAMILIES ===== */
---font-display: 'Sohne', 'Segoe UI', 'Inter', sans-serif;  /* Headers */
---font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;   /* Body text */
+--font-display: 'Sohne', 'Segoe UI', 'Inter', sans-serif; /* Headers */
+--font-body: 'Inter', 'Segoe UI', system-ui, sans-serif; /* Body text */
 --font-mono: 'Fira Code', 'Monaco', 'Courier New', monospace; /* Code */
 
 /* ===== FONT SIZES ===== */
---fs-xs: 11px;      /* Labels, badges */
---fs-sm: 12px;      /* Secondary text */
---fs-base: 14px;    /* Body text (primary) */
---fs-lg: 16px;      /* Call-to-action */
---fs-xl: 20px;      /* Section headers */
---fs-2xl: 24px;     /* Page titles */
---fs-3xl: 32px;     /* Hero section */
+--fs-xs: 11px; /* Labels, badges */
+--fs-sm: 12px; /* Secondary text */
+--fs-base: 14px; /* Body text (primary) */
+--fs-lg: 16px; /* Call-to-action */
+--fs-xl: 20px; /* Section headers */
+--fs-2xl: 24px; /* Page titles */
+--fs-3xl: 32px; /* Hero section */
 
 /* ===== FONT WEIGHTS ===== */
 --fw-light: 300;
@@ -113,8 +115,8 @@ RemindKaro must communicate urgency visually. Your color system should make user
 --fw-bold: 700;
 
 /* ===== LINE HEIGHTS ===== */
---lh-tight: 1.2;    /* Headings */
---lh-normal: 1.5;   /* Body */
+--lh-tight: 1.2; /* Headings */
+--lh-normal: 1.5; /* Body */
 --lh-relaxed: 1.75; /* Long-form */
 
 /* ===== LETTER SPACING ===== */
@@ -180,39 +182,39 @@ RemindKaro must communicate urgency visually. Your color system should make user
 ```css
 /* ===== SPACING SCALE ===== */
 --space-0: 0;
---space-1: 4px;     /* Micro spacing */
---space-2: 8px;     /* Component internal */
---space-3: 12px;    /* Between components */
---space-4: 16px;    /* Section spacing */
---space-5: 20px;    /* Container padding */
---space-6: 24px;    /* Major sections */
---space-8: 32px;    /* Hero section spacing */
---space-10: 40px;   /* Page margins */
---space-12: 48px;   /* Large sections */
---space-16: 64px;   /* Full screen sections */
+--space-1: 4px; /* Micro spacing */
+--space-2: 8px; /* Component internal */
+--space-3: 12px; /* Between components */
+--space-4: 16px; /* Section spacing */
+--space-5: 20px; /* Container padding */
+--space-6: 24px; /* Major sections */
+--space-8: 32px; /* Hero section spacing */
+--space-10: 40px; /* Page margins */
+--space-12: 48px; /* Large sections */
+--space-16: 64px; /* Full screen sections */
 
 /* ===== BORDER RADIUS ===== */
 --radius-none: 0;
---radius-sm: 4px;       /* Tight: badges, small buttons */
---radius-md: 8px;       /* Default: cards, inputs */
---radius-lg: 12px;      /* Generous: modals, main containers */
---radius-xl: 16px;      /* Very generous: large cards */
---radius-full: 9999px;  /* Pill buttons, avatars */
+--radius-sm: 4px; /* Tight: badges, small buttons */
+--radius-md: 8px; /* Default: cards, inputs */
+--radius-lg: 12px; /* Generous: modals, main containers */
+--radius-xl: 16px; /* Very generous: large cards */
+--radius-full: 9999px; /* Pill buttons, avatars */
 ```
 
 ### 1.4 Elevation & Depth System
 
 ```css
 /* ===== Z-INDEX SCALE ===== */
---z-hide: -1;              /* Behind content */
---z-base: 0;               /* Default flow */
---z-dropdown: 10;          /* Dropdowns */
---z-sticky: 20;            /* Sticky headers */
---z-fixed: 30;             /* Fixed overlays */
---z-modal-backdrop: 40;    /* Modal background */
---z-modal: 50;             /* Modal content */
---z-popover: 60;           /* Popovers/tooltips */
---z-notification: 70;      /* Toast notifications */
+--z-hide: -1; /* Behind content */
+--z-base: 0; /* Default flow */
+--z-dropdown: 10; /* Dropdowns */
+--z-sticky: 20; /* Sticky headers */
+--z-fixed: 30; /* Fixed overlays */
+--z-modal-backdrop: 40; /* Modal background */
+--z-modal: 50; /* Modal content */
+--z-popover: 60; /* Popovers/tooltips */
+--z-notification: 70; /* Toast notifications */
 
 /* ===== SHADOW HIERARCHY ===== */
 /* Surface shadows - card borders with subtle depth */
@@ -261,10 +263,24 @@ const TaskCard = ({ task, onStatusChange, onDelete, onEdit }) => {
     const hoursLeft = (deadline - now) / (1000 * 60 * 60);
 
     if (hoursLeft < 0) return { state: 'overdue', icon: '🔴', text: 'Overdue' };
-    if (hoursLeft < 1) return { state: 'critical', icon: '🔴', text: `${Math.round(hoursLeft * 60)}m left` };
-    if (hoursLeft < 6) return { state: 'urgent', icon: '🟠', text: `${Math.round(hoursLeft)}h left` };
+    if (hoursLeft < 1)
+      return {
+        state: 'critical',
+        icon: '🔴',
+        text: `${Math.round(hoursLeft * 60)}m left`,
+      };
+    if (hoursLeft < 6)
+      return {
+        state: 'urgent',
+        icon: '🟠',
+        text: `${Math.round(hoursLeft)}h left`,
+      };
     if (hoursLeft < 24) return { state: 'today', icon: '📅', text: 'Today' };
-    return { state: 'upcoming', icon: '📅', text: `${Math.ceil(hoursLeft / 24)}d left` };
+    return {
+      state: 'upcoming',
+      icon: '📅',
+      text: `${Math.ceil(hoursLeft / 24)}d left`,
+    };
   };
 
   const urgency = getUrgencyState();
@@ -280,7 +296,10 @@ const TaskCard = ({ task, onStatusChange, onDelete, onEdit }) => {
       aria-label={`Task: ${task.title}`}
     >
       {/* Visual priority indicator */}
-      <div className={styles.priorityDot} title={`Priority: ${task.priority}`} />
+      <div
+        className={styles.priorityDot}
+        title={`Priority: ${task.priority}`}
+      />
 
       {/* Main content */}
       <div className={styles.content}>
@@ -298,7 +317,8 @@ const TaskCard = ({ task, onStatusChange, onDelete, onEdit }) => {
 
         <div className={styles.metadata}>
           <div className={styles.deadline}>
-            📍 {new Date(task.deadline).toLocaleDateString('en-US', {
+            📍{' '}
+            {new Date(task.deadline).toLocaleDateString('en-US', {
               month: 'short',
               day: 'numeric',
               hour: '2-digit',
@@ -339,7 +359,11 @@ const TaskCard = ({ task, onStatusChange, onDelete, onEdit }) => {
 
       {/* Escalation indicator for ignored reminders */}
       {task.remindersIgnored > 2 && (
-        <div className={styles.escalationAlert} role="status" aria-label="This task has been escalated">
+        <div
+          className={styles.escalationAlert}
+          role="status"
+          aria-label="This task has been escalated"
+        >
           <span>⚠️</span>
           <span>Escalated - multiple reminders ignored</span>
         </div>
@@ -371,14 +395,21 @@ export default TaskCard;
 }
 
 /* Priority-based left border */
-.card--high { border-left-color: var(--color-urgent-600); }
-.card--medium { border-left-color: var(--color-medium-600); }
-.card--low { border-left-color: var(--color-low-600); }
+.card--high {
+  border-left-color: var(--color-urgent-600);
+}
+.card--medium {
+  border-left-color: var(--color-medium-600);
+}
+.card--low {
+  border-left-color: var(--color-low-600);
+}
 
 /* Urgency states */
 .card--critical,
 .urgency--critical {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     rgba(225, 29, 72, 0.05) 0%,
     transparent 100%
   );
@@ -387,7 +418,8 @@ export default TaskCard;
 
 .card--urgent,
 .urgency--urgent {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     rgba(249, 115, 22, 0.04) 0%,
     transparent 100%
   );
@@ -428,9 +460,15 @@ export default TaskCard;
   background: currentColor;
 }
 
-.card--high .priorityDot { color: var(--color-urgent-600); }
-.card--medium .priorityDot { color: var(--color-medium-600); }
-.card--low .priorityDot { color: var(--color-low-600); }
+.card--high .priorityDot {
+  color: var(--color-urgent-600);
+}
+.card--medium .priorityDot {
+  color: var(--color-medium-600);
+}
+.card--low .priorityDot {
+  color: var(--color-low-600);
+}
 
 /* Content layout */
 .content {
@@ -483,8 +521,13 @@ export default TaskCard;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .urgency--urgent .urgencyBadge {
@@ -583,7 +626,8 @@ export default TaskCard;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     var(--color-urgent-600),
     var(--color-medium-600)
   );
@@ -632,13 +676,17 @@ const Dashboard = ({ tasks, loading, error }) => {
 
     switch (view) {
       case 'today':
-        return tasks.filter(t => {
+        return tasks.filter((t) => {
           const deadline = new Date(t.deadline);
-          const taskDate = new Date(deadline.getFullYear(), deadline.getMonth(), deadline.getDate());
+          const taskDate = new Date(
+            deadline.getFullYear(),
+            deadline.getMonth(),
+            deadline.getDate()
+          );
           return taskDate.getTime() === today.getTime();
         });
       case 'upcoming':
-        return tasks.filter(t => new Date(t.deadline) >= tomorrow);
+        return tasks.filter((t) => new Date(t.deadline) >= tomorrow);
       default:
         return tasks;
     }
@@ -653,7 +701,9 @@ const Dashboard = ({ tasks, loading, error }) => {
           return priorityOrder[a.priority] - priorityOrder[b.priority];
         });
       case 'deadline':
-        return sorted.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+        return sorted.sort(
+          (a, b) => new Date(a.deadline) - new Date(b.deadline)
+        );
       default:
         return sorted;
     }
@@ -662,8 +712,10 @@ const Dashboard = ({ tasks, loading, error }) => {
   const filteredTasks = sortTasks(getTasksByView());
   const stats = {
     total: tasks.length,
-    completed: tasks.filter(t => t.status === 'completed').length,
-    overdue: tasks.filter(t => new Date(t.deadline) < new Date() && t.status !== 'completed').length,
+    completed: tasks.filter((t) => t.status === 'completed').length,
+    overdue: tasks.filter(
+      (t) => new Date(t.deadline) < new Date() && t.status !== 'completed'
+    ).length,
   };
 
   if (error) return <ErrorState message={error} />;
@@ -683,7 +735,7 @@ const Dashboard = ({ tasks, loading, error }) => {
       {/* Filters & Controls */}
       <div className="dashboard-controls">
         <div className="view-tabs">
-          {['today', 'upcoming', 'all'].map(v => (
+          {['today', 'upcoming', 'all'].map((v) => (
             <button
               key={v}
               className={`tab ${view === v ? 'active' : ''}`}
@@ -693,7 +745,11 @@ const Dashboard = ({ tasks, loading, error }) => {
             </button>
           ))}
         </div>
-        <select value={sortBy} onChange={e => setSortBy(e.target.value)} className="sort-select">
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="sort-select"
+        >
           <option value="urgency">Sort by: Urgency</option>
           <option value="deadline">Sort by: Deadline</option>
           <option value="priority">Sort by: Priority</option>
@@ -900,11 +956,21 @@ const Dashboard = ({ tasks, loading, error }) => {
   animation-fill-mode: both;
 }
 
-.list-item:nth-child(1) { animation-delay: 0ms; }
-.list-item:nth-child(2) { animation-delay: 50ms; }
-.list-item:nth-child(3) { animation-delay: 100ms; }
-.list-item:nth-child(4) { animation-delay: 150ms; }
-.list-item:nth-child(n+5) { animation-delay: 150ms; }
+.list-item:nth-child(1) {
+  animation-delay: 0ms;
+}
+.list-item:nth-child(2) {
+  animation-delay: 50ms;
+}
+.list-item:nth-child(3) {
+  animation-delay: 100ms;
+}
+.list-item:nth-child(4) {
+  animation-delay: 150ms;
+}
+.list-item:nth-child(n + 5) {
+  animation-delay: 150ms;
+}
 
 /* ===== NOTIFICATION TOAST ===== */
 @keyframes toastSlideIn {
@@ -1094,11 +1160,7 @@ const MyButton = () => {
   return (
     <button
       {...bind}
-      className={`
-        btn
-        ${isHovered ? 'hovered' : ''}
-        ${isPressed ? 'pressed' : ''}
-      `}
+      className={`btn ${isHovered ? 'hovered' : ''} ${isPressed ? 'pressed' : ''} `}
     >
       Click me
     </button>
@@ -1238,32 +1300,26 @@ export const Button = ({
 ### 4.2 Input Components
 
 ```jsx
-export const Input = React.forwardRef(({
-  error = null,
-  success = null,
-  hint = null,
-  icon = null,
-  ...props
-}, ref) => {
-  return (
-    <div className="input-group">
-      {icon && <span className="input-icon">{icon}</span>}
-      <input
-        ref={ref}
-        className={`
-          input
-          ${error ? 'input-error' : ''}
-          ${success ? 'input-success' : ''}
-          ${icon ? 'input-with-icon' : ''}
-        `}
-        {...props}
-      />
-      {error && <span className="input-error-msg">{error}</span>}
-      {success && <span className="input-success-msg">{success}</span>}
-      {hint && <span className="input-hint">{hint}</span>}
-    </div>
-  );
-});
+export const Input = React.forwardRef(
+  (
+    { error = null, success = null, hint = null, icon = null, ...props },
+    ref
+  ) => {
+    return (
+      <div className="input-group">
+        {icon && <span className="input-icon">{icon}</span>}
+        <input
+          ref={ref}
+          className={`input ${error ? 'input-error' : ''} ${success ? 'input-success' : ''} ${icon ? 'input-with-icon' : ''} `}
+          {...props}
+        />
+        {error && <span className="input-error-msg">{error}</span>}
+        {success && <span className="input-success-msg">{success}</span>}
+        {hint && <span className="input-hint">{hint}</span>}
+      </div>
+    );
+  }
+);
 
 Input.displayName = 'Input';
 ```
@@ -1359,37 +1415,37 @@ Input.displayName = 'Input';
 ```css
 /* Light Mode (Default) */
 :root {
-  --color-bg-primary: #FFFFFF;
-  --color-bg-secondary: #F8F9FA;
-  --color-text-primary: #1A1A1A;
-  --color-text-secondary: #6B7280;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b7280;
   /* ... other light colors ... */
 }
 
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg-primary: #0F0E17;
-    --color-bg-secondary: #1A1927;
-    --color-text-primary: #F5F5F5;
-    --color-text-secondary: #B8B8C8;
+    --color-bg-primary: #0f0e17;
+    --color-bg-secondary: #1a1927;
+    --color-text-primary: #f5f5f5;
+    --color-text-secondary: #b8b8c8;
     /* ... other dark colors ... */
   }
 }
 
 /* Manual Dark Mode Toggle */
 [data-theme='dark'] {
-  --color-bg-primary: #0F0E17;
-  --color-bg-secondary: #1A1927;
-  --color-text-primary: #F5F5F5;
-  --color-text-secondary: #B8B8C8;
+  --color-bg-primary: #0f0e17;
+  --color-bg-secondary: #1a1927;
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #b8b8c8;
 }
 
 [data-theme='light'] {
-  --color-bg-primary: #FFFFFF;
-  --color-bg-secondary: #F8F9FA;
-  --color-text-primary: #1A1A1A;
-  --color-text-secondary: #6B7280;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b7280;
 }
 ```
 
@@ -1421,7 +1477,7 @@ export const useTheme = () => {
   }, [theme]);
 
   const toggle = () => {
-    setTheme(t => (t === 'dark' ? 'light' : 'dark'));
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
   };
 
   return { theme, setTheme, toggle };
@@ -1432,7 +1488,11 @@ export const ThemeToggle = () => {
   const { theme, toggle } = useTheme();
 
   return (
-    <button onClick={toggle} aria-label="Toggle dark mode" className="theme-toggle">
+    <button
+      onClick={toggle}
+      aria-label="Toggle dark mode"
+      className="theme-toggle"
+    >
       {theme === 'dark' ? '☀️' : '🌙'}
     </button>
   );
@@ -1447,6 +1507,7 @@ export const ThemeToggle = () => {
 
 ```markdown
 ## Perceivable
+
 - [ ] Color not sole means of conveying information
 - [ ] Text contrast ratio ≥ 4.5:1 (AA) / ≥ 7:1 (AAA)
 - [ ] All images have alt text
@@ -1454,6 +1515,7 @@ export const ThemeToggle = () => {
 - [ ] Motion/animation can be disabled via prefers-reduced-motion
 
 ## Operable
+
 - [ ] All functionality available via keyboard
 - [ ] Tab order is logical
 - [ ] No keyboard traps
@@ -1461,6 +1523,7 @@ export const ThemeToggle = () => {
 - [ ] No seizure-inducing content (>3 flashes/second)
 
 ## Understandable
+
 - [ ] Language of page identified
 - [ ] Labels for form inputs
 - [ ] Error messages clear and specific
@@ -1468,6 +1531,7 @@ export const ThemeToggle = () => {
 - [ ] Help available
 
 ## Robust
+
 - [ ] Valid HTML
 - [ ] ARIA labels used correctly
 - [ ] Compatible with assistive technologies
@@ -1494,10 +1558,7 @@ export const AccessibleTaskCard = ({ task, onComplete, onDelete }) => {
 
           <dt>Priority</dt>
           <dd>
-            <span
-              aria-label={`Priority: ${task.priority}`}
-              role="img"
-            >
+            <span aria-label={`Priority: ${task.priority}`} role="img">
               {getPriorityEmoji(task.priority)}
             </span>
             {task.priority}
@@ -1597,7 +1658,10 @@ export const securityHeaders = (req, res, next) => {
   );
 
   // Strict Transport Security
-  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  res.setHeader(
+    'Strict-Transport-Security',
+    'max-age=31536000; includeSubDomains'
+  );
 
   next();
 };
@@ -1616,32 +1680,26 @@ import DOMPurify from 'isomorphic-dompurify';
 
 // Schema definition
 const taskSchema = Joi.object({
-  title: Joi.string()
-    .required()
-    .min(3)
-    .max(200)
-    .trim(),
+  title: Joi.string().required().min(3).max(200).trim(),
 
-  description: Joi.string()
-    .max(2000)
-    .allow('')
-    .trim(),
+  description: Joi.string().max(2000).allow('').trim(),
 
-  deadline: Joi.date()
-    .required()
-    .min('now')
-    .iso(),
+  deadline: Joi.date().required().min('now').iso(),
 
-  priority: Joi.string()
-    .required()
-    .valid('high', 'medium', 'low'),
+  priority: Joi.string().required().valid('high', 'medium', 'low'),
 
   category: Joi.string()
     .required()
-    .valid('hackathon', 'assignment', 'coding-test', 'interview', 'work', 'personal'),
+    .valid(
+      'hackathon',
+      'assignment',
+      'coding-test',
+      'interview',
+      'work',
+      'personal'
+    ),
 
-  recurring: Joi.string()
-    .valid('daily', 'weekly', 'monthly', null),
+  recurring: Joi.string().valid('daily', 'weekly', 'monthly', null),
 });
 
 // Validation middleware
@@ -1656,7 +1714,7 @@ export const validateTask = (req, res, next) => {
       success: false,
       error: {
         code: 'VALIDATION_ERROR',
-        details: error.details.map(d => ({
+        details: error.details.map((d) => ({
           field: d.path.join('.'),
           message: d.message,
         })),
@@ -1687,13 +1745,15 @@ app.post('/api/v1/tasks', validateTask, createTaskController);
 db.query(`SELECT * FROM tasks WHERE user_id = ${userId}`);
 
 // ✅ DO: Parameterized queries
-db.query(
-  'SELECT * FROM tasks WHERE user_id = $1 AND status = $2',
-  [userId, 'pending']
-);
+db.query('SELECT * FROM tasks WHERE user_id = $1 AND status = $2', [
+  userId,
+  'pending',
+]);
 
 // ✅ DO: ORM with query builder
-const tasks = await taskRepository.findByUserId(userId).where('status', 'pending');
+const tasks = await taskRepository
+  .findByUserId(userId)
+  .where('status', 'pending');
 ```
 
 ### 7.4 XSS Prevention
@@ -1766,7 +1826,10 @@ export const userDataService = {
   async deleteUserData(userId) {
     await Promise.all([
       db.query('DELETE FROM tasks WHERE user_id = $1', [userId]),
-      db.query('DELETE FROM notifications WHERE task_id IN (SELECT id FROM tasks WHERE user_id = $1)', [userId]),
+      db.query(
+        'DELETE FROM notifications WHERE task_id IN (SELECT id FROM tasks WHERE user_id = $1)',
+        [userId]
+      ),
       db.query('DELETE FROM users WHERE id = $1', [userId]),
       auditLog.record('user_deleted', userId),
     ]);
@@ -1775,7 +1838,9 @@ export const userDataService = {
   // Data export
   async exportUserData(userId) {
     const user = await db.query('SELECT * FROM users WHERE id = $1', [userId]);
-    const tasks = await db.query('SELECT * FROM tasks WHERE user_id = $1', [userId]);
+    const tasks = await db.query('SELECT * FROM tasks WHERE user_id = $1', [
+      userId,
+    ]);
     const notifications = await db.query(
       'SELECT * FROM notifications WHERE task_id IN (SELECT id FROM tasks WHERE user_id = $1)',
       [userId]
@@ -1831,10 +1896,10 @@ export const createTask = async (taskData, userId) => {
   // Encrypt sensitive fields
   const encryptedDescription = encrypt(taskData.description);
 
-  await db.query(
-    'INSERT INTO tasks (user_id, description) VALUES ($1, $2)',
-    [userId, encryptedDescription]
-  );
+  await db.query('INSERT INTO tasks (user_id, description) VALUES ($1, $2)', [
+    userId,
+    encryptedDescription,
+  ]);
 };
 ```
 
@@ -1958,9 +2023,9 @@ localStorage.setItem('token', token);
 // ✅ DO: httpOnly cookies (set by server)
 // Server sets:
 res.cookie('auth_token', token, {
-  httpOnly: true,           // Not accessible via JS
-  secure: true,             // Only HTTPS
-  sameSite: 'strict',       // CSRF protection
+  httpOnly: true, // Not accessible via JS
+  secure: true, // Only HTTPS
+  sameSite: 'strict', // CSRF protection
   maxAge: 7 * 24 * 60 * 60 * 1000,
 });
 
@@ -2036,8 +2101,10 @@ export const apiClient = {
   },
 
   get: (endpoint) => apiClient.request(endpoint),
-  post: (endpoint, data) => apiClient.request(endpoint, { method: 'POST', body: JSON.stringify(data) }),
-  put: (endpoint, data) => apiClient.request(endpoint, { method: 'PUT', body: JSON.stringify(data) }),
+  post: (endpoint, data) =>
+    apiClient.request(endpoint, { method: 'POST', body: JSON.stringify(data) }),
+  put: (endpoint, data) =>
+    apiClient.request(endpoint, { method: 'PUT', body: JSON.stringify(data) }),
   delete: (endpoint) => apiClient.request(endpoint, { method: 'DELETE' }),
 };
 ```
@@ -2195,7 +2262,7 @@ export const securityMonitor = {
     const anomalies = [];
 
     // Check for unusual IP
-    const ips = [...new Set(recentActivity.map(a => a.ip))];
+    const ips = [...new Set(recentActivity.map((a) => a.ip))];
     if (ips.length > 5) {
       anomalies.push({
         type: 'unusual_ip_count',
@@ -2205,7 +2272,9 @@ export const securityMonitor = {
     }
 
     // Check for mass operations
-    const deletions = recentActivity.filter(a => a.action === 'delete').length;
+    const deletions = recentActivity.filter(
+      (a) => a.action === 'delete'
+    ).length;
     if (deletions > 50) {
       anomalies.push({
         type: 'mass_deletion',
@@ -2215,7 +2284,7 @@ export const securityMonitor = {
     }
 
     // Check for unusual times
-    const unusualTimes = recentActivity.filter(a => {
+    const unusualTimes = recentActivity.filter((a) => {
       const hour = new Date(a.timestamp).getHours();
       return hour < 6 || hour > 23; // Between midnight and 6am
     }).length;
@@ -2224,7 +2293,7 @@ export const securityMonitor = {
       anomalies.push({
         type: 'unusual_access_time',
         severity: 'warning',
-        percentage: (unusualTimes / recentActivity.length * 100).toFixed(2),
+        percentage: ((unusualTimes / recentActivity.length) * 100).toFixed(2),
       });
     }
 
@@ -2284,7 +2353,7 @@ This guide provides:
 
 ✅ **Aesthetics:** Premium dark theme, urgency-driven color system, smooth animations  
 ✅ **UI/UX:** Professional components, micro-interactions, accessibility standards  
-✅ **Security:** Enterprise-grade practices, compliance frameworks, monitoring systems  
+✅ **Security:** Enterprise-grade practices, compliance frameworks, monitoring systems
 
 Apply these principles systematically for a product that looks premium and feels secure.
 

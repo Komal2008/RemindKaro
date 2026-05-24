@@ -63,17 +63,24 @@
   gap: 12px;
   position: relative;
   overflow: hidden;
-  transition: border-color var(--transition-fast), transform var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .statCard::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
 }
 
 .statCard:hover {
@@ -128,8 +135,12 @@
   letter-spacing: -0.03em;
 }
 
-.statCard--urgent .statValue { color: var(--color-urgent-400); }
-.statCard--completed .statValue { color: var(--color-low-400); }
+.statCard--urgent .statValue {
+  color: var(--color-urgent-400);
+}
+.statCard--completed .statValue {
+  color: var(--color-low-400);
+}
 
 .statLabel {
   font-size: 12px;
@@ -325,9 +336,15 @@
   flex-shrink: 0;
 }
 
-.upcomingDot--high { background: var(--color-urgent-400); }
-.upcomingDot--medium { background: var(--color-medium-400); }
-.upcomingDot--low { background: var(--color-low-400); }
+.upcomingDot--high {
+  background: var(--color-urgent-400);
+}
+.upcomingDot--medium {
+  background: var(--color-medium-400);
+}
+.upcomingDot--low {
+  background: var(--color-low-400);
+}
 
 .upcomingMeta {
   display: flex;

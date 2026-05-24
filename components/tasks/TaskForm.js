@@ -6,15 +6,24 @@ import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import VoiceMic from '@/components/ui/VoiceMic';
 
-export default function TaskForm({ initialData = null, onClose, onSave, initialVoiceText = '' }) {
+export default function TaskForm({
+  initialData = null,
+  onClose,
+  onSave,
+  initialVoiceText = '',
+}) {
   const [title, setTitle] = useState(initialData?.title || '');
-  const [description, setDescription] = useState(initialData?.description || '');
+  const [description, setDescription] = useState(
+    initialData?.description || ''
+  );
   const [deadline, setDeadline] = useState(
-    initialData?.deadline ? new Date(initialData.deadline).toISOString().slice(0, 16) : ''
+    initialData?.deadline
+      ? new Date(initialData.deadline).toISOString().slice(0, 16)
+      : ''
   );
   const [priority, setPriority] = useState(initialData?.priority || 'medium');
   const [category, setCategory] = useState(initialData?.category || 'General');
-  
+
   const [isProcessingVoice, setIsProcessingVoice] = useState(false);
   const [voiceInput, setVoiceInput] = useState(initialVoiceText);
 
@@ -32,9 +41,9 @@ export default function TaskForm({ initialData = null, onClose, onSave, initialV
       const res = await fetch('/api/voice/parse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
+        body: JSON.stringify({ text }),
       });
-      
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Parse failed');
 
@@ -60,7 +69,7 @@ export default function TaskForm({ initialData = null, onClose, onSave, initialV
       deadline: new Date(deadline).toISOString(),
       priority,
       category,
-      status: initialData?.status || 'pending'
+      status: initialData?.status || 'pending',
     });
   };
 
@@ -68,8 +77,16 @@ export default function TaskForm({ initialData = null, onClose, onSave, initialV
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <header className={styles.header}>
-          <h2 className={styles.title}>{initialData ? 'Edit Task' : 'New Task'}</h2>
-          <button className={styles.closeBtn} onClick={onClose} aria-label="Close">✕</button>
+          <h2 className={styles.title}>
+            {initialData ? 'Edit Task' : 'New Task'}
+          </h2>
+          <button
+            className={styles.closeBtn}
+            onClick={onClose}
+            aria-label="Close"
+          >
+            ✕
+          </button>
         </header>
 
         {!initialData && (
@@ -77,11 +94,16 @@ export default function TaskForm({ initialData = null, onClose, onSave, initialV
             <VoiceMic onResult={processVoiceInput} />
             <div className={styles.voiceHint}>
               {isProcessingVoice ? (
-                <span className={styles.voiceActive}>Parsing your request with AI...</span>
+                <span className={styles.voiceActive}>
+                  Parsing your request with AI...
+                </span>
               ) : voiceInput ? (
                 <span>Heard: "{voiceInput}"</span>
               ) : (
-                <span>Try saying: "Remind me to submit assignment tomorrow at 5pm, urgent"</span>
+                <span>
+                  Try saying: "Remind me to submit assignment tomorrow at 5pm,
+                  urgent"
+                </span>
               )}
             </div>
           </div>
@@ -97,7 +119,7 @@ export default function TaskForm({ initialData = null, onClose, onSave, initialV
             required
             fullWidth
           />
-          
+
           <Input
             id="description"
             label="Description (Optional)"
@@ -119,9 +141,11 @@ export default function TaskForm({ initialData = null, onClose, onSave, initialV
 
           <div className={styles.row}>
             <div className={styles.selectWrap}>
-              <label htmlFor="priority" className={styles.label}>Priority</label>
-              <select 
-                id="priority" 
+              <label htmlFor="priority" className={styles.label}>
+                Priority
+              </label>
+              <select
+                id="priority"
                 className={styles.select}
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
@@ -133,9 +157,11 @@ export default function TaskForm({ initialData = null, onClose, onSave, initialV
             </div>
 
             <div className={styles.selectWrap}>
-              <label htmlFor="category" className={styles.label}>Category</label>
-              <select 
-                id="category" 
+              <label htmlFor="category" className={styles.label}>
+                Category
+              </label>
+              <select
+                id="category"
                 className={styles.select}
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -150,7 +176,9 @@ export default function TaskForm({ initialData = null, onClose, onSave, initialV
           </div>
 
           <div className={styles.footer}>
-            <Button variant="ghost" onClick={onClose}>Cancel</Button>
+            <Button variant="ghost" onClick={onClose}>
+              Cancel
+            </Button>
             <Button type="submit" variant="primary" loading={isProcessingVoice}>
               {initialData ? 'Save Changes' : 'Create Task'}
             </Button>

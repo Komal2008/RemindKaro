@@ -1,9 +1,11 @@
 # RemindKaro — Production Development Guide
+
 ## Version 1.0 | Industry Standards & Best Practices
 
 ---
 
 ## Table of Contents
+
 1. [Code Quality & Clean Code Standards](#1-code-quality--clean-code-standards)
 2. [Frontend Development Best Practices](#2-frontend-development-best-practices)
 3. [Backend Development Best Practices](#3-backend-development-best-practices)
@@ -26,6 +28,7 @@
 ### 1.1 General Clean Code Principles
 
 #### Variables & Naming
+
 ```javascript
 // ❌ AVOID
 let d = new Date();
@@ -39,6 +42,7 @@ let estimatedCompletionTime = calculateEstimatedTime(taskDueDate);
 ```
 
 **Rules:**
+
 - Use descriptive, searchable names
 - Avoid single-letter variables (except loops/indices)
 - Use pronounceable names
@@ -47,22 +51,30 @@ let estimatedCompletionTime = calculateEstimatedTime(taskDueDate);
 - One concept per variable name
 
 #### Functions & Methods
+
 ```javascript
 // ❌ AVOID
 const process = (task) => {
   // 50 lines of mixed logic
   // handles validation, transformation, API call, notification
-}
+};
 
 // ✅ DO
-const validateTaskData = (task) => { /* validation only */ }
-const transformTaskForAPI = (task) => { /* transformation only */ }
-const sendTaskNotification = (task) => { /* notification only */ }
+const validateTaskData = (task) => {
+  /* validation only */
+};
+const transformTaskForAPI = (task) => {
+  /* transformation only */
+};
+const sendTaskNotification = (task) => {
+  /* notification only */
+};
 
 // Functions should do ONE thing well
 ```
 
 **Rules:**
+
 - Single Responsibility Principle (SRP)
 - Pure functions when possible
 - Small functions (max 20-30 lines)
@@ -71,6 +83,7 @@ const sendTaskNotification = (task) => { /* notification only */ }
 - No side effects unless documented
 
 #### Comments & Documentation
+
 ```javascript
 // ❌ AVOID
 // increment i
@@ -93,7 +106,7 @@ i++;
  */
 const escalateTaskUrgency = (tasks, ignoredCount) => {
   // implementation
-}
+};
 
 // Process tasks that approach deadline (< 24 hours)
 for (let task of tasks) {
@@ -104,6 +117,7 @@ for (let task of tasks) {
 ```
 
 **Rules:**
+
 - Comments explain WHY, not WHAT
 - Keep comments in sync with code
 - Use JSDoc for functions
@@ -122,6 +136,7 @@ for (let task of tasks) {
 ### 1.3 Code Formatting Standards
 
 Use **Prettier** with consistent config:
+
 ```json
 {
   "printWidth": 100,
@@ -136,6 +151,7 @@ Use **Prettier** with consistent config:
 ```
 
 Use **ESLint** rules:
+
 - `eslint:recommended`
 - `prettier` integration
 - `react-hooks` rules (if using React)
@@ -148,7 +164,7 @@ try {
   const response = await fetchTasks();
   return response;
 } catch (e) {
-  console.log("error");
+  console.log('error');
 }
 
 // ✅ DO
@@ -162,13 +178,17 @@ try {
   logger.error('Task fetch failed', {
     message: error.message,
     stack: error.stack,
-    context: 'TaskService.fetchTasks'
+    context: 'TaskService.fetchTasks',
   });
-  throw new AppError('Unable to load tasks. Please try again.', 'TASK_FETCH_ERROR');
+  throw new AppError(
+    'Unable to load tasks. Please try again.',
+    'TASK_FETCH_ERROR'
+  );
 }
 ```
 
 **Rules:**
+
 - Use try-catch for async operations
 - Log errors with context
 - Create custom error classes
@@ -182,6 +202,7 @@ try {
 ### 2.1 React/React Native Standards
 
 #### Component Structure
+
 ```javascript
 // ✅ CORRECT STRUCTURE
 
@@ -219,7 +240,9 @@ const TaskCard = ({ taskId, onStatusChange, onDelete }) => {
   // Memoize expensive calculations
   const daysUntilDeadline = useMemo(() => {
     if (!task) return null;
-    return Math.ceil((new Date(task.deadline) - new Date()) / (1000 * 60 * 60 * 24));
+    return Math.ceil(
+      (new Date(task.deadline) - new Date()) / (1000 * 60 * 60 * 24)
+    );
   }, [task]);
 
   const handleStatusToggle = async (newStatus) => {
@@ -251,7 +274,9 @@ const TaskCard = ({ taskId, onStatusChange, onDelete }) => {
         </span>
       </div>
       <div className={styles.actions}>
-        <button onClick={() => handleStatusToggle('completed')}>Complete</button>
+        <button onClick={() => handleStatusToggle('completed')}>
+          Complete
+        </button>
         <button onClick={() => onDelete?.(taskId)}>Delete</button>
       </div>
     </div>
@@ -273,6 +298,7 @@ export default TaskCard;
 ```
 
 **Component Best Practices:**
+
 - Use functional components with hooks
 - Define PropTypes for all props
 - Set defaultProps for optional props
@@ -281,6 +307,7 @@ export default TaskCard;
 - Keep components small and focused
 
 #### State Management
+
 ```javascript
 // ✅ USE CONTEXT API for shared state
 
@@ -295,14 +322,14 @@ const taskReducer = (state, action) => {
     case 'UPDATE_TASK':
       return {
         ...state,
-        tasks: state.tasks.map(t =>
+        tasks: state.tasks.map((t) =>
           t.id === action.payload.id ? { ...t, ...action.payload } : t
         ),
       };
     case 'DELETE_TASK':
       return {
         ...state,
-        tasks: state.tasks.filter(t => t.id !== action.payload),
+        tasks: state.tasks.filter((t) => t.id !== action.payload),
       };
     case 'SET_TASKS':
       return { ...state, tasks: action.payload };
@@ -331,11 +358,13 @@ export const useTask = () => {
 ```
 
 **For complex state, consider:**
+
 - Redux Toolkit (if app grows)
 - Zustand (lightweight alternative)
 - Jotai (modern atoms approach)
 
 #### Custom Hooks
+
 ```javascript
 // ✅ GOOD CUSTOM HOOK PATTERN
 
@@ -400,6 +429,7 @@ export default TaskList;
 ```
 
 **Mobile Optimization:**
+
 - Use FlatList for large lists (not ScrollView)
 - Memoize heavy components
 - Lazy load images
@@ -419,7 +449,7 @@ setState(updatedTask);
 // ✅ DO: For nested updates, use spread operator
 const updatedState = {
   ...state,
-  tasks: state.tasks.map(t =>
+  tasks: state.tasks.map((t) =>
     t.id === taskId ? { ...t, status: 'completed' } : t
   ),
 };
@@ -433,6 +463,7 @@ setState(updatedState);
 ### 3.1 Node.js/Express Architecture
 
 #### Layered Architecture
+
 ```
 src/
 ├── controllers/     # Request handling
@@ -447,6 +478,7 @@ src/
 ```
 
 #### Service Layer Pattern
+
 ```javascript
 // ✅ CORRECT: Separation of concerns
 
@@ -506,6 +538,7 @@ export const create = async (taskData) => {
 ```
 
 **Benefits:**
+
 - Easy to test (mock services/repositories)
 - Clear separation of concerns
 - Reusable business logic
@@ -587,7 +620,16 @@ export const createTaskSchema = Joi.object({
   description: Joi.string().max(1000),
   deadline: Joi.date().required().min('now'),
   priority: Joi.string().valid('high', 'medium', 'low').required(),
-  category: Joi.string().valid('hackathon', 'assignment', 'coding-test', 'interview', 'work', 'personal').required(),
+  category: Joi.string()
+    .valid(
+      'hackathon',
+      'assignment',
+      'coding-test',
+      'interview',
+      'work',
+      'personal'
+    )
+    .required(),
   recurring: Joi.string().valid('daily', 'weekly', 'monthly', null),
 });
 
@@ -729,19 +771,27 @@ CREATE INDEX idx_audit_logs_created_at ON audit_logs(created_at);
 
 ```javascript
 // ❌ AVOID: N+1 Query Problem
-const tasks = await db.query('SELECT * FROM tasks WHERE user_id = $1', [userId]);
+const tasks = await db.query('SELECT * FROM tasks WHERE user_id = $1', [
+  userId,
+]);
 for (let task of tasks) {
-  task.notifications = await db.query('SELECT * FROM notifications WHERE task_id = $1', [task.id]);
+  task.notifications = await db.query(
+    'SELECT * FROM notifications WHERE task_id = $1',
+    [task.id]
+  );
 }
 
 // ✅ DO: Use JOIN
-const tasksWithNotifications = await db.query(`
+const tasksWithNotifications = await db.query(
+  `
   SELECT t.*, json_agg(n.*) as notifications
   FROM tasks t
   LEFT JOIN notifications n ON t.id = n.task_id
   WHERE t.user_id = $1
   GROUP BY t.id
-`, [userId]);
+`,
+  [userId]
+);
 
 // ✅ DO: Use connection pooling
 const pool = new Pool({
@@ -1033,8 +1083,9 @@ reminderQueue.process(async (job) => {
   const { taskId, notificationId } = job.data;
 
   try {
-    const notification = await notificationService.getNotification(notificationId);
-    
+    const notification =
+      await notificationService.getNotification(notificationId);
+
     // Send notification
     await fcmService.sendNotification({
       userId: notification.userId,
@@ -1044,10 +1095,9 @@ reminderQueue.process(async (job) => {
 
     // Mark as sent
     await notificationService.markAsSent(notificationId);
-
   } catch (error) {
     logger.error('Reminder job failed', { taskId, notificationId, error });
-    
+
     // Retry with exponential backoff
     throw error;
   }
@@ -1055,8 +1105,11 @@ reminderQueue.process(async (job) => {
 
 // Handle job failures
 reminderQueue.on('failed', async (job, err) => {
-  logger.error('Job failed after retries', { jobId: job.id, error: err.message });
-  
+  logger.error('Job failed after retries', {
+    jobId: job.id,
+    error: err.message,
+  });
+
   // Send alert to developer
   await alertService.notifyFailedJob(job, err);
 });
@@ -1064,7 +1117,7 @@ reminderQueue.on('failed', async (job, err) => {
 // Export queue API
 export const scheduleReminder = async (task, notificationTime) => {
   const delayMs = notificationTime - Date.now();
-  
+
   if (delayMs < 0) {
     throw new Error('Notification time is in the past');
   }
@@ -1247,12 +1300,14 @@ import helmet from 'helmet';
 import cors from 'cors';
 
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS.split(','),
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS.split(','),
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 
 // ✅ ENVIRONMENT VARIABLES
 // Never commit .env files
@@ -1299,6 +1354,7 @@ export const comparePasswords = async (plain, hashed) => {
 ### 9.1 Design Philosophy
 
 RemindKaro's UI should communicate:
+
 - **Urgency** through color and typography
 - **Clarity** through minimal, focused layouts
 - **Trustworthiness** through consistent patterns
@@ -1310,26 +1366,26 @@ RemindKaro's UI should communicate:
 
 ```css
 /* ✅ PRIMARY COLORS */
---color-primary-urgent: #E63946;    /* Red for high priority */
---color-primary-medium: #F77F00;    /* Orange for medium priority */
---color-primary-low: #06A77D;       /* Green for low priority */
+--color-primary-urgent: #e63946; /* Red for high priority */
+--color-primary-medium: #f77f00; /* Orange for medium priority */
+--color-primary-low: #06a77d; /* Green for low priority */
 
 /* ✅ NEUTRAL PALETTE */
---color-background: #0F0E17;        /* Deep charcoal */
---color-surface: #1A1927;           /* Slightly lighter surface */
---color-surface-hover: #2A2935;     /* Interactive state */
---color-border: #3A3847;            /* Subtle dividers */
+--color-background: #0f0e17; /* Deep charcoal */
+--color-surface: #1a1927; /* Slightly lighter surface */
+--color-surface-hover: #2a2935; /* Interactive state */
+--color-border: #3a3847; /* Subtle dividers */
 
 /* ✅ TEXT COLORS */
---color-text-primary: #F5F5F5;      /* Main text */
---color-text-secondary: #B8B8C8;    /* Secondary text */
---color-text-tertiary: #8A8A9E;    /* Disabled/hint text */
+--color-text-primary: #f5f5f5; /* Main text */
+--color-text-secondary: #b8b8c8; /* Secondary text */
+--color-text-tertiary: #8a8a9e; /* Disabled/hint text */
 
 /* ✅ SEMANTIC COLORS */
---color-success: #06A77D;
---color-warning: #FFB703;
---color-error: #E63946;
---color-info: #4F46E5;
+--color-success: #06a77d;
+--color-warning: #ffb703;
+--color-error: #e63946;
+--color-info: #4f46e5;
 ```
 
 ### 9.3 Typography System
@@ -1339,11 +1395,11 @@ RemindKaro's UI should communicate:
 font-family: 'Inter', 'Segoe UI', sans-serif;
 
 /* ✅ HEADING HIERARCHY */
---font-size-h1: 32px;      /* 2rem | Titles */
---font-size-h2: 24px;      /* 1.5rem | Section headers */
---font-size-h3: 18px;      /* 1.125rem | Subsections */
---font-size-body: 14px;    /* Base body text */
---font-size-sm: 12px;      /* Captions, labels */
+--font-size-h1: 32px; /* 2rem | Titles */
+--font-size-h2: 24px; /* 1.5rem | Section headers */
+--font-size-h3: 18px; /* 1.125rem | Subsections */
+--font-size-body: 14px; /* Base body text */
+--font-size-sm: 12px; /* Captions, labels */
 
 --font-weight-light: 300;
 --font-weight-normal: 400;
@@ -1369,11 +1425,15 @@ font-family: 'Inter', 'Segoe UI', sans-serif;
 const TaskCard = ({ task, onComplete, onDelete }) => {
   const getUrgencyBadge = () => {
     const hoursUntilDeadline = getHoursUntilDeadline(task.deadline);
-    
+
     if (hoursUntilDeadline < 1) {
       return <div className="badge badge-urgent">Due NOW</div>;
     } else if (hoursUntilDeadline < 6) {
-      return <div className="badge badge-urgent">{Math.round(hoursUntilDeadline)}h left</div>;
+      return (
+        <div className="badge badge-urgent">
+          {Math.round(hoursUntilDeadline)}h left
+        </div>
+      );
     } else if (hoursUntilDeadline < 24) {
       return <div className="badge badge-warning">Today</div>;
     }
@@ -1386,9 +1446,9 @@ const TaskCard = ({ task, onComplete, onDelete }) => {
         <h3 className="task-card__title">{task.title}</h3>
         {getUrgencyBadge()}
       </div>
-      
+
       <p className="task-card__description">{task.description}</p>
-      
+
       <div className="task-card__footer">
         <span className="task-card__deadline">
           📅 {formatDeadline(task.deadline)}
@@ -1469,8 +1529,13 @@ const TaskCard = ({ task, onComplete, onDelete }) => {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .task-card__description {
@@ -1508,7 +1573,7 @@ const TaskCard = ({ task, onComplete, onDelete }) => {
 }
 
 .btn-complete:hover {
-  background: #05916A;
+  background: #05916a;
   transform: scale(1.05);
 }
 
@@ -1544,16 +1609,28 @@ const TaskCard = ({ task, onComplete, onDelete }) => {
 }
 
 /* Stagger animation for list items */
-.task-card:nth-child(1) { --animation-delay: 0ms; }
-.task-card:nth-child(2) { --animation-delay: 50ms; }
-.task-card:nth-child(3) { --animation-delay: 100ms; }
-.task-card:nth-child(n+4) { --animation-delay: 150ms; }
+.task-card:nth-child(1) {
+  --animation-delay: 0ms;
+}
+.task-card:nth-child(2) {
+  --animation-delay: 50ms;
+}
+.task-card:nth-child(3) {
+  --animation-delay: 100ms;
+}
+.task-card:nth-child(n + 4) {
+  --animation-delay: 150ms;
+}
 
 /* ✅ LOADING SKELETON */
 
 @keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
 }
 
 .skeleton {
@@ -1598,49 +1675,49 @@ const TaskCard = ({ task, onComplete, onDelete }) => {
 
 ### 10.1 Backend Pitfalls
 
-| Pitfall | Impact | Solution |
-|---------|--------|----------|
-| No pagination on list endpoints | Crashes with 1M+ records | Implement cursor-based or offset pagination |
-| Storing passwords in plain text | Security breach | Always use bcrypt/Argon2 hashing |
-| No retry logic for notifications | Missed notifications | Use queues with exponential backoff |
-| Hard-coded configuration | Environment leaks | Use .env files for all secrets |
-| No database indices | Queries timeout | Index on frequently queried columns (user_id, deadline) |
-| Synchronous heavy operations | Blocks event loop | Use async/await and offload to queues |
-| Missing error logging | Can't debug production | Implement structured logging everywhere |
-| No database backups | Data loss | Set up automated backups with encryption |
+| Pitfall                          | Impact                   | Solution                                                |
+| -------------------------------- | ------------------------ | ------------------------------------------------------- |
+| No pagination on list endpoints  | Crashes with 1M+ records | Implement cursor-based or offset pagination             |
+| Storing passwords in plain text  | Security breach          | Always use bcrypt/Argon2 hashing                        |
+| No retry logic for notifications | Missed notifications     | Use queues with exponential backoff                     |
+| Hard-coded configuration         | Environment leaks        | Use .env files for all secrets                          |
+| No database indices              | Queries timeout          | Index on frequently queried columns (user_id, deadline) |
+| Synchronous heavy operations     | Blocks event loop        | Use async/await and offload to queues                   |
+| Missing error logging            | Can't debug production   | Implement structured logging everywhere                 |
+| No database backups              | Data loss                | Set up automated backups with encryption                |
 
 ### 10.2 Frontend Pitfalls
 
-| Pitfall | Impact | Solution |
-|---------|--------|----------|
-| Direct DOM manipulation in React | Memory leaks, bugs | Always use state/hooks |
-| No error boundaries | White screen of death | Wrap components in error boundaries |
-| Storing auth tokens in localStorage | XSS vulnerability | Use httpOnly cookies or memory storage |
-| Not unsubscribing from listeners | Memory leaks | Clean up subscriptions in useEffect return |
-| Rendering large lists without virtualization | Jank, crashes | Use react-window or similar |
-| No loading states | Poor UX | Always show skeleton/loading indicator |
-| API key in frontend code | Security issue | Never expose API keys, use backend proxy |
-| No debouncing for search inputs | Sends 100 requests/sec | Use debounce/throttle utilities |
+| Pitfall                                      | Impact                 | Solution                                   |
+| -------------------------------------------- | ---------------------- | ------------------------------------------ |
+| Direct DOM manipulation in React             | Memory leaks, bugs     | Always use state/hooks                     |
+| No error boundaries                          | White screen of death  | Wrap components in error boundaries        |
+| Storing auth tokens in localStorage          | XSS vulnerability      | Use httpOnly cookies or memory storage     |
+| Not unsubscribing from listeners             | Memory leaks           | Clean up subscriptions in useEffect return |
+| Rendering large lists without virtualization | Jank, crashes          | Use react-window or similar                |
+| No loading states                            | Poor UX                | Always show skeleton/loading indicator     |
+| API key in frontend code                     | Security issue         | Never expose API keys, use backend proxy   |
+| No debouncing for search inputs              | Sends 100 requests/sec | Use debounce/throttle utilities            |
 
 ### 10.3 Voice Integration Pitfalls
 
-| Pitfall | Impact | Solution |
-|---------|--------|----------|
-| No timeout for voice capture | Users stuck on mic | Set 30-60s timeout |
-| Not handling mic permission denial | Crash or unclear error | Check permissions before starting |
-| Parsing accent variations | Fails to recognize task | Use ML-based NLP, not regex |
-| No fallback to manual entry | User frustrated | Always allow manual task creation |
-| Not testing with real audio | Fails in production | Test with actual user voice samples |
+| Pitfall                            | Impact                  | Solution                            |
+| ---------------------------------- | ----------------------- | ----------------------------------- |
+| No timeout for voice capture       | Users stuck on mic      | Set 30-60s timeout                  |
+| Not handling mic permission denial | Crash or unclear error  | Check permissions before starting   |
+| Parsing accent variations          | Fails to recognize task | Use ML-based NLP, not regex         |
+| No fallback to manual entry        | User frustrated         | Always allow manual task creation   |
+| Not testing with real audio        | Fails in production     | Test with actual user voice samples |
 
 ### 10.4 Notification Pitfalls
 
-| Pitfall | Impact | Solution |
-|---------|--------|----------|
-| No retry logic | Missed notifications | Implement exponential backoff (3-5 retries) |
-| All reminders send at same time | Server overload | Use jitter to spread notifications |
-| Storing invalid FCM tokens | Silent failures | Validate and remove bad tokens |
-| No opt-out mechanism | Spam complaints | Provide notification preference settings |
-| Not testing notification delivery | Works in dev, fails in prod | Test with real devices/tokens |
+| Pitfall                           | Impact                      | Solution                                    |
+| --------------------------------- | --------------------------- | ------------------------------------------- |
+| No retry logic                    | Missed notifications        | Implement exponential backoff (3-5 retries) |
+| All reminders send at same time   | Server overload             | Use jitter to spread notifications          |
+| Storing invalid FCM tokens        | Silent failures             | Validate and remove bad tokens              |
+| No opt-out mechanism              | Spam complaints             | Provide notification preference settings    |
+| Not testing notification delivery | Works in dev, fails in prod | Test with real devices/tokens               |
 
 ---
 
@@ -1656,8 +1733,10 @@ import { parseVoiceCommand } from '../services/voiceParser';
 describe('Voice Command Parser', () => {
   describe('parseVoiceCommand', () => {
     it('should parse basic task with deadline', () => {
-      const result = parseVoiceCommand('Remind me to submit project tomorrow at 11 PM');
-      
+      const result = parseVoiceCommand(
+        'Remind me to submit project tomorrow at 11 PM'
+      );
+
       expect(result).toHaveProperty('title');
       expect(result).toHaveProperty('deadline');
       expect(result.title).toContain('submit');
@@ -1736,7 +1815,9 @@ describe('Task API', () => {
         .set('Authorization', `Bearer ${authToken}`)
         .send({
           title: 'Test',
-          deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+          deadline: new Date(
+            Date.now() + 7 * 24 * 60 * 60 * 1000
+          ).toISOString(),
           priority: 'high',
         });
 
@@ -1817,7 +1898,7 @@ web_vitals(onMetric);
 
 ### 12.1 Deployment Checklist
 
-```markdown
+````markdown
 ## Pre-Deployment
 
 - [ ] All tests passing (unit, integration, E2E)
@@ -1834,18 +1915,22 @@ web_vitals(onMetric);
    ```bash
    npm run build
    ```
+````
 
 2. Run database migrations
+
    ```bash
    npm run migrate:prod
    ```
 
 3. Deploy to production
+
    ```bash
    npm run deploy
    ```
 
 4. Smoke tests
+
    ```bash
    npm run smoke-tests
    ```
@@ -1858,10 +1943,12 @@ web_vitals(onMetric);
 ## Rollback Plan
 
 If critical issue found:
+
 ```bash
 npm run rollback:previous-version
 ```
-```
+
+````
 
 ### 12.2 Docker Setup
 
@@ -1890,7 +1977,7 @@ CMD ["node", "src/server.js"]
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD node healthcheck.js || exit 1
-```
+````
 
 ### 12.3 Environment Configuration
 

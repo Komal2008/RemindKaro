@@ -19,7 +19,11 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 60%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 60%
+  );
   pointer-events: none;
 }
 
@@ -32,22 +36,40 @@
 }
 
 /* ── Priority left accent ── */
-.priority--high  { border-left-color: var(--color-urgent-600); }
-.priority--medium { border-left-color: var(--color-medium-600); }
-.priority--low   { border-left-color: var(--color-low-600); }
+.priority--high {
+  border-left-color: var(--color-urgent-600);
+}
+.priority--medium {
+  border-left-color: var(--color-medium-600);
+}
+.priority--low {
+  border-left-color: var(--color-low-600);
+}
 
 /* ── Urgency state backgrounds ── */
 .urgency--critical {
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.05) 0%, transparent 55%);
+  background: linear-gradient(
+    135deg,
+    rgba(244, 63, 94, 0.05) 0%,
+    transparent 55%
+  );
   animation: pulseUrgent 2.5s ease-in-out infinite;
 }
 .urgency--urgent {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.04) 0%, transparent 55%);
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.04) 0%,
+    transparent 55%
+  );
   animation: pulseMedium 3s ease-in-out infinite;
 }
 .urgency--overdue {
   border-left-color: var(--color-urgent-700);
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.07) 0%, transparent 55%);
+  background: linear-gradient(
+    135deg,
+    rgba(244, 63, 94, 0.07) 0%,
+    transparent 55%
+  );
 }
 
 .completed {
@@ -174,7 +196,9 @@
   margin-left: 10px;
   opacity: 0;
   transform: translateX(6px);
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
   pointer-events: none;
 }
 

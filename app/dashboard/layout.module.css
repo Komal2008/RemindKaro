@@ -59,7 +59,9 @@
   font-weight: 500;
   padding: 6px 14px;
   border-radius: var(--radius-full);
-  transition: color var(--transition-fast), background var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast);
 }
 
 .navLink:hover {

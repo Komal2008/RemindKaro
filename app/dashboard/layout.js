@@ -1,7 +1,7 @@
-'use client';
-import styles from './layout.module.css';
-import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+"use client";
+import styles from "./layout.module.css";
+import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
@@ -9,12 +9,12 @@ export default function DashboardLayout({ children }) {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch('/api/auth/logout', { method: 'POST' });
+      const res = await fetch("/api/auth/logout", { method: "POST" });
       if (res.ok) {
-        router.push('/');
+        router.push("/");
       }
     } catch (err) {
-      console.error('Logout failed', err);
+      console.error("Logout failed", err);
     }
   };
 
@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }) {
         <nav className={styles.nav}>
           <Link
             href="/dashboard"
-            className={`${styles.navLink} ${pathname === '/dashboard' ? styles.active : ''}`}
+            className={`${styles.navLink} ${pathname === "/dashboard" ? styles.active : ""}`}
           >
             Dashboard
           </Link>
@@ -40,9 +40,7 @@ export default function DashboardLayout({ children }) {
         </nav>
       </header>
 
-      <main className={styles.main}>
-        {children}
-      </main>
+      <main className={styles.main}>{children}</main>
     </div>
   );
 }

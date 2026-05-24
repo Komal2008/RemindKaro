@@ -1,6 +1,7 @@
 # RemindKaro — AI Deadline & Smart Reminder Assistant
 
 ## Version
+
 v1.0 (MVP + Scale Roadmap)
 
 ---
@@ -12,12 +13,14 @@ RemindKaro is an AI-powered deadline and productivity assistant designed to help
 The product solves a major productivity problem:
 
 Users often:
+
 - See deadlines once
 - Forget them later
 - Realize too late
 - Miss opportunities because reminders are passive
 
 RemindKaro introduces:
+
 - Smart priority-based reminders
 - AI-assisted urgency escalation
 - Voice-powered task creation
@@ -33,6 +36,7 @@ The initial goal is to launch a strong MVP that solves one critical pain point:
 # 2. Vision
 
 Build the world’s smartest AI productivity assistant focused on:
+
 - deadlines
 - execution
 - urgency management
@@ -41,6 +45,7 @@ Build the world’s smartest AI productivity assistant focused on:
 Long-term positioning:
 
 RemindKaro becomes:
+
 - AI + Todoist
 - AI + Google Calendar
 - AI + Productivity Coach
@@ -54,6 +59,7 @@ Instead of passive reminders, RemindKaro proactively pushes users toward action.
 ## Core Problem
 
 Users miss important tasks because:
+
 - reminders are weak
 - notifications are generic
 - tasks lack prioritization
@@ -61,6 +67,7 @@ Users miss important tasks because:
 - too many reminders become noise
 
 Examples:
+
 - Missing hackathon submissions
 - Missing coding assessments
 - Missing interview rounds
@@ -74,18 +81,23 @@ Examples:
 ## Primary Goals
 
 ### Goal 1
+
 Prevent users from missing important deadlines.
 
 ### Goal 2
+
 Create a frictionless task entry system.
 
 ### Goal 3
+
 Provide intelligent urgency-based reminders.
 
 ### Goal 4
+
 Make task management fast and emotionally engaging.
 
 ### Goal 5
+
 Create a scalable AI productivity platform.
 
 ---
@@ -95,21 +107,25 @@ Create a scalable AI productivity platform.
 ## Primary Users
 
 ### Students
+
 - College assignments
 - Exams
 - Coding contests
 - Hackathons
 
 ### Developers
+
 - OA deadlines
 - Interview prep
 - Freelance delivery deadlines
 
 ### Freelancers
+
 - Client delivery timelines
 - Project milestones
 
 ### Working Professionals
+
 - Meeting reminders
 - Task deadlines
 - Submission tracking
@@ -155,6 +171,7 @@ AI prioritization and smart scheduling.
 Traditional task creation flow.
 
 ## Fields
+
 - Task title
 - Description
 - Deadline
@@ -164,6 +181,7 @@ Traditional task creation flow.
 - Recurring option
 
 ## Categories
+
 - Hackathon
 - Assignment
 - Coding Test
@@ -174,6 +192,7 @@ Traditional task creation flow.
 - Other
 
 ## Priorities
+
 - High
 - Medium
 - Low
@@ -183,6 +202,7 @@ Traditional task creation flow.
 # 7.2 AI Voice Task Creation
 
 ## Overview
+
 Users can create reminders naturally using voice.
 
 Example:
@@ -190,6 +210,7 @@ Example:
 “Hey RemindKaro, remind me to submit my Amazon hackathon project tomorrow at 11 PM.”
 
 The system automatically extracts:
+
 - task name
 - date
 - time
@@ -214,12 +235,15 @@ Open App
 ## Example Voice Commands
 
 ### Basic
+
 “Remind me to apply for Google internship tomorrow.”
 
 ### Advanced
+
 “Set high priority reminder for Amazon OA this Sunday at 8 PM.”
 
 ### Recurring
+
 “Remind me every day at 7 PM to practice DSA.”
 
 ---
@@ -235,6 +259,7 @@ Instead of fixed reminders, RemindKaro uses intelligent escalation.
 ## Reminder Logic
 
 ### High Priority Tasks
+
 - 7 days before
 - 3 days before
 - 1 day before
@@ -245,6 +270,7 @@ Instead of fixed reminders, RemindKaro uses intelligent escalation.
 ---
 
 ### Medium Priority Tasks
+
 - 3 days before
 - 1 day before
 - 2 hours before
@@ -252,6 +278,7 @@ Instead of fixed reminders, RemindKaro uses intelligent escalation.
 ---
 
 ### Low Priority Tasks
+
 - 1 day before
 
 ---
@@ -259,6 +286,7 @@ Instead of fixed reminders, RemindKaro uses intelligent escalation.
 # 7.4 Escalation System
 
 If user ignores reminders:
+
 - notification urgency increases
 - reminder frequency increases
 - dashboard highlights task in red
@@ -277,6 +305,7 @@ Escalated:
 # 7.5 Dashboard
 
 ## Sections
+
 - Today’s Tasks
 - Upcoming Deadlines
 - Overdue Tasks
@@ -286,6 +315,7 @@ Escalated:
 ---
 
 ## Dashboard Features
+
 - Color-coded priorities
 - Task progress tracking
 - Quick complete button
@@ -297,6 +327,7 @@ Escalated:
 # 7.6 Notification System
 
 ## MVP Notifications
+
 - Push notifications
 - In-app alerts
 - Email reminders
@@ -304,6 +335,7 @@ Escalated:
 ---
 
 ## Future Notifications
+
 - WhatsApp reminders
 - Telegram reminders
 - Discord integration
@@ -315,6 +347,7 @@ Escalated:
 # 7.7 Calendar View
 
 ## Features
+
 - Monthly calendar
 - Weekly planner
 - Deadline heatmap
@@ -325,6 +358,7 @@ Escalated:
 # 7.8 Task Status System
 
 ## States
+
 - Pending
 - In Progress
 - Completed
@@ -338,6 +372,7 @@ Escalated:
 # 8.1 AI Priority Scoring
 
 The system predicts urgency based on:
+
 - deadline closeness
 - user behavior
 - event importance
@@ -352,6 +387,7 @@ Hackathon deadline tomorrow → auto marked urgent.
 # 8.2 AI Productivity Suggestions
 
 Examples:
+
 - “You usually delay assignments.”
 - “Best time to start this task is now.”
 - “This task may require 3 hours.”
@@ -361,11 +397,13 @@ Examples:
 # 8.3 OCR Deadline Extraction
 
 User uploads:
+
 - screenshot
 - PDF
 - email
 
 AI extracts:
+
 - task title
 - deadline
 - time
@@ -376,6 +414,7 @@ AI extracts:
 # 8.4 Browser Extension
 
 Detects deadlines from:
+
 - hackathon pages
 - Google forms
 - coding contests
@@ -386,6 +425,7 @@ Detects deadlines from:
 # 8.5 AI Smart Scheduling
 
 AI suggests:
+
 - when to start
 - how much time needed
 - best working time
@@ -397,6 +437,7 @@ AI suggests:
 # 9.1 Authentication
 
 The system shall:
+
 - allow email login
 - allow Google Sign-In
 - securely manage sessions
@@ -406,6 +447,7 @@ The system shall:
 # 9.2 Task Management
 
 The system shall:
+
 - create tasks
 - edit tasks
 - delete tasks
@@ -417,6 +459,7 @@ The system shall:
 # 9.3 Voice Assistant
 
 The system shall:
+
 - capture voice input
 - convert speech to text
 - parse natural language
@@ -428,6 +471,7 @@ The system shall:
 # 9.4 Reminder Engine
 
 The system shall:
+
 - schedule reminders
 - escalate ignored reminders
 - support recurring reminders
@@ -438,6 +482,7 @@ The system shall:
 # 9.5 Notification Service
 
 The system shall:
+
 - send notifications reliably
 - retry failed notifications
 - support multiple channels
@@ -447,18 +492,21 @@ The system shall:
 # 10. Non-Functional Requirements
 
 ## Performance
+
 - app launch < 3 seconds
 - notification latency < 5 seconds
 
 ---
 
 ## Scalability
+
 - support 100k+ users
 - scalable notification queues
 
 ---
 
 ## Security
+
 - encrypted authentication
 - secure token handling
 - secure API access
@@ -466,6 +514,7 @@ The system shall:
 ---
 
 ## Reliability
+
 - notifications should never fail silently
 - retry queue required
 
@@ -476,23 +525,28 @@ The system shall:
 ## MVP Includes
 
 ### Authentication
+
 - Email login
 - Google login
 
 ### Task Creation
+
 - Manual entry
 - Voice entry
 
 ### Dashboard
+
 - Upcoming tasks
 - Overdue tasks
 - Priority view
 
 ### Notifications
+
 - Push notifications
 - Escalation reminders
 
 ### Calendar
+
 - Basic monthly calendar
 
 ---
@@ -513,9 +567,11 @@ The system shall:
 # Frontend
 
 ## Mobile App
+
 ### React Native + Expo
 
 Why:
+
 - cross-platform
 - fast MVP development
 - easy notifications
@@ -524,9 +580,11 @@ Why:
 ---
 
 ## Web Dashboard
+
 ### Next.js
 
 Why:
+
 - scalable
 - SEO friendly
 - modern architecture
@@ -538,6 +596,7 @@ Why:
 ## Node.js + Express
 
 Why:
+
 - fast development
 - JavaScript ecosystem
 - scalable APIs
@@ -549,6 +608,7 @@ Why:
 ## PostgreSQL
 
 Why:
+
 - relational structure
 - reliable transactions
 - scalable task system
@@ -560,6 +620,7 @@ Why:
 ## Redis + BullMQ
 
 Why:
+
 - reliable reminder scheduling
 - retry failed jobs
 - scalable queue system
@@ -571,6 +632,7 @@ Why:
 ## Firebase Cloud Messaging (FCM)
 
 Why:
+
 - reliable push notifications
 - Android/iOS support
 - free for MVP
@@ -582,6 +644,7 @@ Why:
 ## Firebase Auth
 
 Why:
+
 - quick implementation
 - Google login support
 - secure auth flow
@@ -593,6 +656,7 @@ Why:
 ## react-native-voice
 
 Why:
+
 - microphone integration
 - speech-to-text support
 
@@ -603,6 +667,7 @@ Why:
 ## chrono-node
 
 Used for:
+
 - tomorrow
 - Friday
 - 8 PM
@@ -613,6 +678,7 @@ Used for:
 ## compromise.js
 
 Used for:
+
 - extracting task meaning
 - natural language parsing
 
@@ -621,12 +687,15 @@ Used for:
 # Hosting
 
 ## Frontend
+
 - Vercel
 
 ## Backend
+
 - Railway / Render
 
 ## Database
+
 - Supabase PostgreSQL
 
 ---
@@ -634,9 +703,9 @@ Used for:
 # 13. System Architecture
 
 Frontend (React Native / Next.js)
-        ↓
+↓
 API Gateway
-        ↓
+↓
 Backend Services
 
 ├── Authentication Service
@@ -646,12 +715,14 @@ Backend Services
 ├── Reminder Scheduler
 
         ↓
+
 Database Layer
 
 ├── PostgreSQL
 ├── Redis Queue
 
         ↓
+
 Notification Providers
 
 ├── Firebase FCM
@@ -768,6 +839,7 @@ POST /notifications/test
 ## Dark Mode First
 
 Colors:
+
 - charcoal black
 - subtle gray
 - urgency red
@@ -789,6 +861,7 @@ Colors:
 # 17. Recommended App Screens
 
 ## Authentication
+
 - Splash Screen
 - Login
 - Signup
@@ -796,6 +869,7 @@ Colors:
 ---
 
 ## Core Screens
+
 - Dashboard
 - Add Task
 - Voice Task Modal
@@ -834,6 +908,7 @@ Open App
 # Phase 1 — Foundation (Week 1)
 
 ## Build
+
 - React Native setup
 - Backend setup
 - Database setup
@@ -845,6 +920,7 @@ Open App
 # Phase 2 — Core Task System (Week 2)
 
 ## Build
+
 - Task CRUD
 - Dashboard
 - Priority system
@@ -855,6 +931,7 @@ Open App
 # Phase 3 — Notifications (Week 3)
 
 ## Build
+
 - Reminder engine
 - Push notifications
 - Escalation system
@@ -865,6 +942,7 @@ Open App
 # Phase 4 — Voice Assistant (Week 4)
 
 ## Build
+
 - microphone support
 - speech-to-text
 - NLP parser
@@ -875,6 +953,7 @@ Open App
 # Phase 5 — MVP Polish (Week 5)
 
 ## Improve
+
 - animations
 - onboarding
 - loading states
@@ -888,6 +967,7 @@ Open App
 # Version 2
 
 ## Features
+
 - AI urgency scoring
 - analytics dashboard
 - smart productivity suggestions
@@ -897,6 +977,7 @@ Open App
 # Version 3
 
 ## Features
+
 - OCR extraction
 - browser extension
 - Gmail integration
@@ -907,6 +988,7 @@ Open App
 # Version 4
 
 ## Features
+
 - team collaboration
 - shared workspaces
 - productivity AI coach
@@ -919,6 +1001,7 @@ Open App
 # Freemium Model
 
 ## Free Plan
+
 - basic reminders
 - 50 active tasks
 - push notifications
@@ -926,9 +1009,11 @@ Open App
 ---
 
 ## Premium Plan
+
 ₹149/month
 
 Includes:
+
 - unlimited tasks
 - AI scheduling
 - analytics
@@ -941,6 +1026,7 @@ Includes:
 # 22. Success Metrics
 
 ## Product Metrics
+
 - daily active users
 - notification open rate
 - tasks completed before deadline
@@ -950,6 +1036,7 @@ Includes:
 ---
 
 # Business Metrics
+
 - premium conversion
 - monthly active users
 - user growth
@@ -958,13 +1045,13 @@ Includes:
 
 # 23. Competitive Advantage
 
-| Competitor | Weakness |
-|---|---|
-| Google Calendar | Generic reminders |
-| Todoist | Passive productivity |
-| Notion | Too manual |
-| Apple Reminders | No intelligence |
-| RemindKaro | Smart urgency + AI voice |
+| Competitor      | Weakness                 |
+| --------------- | ------------------------ |
+| Google Calendar | Generic reminders        |
+| Todoist         | Passive productivity     |
+| Notion          | Too manual               |
+| Apple Reminders | No intelligence          |
+| RemindKaro      | Smart urgency + AI voice |
 
 ---
 
@@ -985,6 +1072,7 @@ Voice-powered natural reminder creation.
 # 25. Risks & Challenges
 
 ## Challenge 1
+
 Notification reliability.
 
 Solution:
@@ -993,6 +1081,7 @@ Use queue-based scheduling.
 ---
 
 ## Challenge 2
+
 Natural language parsing accuracy.
 
 Solution:
@@ -1001,6 +1090,7 @@ Use proven NLP libraries.
 ---
 
 ## Challenge 3
+
 Too many notifications.
 
 Solution:
@@ -1040,6 +1130,7 @@ Adaptive reminder logic.
 # 27. Claude Prompt Direction
 
 Use Claude for:
+
 - database schema generation
 - backend architecture
 - API contracts
@@ -1101,6 +1192,7 @@ Focus ONLY on:
 
 If these work perfectly:
 RemindKaro already becomes a strong:
+
 - hackathon project
 - startup MVP
 - portfolio project
@@ -1115,4 +1207,3 @@ RemindKaro is not just a reminder app.
 It is:
 
 > An AI-powered execution assistant designed to prevent missed opportunities and help users take action before deadlines arrive.
-

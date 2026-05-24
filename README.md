@@ -1,4 +1,4 @@
-#  Remind Karo ( Ai assistant and reminder app)
+# Remind Karo ( Ai assistant and reminder app)
 
 > Features
 
@@ -11,7 +11,7 @@
 First contact the owner- @Pantkartik</br>
 Email - kartikpant.kp69@gmail.com
 
-# Images 
+# Images
 
 <img width="2000" height="1300" alt="image" src="https://github.com/user-attachments/assets/ce05e1c3-21d9-4d7f-b40b-858985a57951" />
 <br/>

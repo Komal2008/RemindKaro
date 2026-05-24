@@ -136,9 +136,15 @@
   border-radius: 50%;
 }
 
-.marker--high { background: var(--color-urgent-500); }
-.marker--medium { background: var(--color-medium-500); }
-.marker--low { background: var(--color-low-500); }
+.marker--high {
+  background: var(--color-urgent-500);
+}
+.marker--medium {
+  background: var(--color-medium-500);
+}
+.marker--low {
+  background: var(--color-low-500);
+}
 
 .moreMarker {
   font-size: 10px;

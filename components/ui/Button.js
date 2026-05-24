@@ -9,7 +9,7 @@ export default function Button({
   onClick,
   type = 'button',
   variant = 'primary', // 'primary' | 'secondary' | 'danger' | 'ghost' | 'success'
-  size = 'md',         // 'sm' | 'md' | 'lg'
+  size = 'md', // 'sm' | 'md' | 'lg'
   loading = false,
   disabled = false,
   fullWidth = false,
@@ -23,7 +23,9 @@ export default function Button({
     fullWidth ? styles['btn--full'] : '',
     loading ? styles['btn--loading'] : '',
     className,
-  ].filter(Boolean).join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <button
@@ -34,9 +36,7 @@ export default function Button({
       disabled={disabled || loading}
       aria-busy={loading}
     >
-      {loading && (
-        <span className={styles.spinner} aria-hidden="true" />
-      )}
+      {loading && <span className={styles.spinner} aria-hidden="true" />}
       <span className={styles.label}>{children}</span>
     </button>
   );

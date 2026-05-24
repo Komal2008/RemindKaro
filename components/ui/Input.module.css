@@ -1,7 +1,13 @@
 /* components/ui/Input.module.css */
 
-.wrapper { display: flex; flex-direction: column; gap: 6px; }
-.fullWidth { width: 100%; }
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fullWidth {
+  width: 100%;
+}
 
 .label {
   font-size: 12px;
@@ -11,7 +17,9 @@
   letter-spacing: 0.06em;
 }
 
-.required { color: #EF4444; }
+.required {
+  color: #ef4444;
+}
 
 .inputWrap {
   position: relative;
@@ -44,9 +52,14 @@
   -webkit-appearance: none;
 }
 
-.input.withIcon { padding-left: 44px; }
+.input.withIcon {
+  padding-left: 44px;
+}
 
-.input::placeholder { color: #cbd5e1; font-weight: 400; }
+.input::placeholder {
+  color: #cbd5e1;
+  font-weight: 400;
+}
 
 .input:hover:not(:disabled) {
   border-color: #cbd5e1;
@@ -66,14 +79,14 @@
 }
 
 .hasError .input {
-  border-color: #EF4444;
+  border-color: #ef4444;
   background: #fff;
   box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.08);
 }
 
 .errorMsg {
   font-size: 12px;
-  color: #EF4444;
+  color: #ef4444;
   display: flex;
   align-items: center;
   gap: 4px;
