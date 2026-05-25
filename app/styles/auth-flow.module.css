@@ -1,0 +1,718 @@
+/* Shared auth & onboarding surfaces — Linear design tokens (DESIGN.md) */
+
+.page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--linear-canvas);
+  color: var(--linear-ink);
+  font-family: var(--font-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  padding: max(var(--space-6), env(safe-area-inset-top))
+    max(var(--space-6), env(safe-area-inset-right))
+    max(var(--space-6), env(safe-area-inset-bottom))
+    max(var(--space-6), env(safe-area-inset-left));
+  position: relative;
+  overflow-x: hidden;
+}
+
+.pageInner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+}
+
+.pageInnerWide {
+  max-width: 1000px;
+}
+
+.authCardSingle {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  background: var(--linear-surface-1);
+  border: 1px solid var(--linear-hairline);
+  border-radius: var(--linear-radius-lg);
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.authCardSingleBody {
+  padding: var(--space-12) var(--space-10);
+}
+
+/* Subtle top-edge highlight on shell (Linear decorative depth) */
+.authShell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  min-height: min(640px, calc(100dvh - 48px));
+  background: var(--linear-surface-1);
+  border: 1px solid var(--linear-hairline);
+  border-radius: var(--linear-radius-lg);
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.brandPanel {
+  background: var(--linear-surface-2);
+  padding: var(--space-10) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid var(--linear-hairline);
+  min-height: 0;
+}
+
+.formPanel {
+  padding: var(--space-12) var(--space-10);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+}
+
+.formInner {
+  max-width: 380px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.logoLink {
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: var(--space-10);
+  color: var(--linear-ink);
+}
+
+.brandTitle {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
+  color: var(--linear-ink);
+  margin-bottom: var(--space-6);
+}
+
+.brandDesc {
+  color: var(--linear-ink-muted);
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: var(--space-10);
+}
+
+.perkList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.perkItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--linear-ink-subtle);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.perkIcon {
+  color: var(--linear-primary);
+  flex-shrink: 0;
+}
+
+.quoteCard {
+  background: var(--linear-surface-1);
+  padding: var(--space-6);
+  border-radius: var(--linear-radius-lg);
+  border: 1px solid var(--linear-hairline);
+}
+
+.quoteStars {
+  color: #fbbf24;
+  margin-bottom: var(--space-3);
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.quoteText {
+  color: var(--linear-ink-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.quoteAuthor {
+  color: var(--linear-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Onboarding */
+.progressWrap {
+  margin-bottom: var(--space-8);
+}
+
+.progressMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+  gap: var(--space-4);
+}
+
+.eyebrow {
+  color: var(--linear-primary);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.progressLabel {
+  color: var(--linear-ink-tertiary);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: right;
+}
+
+.progressTrack {
+  height: 4px;
+  background: var(--linear-surface-3);
+  border-radius: var(--linear-radius-pill);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--linear-primary);
+  border-radius: var(--linear-radius-pill);
+}
+
+.card {
+  background: var(--linear-surface-1);
+  border: 1px solid var(--linear-hairline);
+  border-radius: var(--linear-radius-lg);
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.cardStep {
+  padding: var(--space-12) var(--space-10) var(--space-10);
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 5vw, 28px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
+  color: var(--linear-ink);
+  margin-bottom: var(--space-2);
+}
+
+.stepDesc {
+  color: var(--linear-ink-subtle);
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: var(--space-8);
+}
+
+.roleList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.roleOption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  min-height: 44px;
+  border-radius: var(--linear-radius-md);
+  border: 1px solid var(--linear-hairline);
+  background: var(--linear-surface-2);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.roleOption:hover {
+  border-color: var(--linear-hairline-strong);
+  background: var(--linear-surface-3);
+}
+
+.roleOptionSelected {
+  border-color: var(--linear-primary-focus);
+  background: var(--linear-surface-3);
+  box-shadow: 0 0 0 1px rgba(94, 106, 210, 0.35);
+}
+
+.roleIconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--linear-radius-md);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--linear-surface-1);
+  color: var(--linear-ink-subtle);
+  transition: all var(--transition-fast);
+}
+
+.roleOptionSelected .roleIconWrap {
+  background: rgba(94, 106, 210, 0.15);
+  color: var(--linear-primary-hover);
+}
+
+.roleLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--linear-ink-muted);
+  margin-bottom: 2px;
+}
+
+.roleOptionSelected .roleLabel {
+  color: var(--linear-ink);
+}
+
+.roleDesc {
+  font-size: 13px;
+  color: var(--linear-ink-subtle);
+  line-height: 1.4;
+}
+
+.roleCheck {
+  color: var(--linear-primary);
+  flex-shrink: 0;
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.selectIcon {
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--linear-primary);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.select {
+  width: 100%;
+  min-height: 44px;
+  padding: 14px 44px;
+  border-radius: var(--linear-radius-md);
+  border: 1px solid var(--linear-hairline-strong);
+  background: var(--linear-surface-2);
+  color: var(--linear-ink);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  font-family: var(--font-body);
+  transition: border-color var(--transition-fast);
+}
+
+.select:focus {
+  border-color: var(--linear-primary-focus);
+  box-shadow: 0 0 0 2px rgba(94, 105, 209, 0.35);
+}
+
+.selectChevron {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--linear-ink-subtle);
+  pointer-events: none;
+}
+
+.hintBox {
+  margin-top: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--linear-radius-md);
+  background: var(--linear-surface-2);
+  border: 1px solid var(--linear-hairline);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.hintBox span {
+  color: var(--linear-ink-subtle);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.hintBox strong {
+  color: var(--linear-ink-muted);
+  font-weight: 600;
+}
+
+.errorBox {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--linear-radius-md);
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  font-size: 14px;
+}
+
+.alertBox {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--linear-radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.alertDot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-error);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.successBox {
+  background: rgba(39, 166, 68, 0.1);
+  border: 1px solid rgba(39, 166, 68, 0.25);
+  color: #86efac;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--linear-radius-md);
+  font-size: 14px;
+  margin-bottom: var(--space-6);
+}
+
+.formTitle {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 5vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  color: var(--linear-ink);
+  margin-bottom: var(--space-2);
+}
+
+.formDesc {
+  color: var(--linear-ink-subtle);
+  font-size: 15px;
+  margin-bottom: var(--space-8);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.formFooter {
+  margin-top: var(--space-8);
+  text-align: center;
+}
+
+.formFooterText {
+  color: var(--linear-ink-subtle);
+  font-size: 15px;
+}
+
+.formFooterLink {
+  color: var(--linear-primary);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.formFooterLink:hover {
+  color: var(--linear-primary-hover);
+}
+
+.forgotLink {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: calc(-1 * var(--space-2));
+}
+
+.forgotLink a {
+  color: var(--linear-primary);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.forgotLink a:hover {
+  color: var(--linear-primary-hover);
+}
+
+.btnPrimary {
+  width: 100%;
+  min-height: 44px;
+  margin-top: var(--space-6);
+  padding: 14px var(--space-4);
+  border-radius: var(--linear-radius-md);
+  border: none;
+  cursor: pointer;
+  background: var(--linear-primary);
+  color: var(--linear-on-primary);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  transition:
+    background var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: var(--linear-primary-hover);
+}
+
+.btnPrimary:disabled {
+  background: var(--linear-surface-3);
+  color: var(--linear-ink-tertiary);
+  cursor: not-allowed;
+}
+
+.btnPrimaryFlex2 {
+  flex: 2;
+  margin-top: 0;
+}
+
+.actionsRow {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.btnSecondary {
+  flex: 1;
+  min-height: 44px;
+  padding: 14px var(--space-4);
+  border-radius: var(--linear-radius-md);
+  border: 1px solid var(--linear-hairline);
+  cursor: pointer;
+  background: transparent;
+  color: var(--linear-ink-subtle);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.btnSecondary:hover {
+  border-color: var(--linear-hairline-strong);
+  color: var(--linear-ink-muted);
+}
+
+.successStep {
+  padding: var(--space-12) var(--space-10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  text-align: center;
+}
+
+.successIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--linear-surface-2);
+  border: 1px solid var(--linear-primary-focus);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--linear-primary-hover);
+}
+
+.successTitle {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 5vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  color: var(--linear-ink);
+}
+
+.successDesc {
+  color: var(--linear-ink-subtle);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.successBar {
+  width: 48px;
+  height: 4px;
+  border-radius: var(--linear-radius-pill);
+  background: var(--linear-surface-3);
+  overflow: hidden;
+  margin-top: var(--space-2);
+}
+
+.successBarFill {
+  height: 100%;
+  background: var(--linear-primary);
+  border-radius: var(--linear-radius-pill);
+}
+
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--linear-ink-tertiary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: authSpin 0.6s linear infinite;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--linear-ink-subtle);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-bottom: var(--space-8);
+  transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--linear-ink-muted);
+}
+
+@keyframes authSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tablet: auth shell stacks */
+@media (max-width: 900px) {
+  .authShell {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .brandPanel {
+    border-right: none;
+    border-bottom: 1px solid var(--linear-hairline);
+    padding: var(--space-8) var(--space-6);
+  }
+
+  .brandPanelCompact .quoteCard {
+    display: none;
+  }
+
+  .formPanel {
+    padding: var(--space-8) var(--space-6);
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: var(--space-4);
+    align-items: flex-start;
+    padding-top: max(var(--space-6), env(safe-area-inset-top));
+  }
+
+  .authCardSingleBody {
+    padding: var(--space-8) var(--space-5);
+  }
+
+  .pageInner,
+  .pageInnerWide {
+    max-width: 100%;
+  }
+
+  .cardStep {
+    padding: var(--space-8) var(--space-5) var(--space-6);
+  }
+
+  .brandTitle {
+    margin-bottom: var(--space-4);
+  }
+
+  .brandDesc {
+    margin-bottom: var(--space-6);
+    font-size: 15px;
+  }
+
+  .logoLink {
+    margin-bottom: var(--space-6);
+  }
+
+  .formPanel {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .roleOption {
+    padding: var(--space-4) var(--space-5);
+    gap: var(--space-3);
+  }
+
+  .roleIconWrap {
+    width: 40px;
+    height: 40px;
+  }
+
+  .select {
+    font-size: 14px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .progressMeta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .progressLabel {
+    text-align: left;
+  }
+
+  .actionsRow {
+    flex-direction: column;
+  }
+
+  .btnPrimaryFlex2,
+  .btnSecondary {
+    flex: none;
+    width: 100%;
+  }
+
+  .perkList {
+    gap: var(--space-3);
+  }
+}

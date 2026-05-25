@@ -1,5 +1,6 @@
 // app/layout.js
 import "./globals.css";
+import AppProviders from "@/components/providers/AppProviders";
 
 export const metadata = {
   title: "RemindKaro — Smart AI Deadline & Reminders Dashboard",
@@ -19,17 +20,21 @@ export const metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
 };
+
+const themeInitScript = `(function(){try{var t=localStorage.getItem('remindkaro-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);else document.documentElement.setAttribute('data-theme',window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
-        <main>{children}</main>
+        <AppProviders>
+          <main>{children}</main>
+        </AppProviders>
       </body>
     </html>
   );

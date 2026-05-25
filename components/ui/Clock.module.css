@@ -1,0 +1,34 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.time {
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: var(--landing-ink);
+  display: flex;
+  align-items: baseline;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-display);
+  transition: color 0.3s ease;
+}
+
+.sep {
+  opacity: 0.45;
+  margin: 0 8px;
+}
+
+.seconds {
+  font-size: 0.6em;
+}
+
+.date {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--landing-ink-subtle);
+  letter-spacing: 0.04em;
+  font-family: var(--font-body);
+}

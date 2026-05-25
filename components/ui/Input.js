@@ -21,10 +21,13 @@ const Input = forwardRef(function Input(
     disabled = false,
     fullWidth = true,
     className = '',
+    theme = 'light',
     ...props
   },
   ref
 ) {
+  const isDark = theme === 'dark';
+
   return (
     <div
       className={[styles.wrapper, fullWidth ? styles.fullWidth : '', className]
@@ -32,7 +35,10 @@ const Input = forwardRef(function Input(
         .join(' ')}
     >
       {label && (
-        <label htmlFor={id} className={styles.label}>
+        <label
+          htmlFor={id}
+          className={[styles.label, isDark ? styles.labelDark : ''].join(' ')}
+        >
           {label}
           {required && (
             <span className={styles.required} aria-hidden="true">
@@ -46,7 +52,10 @@ const Input = forwardRef(function Input(
         className={[styles.inputWrap, error ? styles.hasError : ''].join(' ')}
       >
         {icon && (
-          <span className={styles.icon} aria-hidden="true">
+          <span
+            className={[styles.icon, isDark ? styles.iconDark : ''].join(' ')}
+            aria-hidden="true"
+          >
             {icon}
           </span>
         )}
@@ -60,7 +69,11 @@ const Input = forwardRef(function Input(
           onBlur={onBlur}
           disabled={disabled}
           required={required}
-          className={[styles.input, icon ? styles.withIcon : ''].join(' ')}
+          className={[
+            styles.input,
+            icon ? styles.withIcon : '',
+            isDark ? styles.inputDark : '',
+          ].join(' ')}
           aria-invalid={error ? 'true' : 'false'}
           aria-describedby={
             error ? `${id}-error` : hint ? `${id}-hint` : undefined

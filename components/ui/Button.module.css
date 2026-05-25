@@ -6,9 +6,9 @@
   justify-content: center;
   gap: 8px;
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 500;
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
+  border-radius: var(--linear-radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
   position: relative;
@@ -18,37 +18,36 @@
 }
 
 .btn:active:not(:disabled) {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
-/* Sizes */
 .btn--sm {
   padding: 6px 14px;
   font-size: 12px;
+  min-height: 32px;
 }
 .btn--md {
-  padding: 10px 20px;
+  padding: 10px 18px;
   font-size: 14px;
+  min-height: 40px;
 }
 .btn--lg {
-  padding: 14px 28px;
-  font-size: 16px;
+  padding: 12px 22px;
+  font-size: 15px;
+  min-height: 44px;
 }
 .btn--full {
   width: 100%;
 }
 
-/* Variants */
 .btn--primary {
-  background: var(--color-info);
-  color: #fff;
+  background: var(--linear-primary);
+  color: var(--linear-on-primary);
   border-color: transparent;
-  box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
 }
 .btn--primary:hover:not(:disabled) {
-  background: #818cf8;
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
-  transform: translateY(-1px);
+  background: var(--linear-primary-hover);
+  color: var(--linear-on-primary);
 }
 
 .btn--secondary {
@@ -62,19 +61,19 @@
 }
 
 .btn--danger {
-  background: rgba(244, 63, 94, 0.15);
+  background: rgba(244, 63, 94, 0.12);
   color: var(--color-urgent-400);
-  border-color: rgba(244, 63, 94, 0.3);
+  border-color: rgba(244, 63, 94, 0.28);
 }
 .btn--danger:hover:not(:disabled) {
-  background: rgba(244, 63, 94, 0.25);
+  background: rgba(244, 63, 94, 0.2);
   border-color: var(--color-urgent-600);
 }
 
 .btn--ghost {
   background: transparent;
   color: var(--color-text-secondary);
-  border-color: transparent;
+  border-color: var(--color-border-medium);
 }
 .btn--ghost:hover:not(:disabled) {
   background: var(--color-bg-tertiary);
@@ -82,29 +81,27 @@
 }
 
 .btn--success {
-  background: rgba(16, 185, 129, 0.15);
+  background: rgba(39, 166, 68, 0.12);
   color: var(--color-low-400);
-  border-color: rgba(16, 185, 129, 0.3);
+  border-color: rgba(39, 166, 68, 0.28);
 }
 .btn--success:hover:not(:disabled) {
-  background: rgba(16, 185, 129, 0.25);
+  background: rgba(39, 166, 68, 0.2);
 }
 
-/* Disabled & Loading */
 .btn:disabled {
-  opacity: 0.4;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
 .btn--loading .label {
-  opacity: 0.6;
+  opacity: 0.65;
 }
 
-/* Spinner */
 .spinner {
   width: 14px;
   height: 14px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.35);
   border-top-color: currentColor;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;

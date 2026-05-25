@@ -5,6 +5,7 @@ import styles from './TaskForm.module.css';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import VoiceMic from '@/components/ui/VoiceMic';
+import { SkeletonField } from '@/components/ui/Skeleton';
 
 export default function TaskForm({
   initialData = null,
@@ -110,70 +111,84 @@ export default function TaskForm({
         )}
 
         <form className={styles.form} onSubmit={handleSubmit}>
-          <Input
-            id="title"
-            label="Task Title"
-            placeholder="e.g. Finish Next.js project"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            fullWidth
-          />
+          {isProcessingVoice ? (
+            <>
+              <SkeletonField />
+              <SkeletonField />
+              <SkeletonField />
+              <div className={styles.row}>
+                <SkeletonField />
+                <SkeletonField />
+              </div>
+            </>
+          ) : (
+            <>
+              <Input
+                id="title"
+                label="Task Title"
+                placeholder="e.g. Finish Next.js project"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                fullWidth
+              />
 
-          <Input
-            id="description"
-            label="Description (Optional)"
-            placeholder="Add details here..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            fullWidth
-          />
+              <Input
+                id="description"
+                label="Description (Optional)"
+                placeholder="Add details here..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                fullWidth
+              />
 
-          <Input
-            id="deadline"
-            label="Deadline"
-            type="datetime-local"
-            value={deadline}
-            onChange={(e) => setDeadline(e.target.value)}
-            required
-            fullWidth
-          />
+              <Input
+                id="deadline"
+                label="Deadline"
+                type="datetime-local"
+                value={deadline}
+                onChange={(e) => setDeadline(e.target.value)}
+                required
+                fullWidth
+              />
 
-          <div className={styles.row}>
-            <div className={styles.selectWrap}>
-              <label htmlFor="priority" className={styles.label}>
-                Priority
-              </label>
-              <select
-                id="priority"
-                className={styles.select}
-                value={priority}
-                onChange={(e) => setPriority(e.target.value)}
-              >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High / Urgent</option>
-              </select>
-            </div>
+              <div className={styles.row}>
+                <div className={styles.selectWrap}>
+                  <label htmlFor="priority" className={styles.label}>
+                    Priority
+                  </label>
+                  <select
+                    id="priority"
+                    className={styles.select}
+                    value={priority}
+                    onChange={(e) => setPriority(e.target.value)}
+                  >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High / Urgent</option>
+                  </select>
+                </div>
 
-            <div className={styles.selectWrap}>
-              <label htmlFor="category" className={styles.label}>
-                Category
-              </label>
-              <select
-                id="category"
-                className={styles.select}
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="General">General</option>
-                <option value="Assignment">Assignment</option>
-                <option value="Work">Work</option>
-                <option value="Meeting">Meeting</option>
-                <option value="Personal">Personal</option>
-              </select>
-            </div>
-          </div>
+                <div className={styles.selectWrap}>
+                  <label htmlFor="category" className={styles.label}>
+                    Category
+                  </label>
+                  <select
+                    id="category"
+                    className={styles.select}
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                  >
+                    <option value="General">General</option>
+                    <option value="Assignment">Assignment</option>
+                    <option value="Work">Work</option>
+                    <option value="Meeting">Meeting</option>
+                    <option value="Personal">Personal</option>
+                  </select>
+                </div>
+              </div>
+            </>
+          )}
 
           <div className={styles.footer}>
             <Button variant="ghost" onClick={onClose}>

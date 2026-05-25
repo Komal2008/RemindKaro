@@ -98,3 +98,43 @@
   color: #94a3b8;
   font-weight: 500;
 }
+
+/* Dark theme — auth / onboarding (DESIGN.md Linear surfaces) */
+.labelDark {
+  color: var(--linear-ink-subtle);
+}
+
+.inputDark {
+  background: var(--linear-surface-2);
+  border: 1px solid var(--linear-hairline-strong);
+  border-radius: var(--linear-radius-md);
+  color: var(--linear-ink);
+}
+
+.inputDark.withIcon {
+  padding-left: 44px;
+}
+
+.inputDark::placeholder {
+  color: var(--linear-ink-tertiary);
+}
+
+.inputDark:hover:not(:disabled) {
+  border-color: var(--linear-hairline-tertiary);
+  background: var(--linear-surface-3);
+}
+
+.inputDark:focus {
+  border-color: var(--linear-primary-focus);
+  background: var(--linear-surface-2);
+  box-shadow: 0 0 0 2px rgba(94, 105, 209, 0.35);
+}
+
+.iconDark {
+  color: var(--linear-ink-subtle);
+}
+
+.hasError .inputDark {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
+}

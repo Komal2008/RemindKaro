@@ -3,9 +3,6 @@
 import { useState, useMemo } from 'react';
 import styles from './CalendarView.module.css';
 
-/**
- * Premium CalendarView grid showing deadline markers for tasks
- */
 export default function CalendarView({ tasks = [], onDateSelect }) {
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -17,11 +14,7 @@ export default function CalendarView({ tasks = [], onDateSelect }) {
 
   const days = useMemo(() => {
     const d = [];
-    // Padding for first row
-    for (let i = 0; i < firstDayOfMonth; i++) {
-      d.push(null);
-    }
-    // Actual days
+    for (let i = 0; i < firstDayOfMonth; i++) d.push(null);
     for (let i = 1; i <= daysInMonth; i++) {
       d.push(new Date(year, month, i));
     }
@@ -32,13 +25,23 @@ export default function CalendarView({ tasks = [], onDateSelect }) {
     const map = {};
     tasks.forEach((t) => {
       if (t.status === 'completed') return;
-      const tDate = new Date(t.deadline);
-      const dateStr = tDate.toDateString();
+      const dateStr = new Date(t.deadline).toDateString();
       if (!map[dateStr]) map[dateStr] = [];
       map[dateStr].push(t);
     });
     return map;
   }, [tasks]);
+
+  const monthTaskCount = useMemo(() => {
+    let count = 0;
+    Object.keys(taskMap).forEach((key) => {
+      const d = new Date(key);
+      if (d.getMonth() === month && d.getFullYear() === year) {
+        count += taskMap[key].length;
+      }
+    });
+    return count;
+  }, [taskMap, month, year]);
 
   const prevMonth = () => setCurrentDate(new Date(year, month - 1, 1));
   const nextMonth = () => setCurrentDate(new Date(year, month + 1, 1));
@@ -50,31 +53,62 @@ export default function CalendarView({ tasks = [], onDateSelect }) {
   return (
     <div className={styles.calendar}>
       <header className={styles.header}>
-        <div className={styles.controls}>
-          <button
-            className={styles.navBtn}
-            onClick={prevMonth}
-            aria-label="Previous Month"
-          >
-            ‹
-          </button>
-          <button
-            className={styles.navBtn}
-            onClick={nextMonth}
-            aria-label="Next Month"
-          >
-            ›
-          </button>
-          <button className={styles.todayBtn} onClick={goToToday}>
-            Today
-          </button>
+        <div className={styles.headerTop}>
+          <h2 className={styles.monthTitle}>
+            {currentDate.toLocaleString('default', {
+              month: 'long',
+              year: 'numeric',
+            })}
+          </h2>
+          <div className={styles.controls}>
+            <button
+              type="button"
+              className={styles.navBtn}
+              onClick={prevMonth}
+              aria-label="Previous month"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              className={styles.navBtn}
+              onClick={nextMonth}
+              aria-label="Next month"
+            >
+              ›
+            </button>
+            <button
+              type="button"
+              className={styles.todayBtn}
+              onClick={goToToday}
+            >
+              Today
+            </button>
+          </div>
         </div>
-        <h2 className={styles.monthTitle}>
-          {currentDate.toLocaleString('default', {
-            month: 'long',
-            year: 'numeric',
-          })}
-        </h2>
+        <div className={styles.legend}>
+          <span className={styles.legendItem}>
+            <span
+              className={`${styles.legendDot} ${styles.legendDotHigh}`}
+              aria-hidden
+            />
+            Urgent
+          </span>
+          <span className={styles.legendItem}>
+            <span
+              className={`${styles.legendDot} ${styles.legendDotMedium}`}
+              aria-hidden
+            />
+            Medium
+          </span>
+          <span className={styles.legendItem}>
+            <span
+              className={`${styles.legendDot} ${styles.legendDotLow}`}
+              aria-hidden
+            />
+            Low
+          </span>
+        </div>
       </header>
 
       <div className={styles.grid}>
@@ -85,8 +119,9 @@ export default function CalendarView({ tasks = [], onDateSelect }) {
         ))}
 
         {days.map((date, i) => {
-          if (!date)
+          if (!date) {
             return <div key={`empty-${i}`} className={styles.emptyDay} />;
+          }
 
           const dateStr = date.toDateString();
           const dayTasks = taskMap[dateStr] || [];
@@ -95,8 +130,16 @@ export default function CalendarView({ tasks = [], onDateSelect }) {
           return (
             <button
               key={dateStr}
-              className={`${styles.day} ${isToday ? styles.isToday : ''} ${dayTasks.length > 0 ? styles.hasTasks : ''}`}
-              onClick={() => onDateSelect && onDateSelect(date)}
+              type="button"
+              className={[
+                styles.day,
+                isToday ? styles.isToday : '',
+                dayTasks.length > 0 ? styles.hasTasks : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              onClick={() => onDateSelect?.(date)}
+              aria-label={`${date.toLocaleDateString()}, ${dayTasks.length} tasks`}
             >
               <span className={styles.dateNum}>{date.getDate()}</span>
               {dayTasks.length > 0 && (
@@ -105,10 +148,13 @@ export default function CalendarView({ tasks = [], onDateSelect }) {
                     <span
                       key={idx}
                       className={`${styles.marker} ${styles[`marker--${t.priority}`]}`}
+                      aria-hidden
                     />
                   ))}
                   {dayTasks.length > 3 && (
-                    <span className={styles.moreMarker}>+</span>
+                    <span className={styles.moreMarker}>
+                      +{dayTasks.length - 3}
+                    </span>
                   )}
                 </div>
               )}
@@ -116,6 +162,11 @@ export default function CalendarView({ tasks = [], onDateSelect }) {
           );
         })}
       </div>
+
+      <p className={styles.taskSummary}>
+        <strong>{monthTaskCount}</strong>{' '}
+        {monthTaskCount === 1 ? 'deadline' : 'deadlines'} this month
+      </p>
     </div>
   );
 }

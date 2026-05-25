@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import {
   motion,
@@ -17,25 +18,64 @@ import {
   Briefcase,
   Trophy,
   Lock,
+  Menu,
+  X,
+  Check,
 } from 'lucide-react';
 import Link from 'next/link';
 import Clock from './ui/Clock';
 import PhoneMockup from './ui/PhoneMockup';
+import ThemeToggle from './ui/ThemeToggle';
+import Footer from './ui/Footer';
+import BrandLogo from './ui/BrandLogo';
+import styles from './LandingClient.module.css';
+
+const TESTIMONIALS = [
+  {
+    name: 'Rahul S.',
+    role: 'Student',
+    text: 'RemindKaro changed how I manage my hackathons!',
+  },
+  {
+    name: 'Priya M.',
+    role: 'Developer',
+    text: "Voice entry is magic. Just speak and it's scheduled.",
+  },
+  {
+    name: 'Amit K.',
+    role: 'Tech Lead',
+    text: 'Clean, fast, exactly what I needed for sprint tracking.',
+  },
+  {
+    name: 'Sneha R.',
+    role: 'Designer',
+    text: 'The aesthetic is top notch. Love using this app.',
+  },
+  {
+    name: 'Karan V.',
+    role: 'Freelancer',
+    text: 'Smart escalation ensures I never miss client deadlines.',
+  },
+];
 
 export default function LandingClient({ isLoggedIn }) {
   const [loading, setLoading] = useState(true);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [billing, setBilling] = useState('monthly');
   const { scrollYProgress } = useScroll();
-  const bgX1 = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
-  const bgX2 = useTransform(scrollYProgress, [0, 1], ['-20%', '0%']);
-  const bgX3 = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
+  const bgX1 = useTransform(scrollYProgress, [0, 1], ['0%', '-15%']);
+  const bgX2 = useTransform(scrollYProgress, [0, 1], ['-10%', '5%']);
+  const bgX3 = useTransform(scrollYProgress, [0, 1], ['0%', '-12%']);
 
   useEffect(() => {
-    // Loader animation duration
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2800);
+    const timer = setTimeout(() => setLoading(false), 2800);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle('site-nav-open', mobileNavOpen);
+    return () => document.body.classList.remove('site-nav-open');
+  }, [mobileNavOpen]);
 
   const navItems = [
     { icon: <Search size={20} />, label: 'TRACK' },
@@ -47,103 +87,124 @@ export default function LandingClient({ isLoggedIn }) {
   const features = [
     {
       title: 'Track Deadlines',
-      desc: 'Never miss an important coding test or assignment deadline again. Smart notifications keep you on time.',
-      icon: <Calendar size={28} strokeWidth={2} />,
-      color: '#4f46e5',
-      textColor: '#fff',
+      desc: 'Never miss a coding test or assignment. Smart notifications keep you on time.',
+      icon: <Calendar size={26} strokeWidth={2} />,
       bg: 'linear-gradient(135deg, #4f46e5, #6366f1)',
     },
     {
       title: 'Voice Entry',
-      desc: "Just speak your tasks and we'll automatically categorize and schedule them with zero friction.",
-      icon: <Mic size={28} strokeWidth={2} />,
-      color: '#0ea5e9',
-      textColor: '#fff',
+      desc: 'Speak tasks and we categorize and schedule them with zero friction.',
+      icon: <Mic size={26} strokeWidth={2} />,
       bg: 'linear-gradient(135deg, #0369a1, #0ea5e9)',
     },
     {
       title: 'Urgency Escalation',
-      desc: 'Our system highlights tasks that need your immediate attention based on time left and priority.',
-      icon: <Zap size={28} strokeWidth={2} />,
-      color: '#7c3aed',
-      textColor: '#fff',
+      desc: 'Highlights what needs attention based on time left and priority.',
+      icon: <Zap size={26} strokeWidth={2} />,
       bg: 'linear-gradient(135deg, #6d28d9, #8b5cf6)',
     },
     {
       title: 'Interview Prep',
-      desc: 'Keep all your interview schedules and preparation materials in one beautifully organized place.',
-      icon: <Briefcase size={28} strokeWidth={2} />,
-      color: '#db2777',
-      textColor: '#fff',
+      desc: 'Interview schedules and prep materials in one organized place.',
+      icon: <Briefcase size={26} strokeWidth={2} />,
       bg: 'linear-gradient(135deg, #be185d, #ec4899)',
     },
     {
       title: 'Hackathon Tracker',
-      desc: 'Manage team submissions, project milestones, and final pitch deadlines effortlessly.',
-      icon: <Trophy size={28} strokeWidth={2} />,
-      color: '#ea580c',
-      textColor: '#fff',
+      desc: 'Team submissions, milestones, and pitch deadlines in one view.',
+      icon: <Trophy size={26} strokeWidth={2} />,
       bg: 'linear-gradient(135deg, #c2410c, #f97316)',
     },
     {
       title: 'Secure & Private',
-      desc: 'Your data is encrypted and completely private. We never share or sell your schedule.',
-      icon: <Lock size={28} strokeWidth={2} />,
-      color: '#16a34a',
-      textColor: '#fff',
+      desc: 'Encrypted data. We never share or sell your schedule.',
+      icon: <Lock size={26} strokeWidth={2} />,
       bg: 'linear-gradient(135deg, #15803d, #22c55e)',
     },
   ];
+
+  const plans = [
+    {
+      id: 'free',
+      name: 'Free',
+      monthly: 0,
+      yearly: 0,
+      desc: 'Perfect for students getting started',
+      featured: false,
+      features: [
+        'Up to 25 active tasks',
+        'Email deadline reminders',
+        'Basic urgency levels',
+        'Single timezone',
+      ],
+      cta: 'Get Started Free',
+      href: '/signup',
+      secondary: true,
+    },
+    {
+      id: 'pro',
+      name: 'Pro',
+      monthly: 9,
+      yearly: 7,
+      desc: 'For power users and freelancers',
+      featured: true,
+      features: [
+        'Unlimited tasks',
+        'Voice-powered entry',
+        'Smart escalation engine',
+        'Priority support',
+      ],
+      cta: 'Start Pro Trial',
+      href: '/signup',
+      secondary: false,
+    },
+    {
+      id: 'team',
+      name: 'Team',
+      monthly: 19,
+      yearly: 15,
+      desc: 'Hackathon squads & study groups',
+      featured: false,
+      features: [
+        'Everything in Pro',
+        'Shared project boards',
+        'Team deadline sync',
+        'Admin dashboard',
+      ],
+      cta: 'Contact Sales',
+      href: 'mailto:hello@remindkaro.com',
+      secondary: true,
+    },
+  ];
+
+  const scrollTo = (id) => {
+    setMobileNavOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <>
       <AnimatePresence>
         {loading && (
           <motion.div
+            className={styles.loader}
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: 'easeInOut' }}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: '#000000',
-              zIndex: 9999,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: '#ffffff',
-              fontFamily: 'var(--font-display)',
-            }}
           >
             <motion.div
+              className={styles.loaderTitle}
               initial={{ opacity: 0, filter: 'blur(10px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
-              transition={{ duration: 1.2, ease: 'easeOut', delay: 0.2 }}
-              style={{
-                fontSize: 'clamp(40px, 6vw, 64px)',
-                fontWeight: 800,
-                letterSpacing: '-2px',
-                marginBottom: '24px',
-              }}
+              transition={{ duration: 1.2, delay: 0.2 }}
             >
               RemindKaro
             </motion.div>
             <motion.div
+              className={styles.loaderSub}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: 'easeOut', delay: 1.2 }}
-              style={{
-                fontSize: 'clamp(14px, 2vw, 18px)',
-                color: '#94a3b8',
-                letterSpacing: '4px',
-                textTransform: 'uppercase',
-                fontWeight: 500,
-                textAlign: 'center',
-              }}
+              transition={{ delay: 1.2 }}
             >
               Your ultimate companion for success
             </motion.div>
@@ -151,215 +212,130 @@ export default function LandingClient({ isLoggedIn }) {
         )}
       </AnimatePresence>
 
-      <div
-        style={{
-          minHeight: '100vh',
-          backgroundColor: '#f1f5f9', // Light background exactly like the video
-          color: '#0f172a',
-          fontFamily: 'var(--font-display)',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Huge Background Scrolling Text */}
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 0,
-            pointerEvents: 'none',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            gap: '40px',
-            opacity: 0.1,
-          }}
-        >
-          <motion.div
-            style={{
-              fontSize: '15vw',
-              fontWeight: 900,
-              whiteSpace: 'nowrap',
-              color: '#1e3a8a',
-              x: bgX1,
-              lineHeight: 0.8,
-            }}
-          >
+      <div className={`landing-page ${styles.page}`}>
+        <div className={styles.bgTextLayer} aria-hidden>
+          <motion.div className={styles.landingBgText} style={{ x: bgX1 }}>
             CODING TESTS INTERVIEWS HACKATHONS
           </motion.div>
-          <motion.div
-            style={{
-              fontSize: '15vw',
-              fontWeight: 900,
-              whiteSpace: 'nowrap',
-              color: '#1e3a8a',
-              x: bgX2,
-              lineHeight: 0.8,
-            }}
-          >
+          <motion.div className={styles.landingBgText} style={{ x: bgX2 }}>
             ASSIGNMENTS PROJECTS DEADLINES
           </motion.div>
-          <motion.div
-            style={{
-              fontSize: '15vw',
-              fontWeight: 900,
-              whiteSpace: 'nowrap',
-              color: '#1e3a8a',
-              x: bgX3,
-              lineHeight: 0.8,
-            }}
-          >
+          <motion.div className={styles.landingBgText} style={{ x: bgX3 }}>
             REMIND KARO MANAGE SUCCEED
           </motion.div>
         </div>
 
-        {/* Main Content Area (White Rounded Container like video) */}
-        <main
-          className="main-container"
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            margin: '2vw',
-            minHeight: '96vh',
-            backgroundColor: '#ffffff',
-            borderRadius: '40px',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)',
-            padding: '40px',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {/* Header inside the white container */}
-          <header
-            className="main-header"
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '80px',
-            }}
-          >
-            <div
-              className="header-logo"
-              style={{
-                fontSize: '32px',
-                fontWeight: 800,
-                letterSpacing: '-1px',
-              }}
-            >
-              RemindKaro
+        <main className={`main-container ${styles.main}`}>
+          <header className={`main-header ${styles.header}`}>
+            <BrandLogo href="/" size="md" className={styles.logo} />
+            <div className={`landing-header-actions ${styles.headerActions}`}>
+              <nav className={styles.desktopNav} aria-label="Main">
+                <button
+                  type="button"
+                  className={`navLink ${styles.navLink}`}
+                  onClick={() => scrollTo('features')}
+                >
+                  Features
+                </button>
+                <button
+                  type="button"
+                  className={`navLink ${styles.navLink}`}
+                  onClick={() => scrollTo('pricing')}
+                >
+                  Pricing
+                </button>
+                <Link href="/testimonials" className={styles.navLink}>
+                  Testimonials
+                </Link>
+              </nav>
+              <ThemeToggle compact />
+              <button
+                type="button"
+                className={`nav-menu-btn ${styles.menuBtn}`}
+                aria-expanded={mobileNavOpen}
+                aria-label={mobileNavOpen ? 'Close menu' : 'Open menu'}
+                onClick={() => setMobileNavOpen((o) => !o)}
+              >
+                {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+              <Link
+                href={isLoggedIn ? '/dashboard' : '/signup'}
+                className={styles.ctaBtn}
+              >
+                {isLoggedIn ? 'Dashboard' : 'Get Started'}
+              </Link>
             </div>
-            <Link
-              href={isLoggedIn ? '/dashboard' : '/signup'}
-              style={{
-                padding: '12px 24px',
-                backgroundColor: '#3b82f6',
-                color: '#fff',
-                borderRadius: '30px',
-                fontWeight: 600,
-                fontSize: '14px',
-                boxShadow: '0 4px 14px rgba(59, 130, 246, 0.4)',
-                textDecoration: 'none',
-              }}
+            <nav
+              className={[
+                styles.mobileNav,
+                mobileNavOpen ? styles.mobileNavOpen : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              aria-label="Mobile"
             >
-              {isLoggedIn ? 'Go to Dashboard' : 'Get Started Free'}
-            </Link>
+              <button
+                type="button"
+                className={styles.mobileNavLink}
+                onClick={() => scrollTo('features')}
+              >
+                Features
+              </button>
+              <button
+                type="button"
+                className={styles.mobileNavLink}
+                onClick={() => scrollTo('pricing')}
+              >
+                Pricing
+              </button>
+              <Link
+                href="/testimonials"
+                className={styles.mobileNavLink}
+                onClick={() => setMobileNavOpen(false)}
+              >
+                Testimonials
+              </Link>
+              {!isLoggedIn && (
+                <Link
+                  href="/login"
+                  className={styles.mobileNavLink}
+                  onClick={() => setMobileNavOpen(false)}
+                >
+                  Sign In
+                </Link>
+              )}
+            </nav>
           </header>
 
-          {/* Hero Layout exactly like video */}
-          <div
-            className="hero-layout"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr auto 1fr',
-              alignItems: 'center',
-              flex: 1,
-              gap: '40px',
-            }}
-          >
-            {/* Left Column: Clock and Copy */}
-            <div
-              className="hero-col-left"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                gap: '60px',
-              }}
-            >
-              <div className="hero-desc" style={{ maxWidth: '300px' }}>
-                <p
-                  style={{
-                    fontSize: '16px',
-                    color: '#64748b',
-                    lineHeight: 1.6,
-                    marginBottom: '20px',
-                  }}
-                >
-                  [RemindKaro. Track deadlines effortlessly.] Stay ahead of your
-                  coding tests, assignments, and hackathons.
+          <div className={`hero-layout ${styles.hero}`}>
+            <div className={`hero-col-left ${styles.heroLeft}`}>
+              <div className={`hero-desc ${styles.heroDesc}`}>
+                <p>
+                  Track coding tests, assignments, and hackathons with smart
+                  urgency — built for students and builders.
                 </p>
-                <div
-                  className="hero-desc-divider"
-                  style={{
-                    height: '2px',
-                    width: '40px',
-                    backgroundColor: '#e2e8f0',
-                  }}
-                />
+                <div className={`hero-desc-divider ${styles.heroDivider}`} />
               </div>
               <div className="clock-container">
                 <Clock />
               </div>
             </div>
-
-            {/* Center Column: Phone Mockup */}
-            <div
-              className="hero-col-center"
-              style={{ display: 'flex', justifyContent: 'center' }}
-            >
+            <div className={`hero-col-center ${styles.heroCenter}`}>
               <PhoneMockup />
             </div>
-
-            {/* Right Column: Vertical Nav list */}
-            <div
-              className="hero-col-right"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'flex-start',
-                paddingLeft: '40px',
-              }}
-            >
-              <div
-                className="nav-list"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '24px',
-                }}
-              >
+            <div className={`hero-col-right ${styles.heroRight}`}>
+              <div className={`nav-list ${styles.navList}`}>
                 {navItems.map((item, idx) => (
                   <div
-                    key={idx}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '16px',
-                      color: idx === 0 ? '#0f172a' : '#94a3b8',
-                      fontWeight: 600,
-                      fontSize: '16px',
-                      letterSpacing: '1px',
-                      transition: 'color 0.2s',
-                      cursor: 'pointer',
-                    }}
-                    className="nav-item-hover"
+                    key={item.label}
+                    className={[
+                      styles.navItem,
+                      idx === 0 ? styles.navItemActive : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
                   >
-                    <span style={{ opacity: idx === 0 ? 1 : 0.5 }}>
+                    <span style={{ opacity: idx === 0 ? 1 : 0.45 }}>
                       {item.icon}
                     </span>
                     {item.label}
@@ -369,378 +345,177 @@ export default function LandingClient({ isLoggedIn }) {
             </div>
           </div>
 
-          {/* Feature Folders Section (Sliding up) */}
-          <div
-            className="feature-section"
-            style={{ marginTop: '120px', padding: '40px 0' }}
+          <section
+            id="features"
+            className={`feature-section ${styles.section}`}
           >
-            <h2
-              className="feature-title"
-              style={{
-                fontSize: '48px',
-                fontWeight: 800,
-                marginBottom: '60px',
-                textAlign: 'center',
-                color: '#0f172a',
-                letterSpacing: '-1px',
-              }}
-            >
-              Simple Steps to
+            <h2 className={`feature-title ${styles.sectionTitle}`}>
+              Simple steps to
               <br />
-              Deadline Success
+              deadline success
             </h2>
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '30px',
-                padding: '0 20px',
-              }}
-            >
+            <div className={styles.featureGrid}>
               {features.map((feature, idx) => (
                 <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 80 }}
+                  key={feature.title}
+                  className={styles.featureCard}
+                  style={{ background: feature.bg }}
+                  initial={{ opacity: 0, y: 48 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{
-                    duration: 0.7,
-                    delay: idx * 0.1,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  style={{
-                    background: feature.bg,
-                    borderRadius: '24px',
-                    padding: '40px 30px',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    minHeight: '300px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    boxShadow: `0 20px 40px -10px ${feature.color}55`,
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    cursor: 'pointer',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform =
-                      'translateY(-10px) scale(1.01)';
-                    e.currentTarget.style.boxShadow = `0 35px 60px -15px ${feature.color}80`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                    e.currentTarget.style.boxShadow = `0 20px 40px -10px ${feature.color}55`;
-                  }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.55, delay: idx * 0.08 }}
                 >
-                  {/* Folder Top Tab Decorative Element */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 30,
-                      width: '60px',
-                      height: '6px',
-                      backgroundColor: 'rgba(255,255,255,0.3)',
-                      borderBottomLeftRadius: '6px',
-                      borderBottomRightRadius: '6px',
-                    }}
-                  />
-
-                  {/* Icon Container */}
-                  <div
-                    style={{
-                      width: '64px',
-                      height: '64px',
-                      borderRadius: '20px',
-                      background: 'rgba(255,255,255,0.2)',
-                      backdropFilter: 'blur(8px)',
-                      border: '1px solid rgba(255,255,255,0.3)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginBottom: '28px',
-                      color: '#fff',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
-                    }}
-                  >
-                    {feature.icon}
-                  </div>
-                  <h3
-                    style={{
-                      fontSize: '22px',
-                      fontWeight: 800,
-                      marginBottom: '14px',
-                      lineHeight: 1.25,
-                      letterSpacing: '-0.5px',
-                      color: '#fff',
-                    }}
-                  >
-                    {feature.title}
-                  </h3>
-                  <p
-                    style={{
-                      color: 'rgba(255,255,255,0.8)',
-                      fontSize: '15px',
-                      lineHeight: 1.65,
-                      fontWeight: 500,
-                    }}
-                  >
-                    {feature.desc}
-                  </p>
+                  <div className={styles.featureTab} />
+                  <div className={styles.featureIcon}>{feature.icon}</div>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.desc}</p>
                 </motion.div>
               ))}
             </div>
-          </div>
+          </section>
 
-          {/* Testimonials Marquee Section */}
-          <div
-            className="testimonials-section"
-            style={{
-              marginTop: '120px',
-              padding: '80px 0',
-              backgroundColor: '#f8fafc',
-              borderRadius: '40px',
-              overflow: 'hidden',
-            }}
+          <section
+            id="pricing"
+            className={`pricing-section ${styles.pricingSection}`}
+          >
+            <p className={styles.pricingEyebrow}>Pricing</p>
+            <h2 className={`pricing-title ${styles.sectionTitle}`}>
+              Plans that scale with you
+            </h2>
+            <div className={`pricing-tabs ${styles.pricingTabs}`}>
+              <button
+                type="button"
+                className={[
+                  'pricingTab',
+                  styles.pricingTab,
+                  billing === 'monthly' ? styles.pricingTabActive : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                onClick={() => setBilling('monthly')}
+              >
+                Monthly
+              </button>
+              <button
+                type="button"
+                className={[
+                  'pricingTab',
+                  styles.pricingTab,
+                  billing === 'yearly' ? styles.pricingTabActive : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                onClick={() => setBilling('yearly')}
+              >
+                Yearly (save ~20%)
+              </button>
+            </div>
+            <div className={`pricing-grid ${styles.pricingGrid}`}>
+              {plans.map((plan) => {
+                const price = billing === 'yearly' ? plan.yearly : plan.monthly;
+                return (
+                  <motion.div
+                    key={plan.id}
+                    className={[
+                      styles.priceCard,
+                      plan.featured ? styles.priceCardFeatured : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    {plan.featured && (
+                      <span className={styles.priceBadge}>Most popular</span>
+                    )}
+                    <div>
+                      <h3 className={styles.priceName}>{plan.name}</h3>
+                      <p
+                        style={{
+                          color: 'var(--landing-ink-subtle)',
+                          fontSize: '14px',
+                          marginTop: '4px',
+                        }}
+                      >
+                        {plan.desc}
+                      </p>
+                    </div>
+                    <div>
+                      <div className={styles.priceAmount}>
+                        {price === 0 ? 'Free' : `$${price}`}
+                      </div>
+                      <div className={styles.pricePeriod}>
+                        {price === 0
+                          ? 'forever'
+                          : billing === 'yearly'
+                            ? 'per month, billed yearly'
+                            : 'per month'}
+                      </div>
+                    </div>
+                    <ul className={styles.priceFeatures}>
+                      {plan.features.map((f) => (
+                        <li key={f}>{f}</li>
+                      ))}
+                    </ul>
+                    <Link
+                      href={plan.href}
+                      className={[
+                        styles.priceCta,
+                        plan.secondary
+                          ? styles.priceCtaSecondary
+                          : styles.priceCtaPrimary,
+                      ].join(' ')}
+                    >
+                      {plan.cta}
+                      {!plan.secondary && <Check size={16} />}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </section>
+
+          <section
+            className={`testimonials-section ${styles.section} ${styles.testimonials}`}
           >
             <h2
-              className="testimonials-title"
-              style={{
-                fontSize: '36px',
-                fontWeight: 800,
-                marginBottom: '40px',
-                textAlign: 'center',
-                color: '#0f172a',
-              }}
+              className={`testimonials-title ${styles.sectionTitle}`}
+              style={{ marginBottom: '32px' }}
             >
               Trusted by the best
             </h2>
-
-            <div
-              style={{
-                display: 'flex',
-                width: 'max-content',
-                animation: 'marquee 40s linear infinite',
-              }}
-            >
-              {[
-                {
-                  name: 'Rahul S.',
-                  role: 'Student',
-                  text: 'RemindKaro changed how I manage my hackathons!',
-                },
-                {
-                  name: 'Priya M.',
-                  role: 'Developer',
-                  text: "Voice entry is magic. Just speak and it's scheduled.",
-                },
-                {
-                  name: 'Amit K.',
-                  role: 'Tech Lead',
-                  text: 'Clean, fast, exactly what I needed for sprint tracking.',
-                },
-                {
-                  name: 'Sneha R.',
-                  role: 'Designer',
-                  text: 'The aesthetic is top notch. Love using this app.',
-                },
-                {
-                  name: 'Karan V.',
-                  role: 'Freelancer',
-                  text: 'Smart escalation ensures I never miss client deadlines.',
-                },
-              ].map((t, idx) => (
+            <div className={styles.marqueeTrack}>
+              {[...TESTIMONIALS, ...TESTIMONIALS].map((t, idx) => (
                 <div
-                  key={idx}
-                  style={{
-                    backgroundColor: '#fff',
-                    padding: '30px',
-                    borderRadius: '24px',
-                    boxShadow: '0 10px 30px -10px rgba(0,0,0,0.05)',
-                    margin: '0 15px',
-                    width: '350px',
-                    flexShrink: 0,
-                    border: '1px solid rgba(0,0,0,0.03)',
-                  }}
+                  key={`${t.name}-${idx}`}
+                  className={`marquee-card ${styles.marqueeCard}`}
                 >
-                  <div
-                    style={{
-                      display: 'flex',
-                      gap: '4px',
-                      color: '#FBBF24',
-                      marginBottom: '16px',
-                    }}
-                  >
-                    {'★★★★★'}
+                  <div className={styles.marqueeStars} aria-hidden>
+                    ★★★★★
                   </div>
-                  <p
-                    style={{
-                      color: '#334155',
-                      fontSize: '16px',
-                      lineHeight: 1.6,
-                      marginBottom: '20px',
-                      fontWeight: 500,
-                    }}
-                  >
-                    "{t.text}"
-                  </p>
-                  <div>
-                    <h4
-                      style={{
-                        color: '#0f172a',
-                        fontWeight: 700,
-                        fontSize: '16px',
-                      }}
-                    >
-                      {t.name}
-                    </h4>
-                    <p
-                      style={{
-                        color: '#64748b',
-                        fontSize: '14px',
-                        fontWeight: 500,
-                      }}
-                    >
-                      {t.role}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              {/* Duplicated for seamless marquee */}
-              {[
-                {
-                  name: 'Rahul S.',
-                  role: 'Student',
-                  text: 'RemindKaro changed how I manage my hackathons!',
-                },
-                {
-                  name: 'Priya M.',
-                  role: 'Developer',
-                  text: "Voice entry is magic. Just speak and it's scheduled.",
-                },
-                {
-                  name: 'Amit K.',
-                  role: 'Tech Lead',
-                  text: 'Clean, fast, exactly what I needed for sprint tracking.',
-                },
-                {
-                  name: 'Sneha R.',
-                  role: 'Designer',
-                  text: 'The aesthetic is top notch. Love using this app.',
-                },
-                {
-                  name: 'Karan V.',
-                  role: 'Freelancer',
-                  text: 'Smart escalation ensures I never miss client deadlines.',
-                },
-              ].map((t, idx) => (
-                <div
-                  key={`dup-${idx}`}
-                  style={{
-                    backgroundColor: '#fff',
-                    padding: '30px',
-                    borderRadius: '24px',
-                    boxShadow: '0 10px 30px -10px rgba(0,0,0,0.05)',
-                    margin: '0 15px',
-                    width: '350px',
-                    flexShrink: 0,
-                    border: '1px solid rgba(0,0,0,0.03)',
-                  }}
-                >
-                  <div
-                    style={{
-                      display: 'flex',
-                      gap: '4px',
-                      color: '#FBBF24',
-                      marginBottom: '16px',
-                    }}
-                  >
-                    {'★★★★★'}
-                  </div>
-                  <p
-                    style={{
-                      color: '#334155',
-                      fontSize: '16px',
-                      lineHeight: 1.6,
-                      marginBottom: '20px',
-                      fontWeight: 500,
-                    }}
-                  >
-                    "{t.text}"
-                  </p>
-                  <div>
-                    <h4
-                      style={{
-                        color: '#0f172a',
-                        fontWeight: 700,
-                        fontSize: '16px',
-                      }}
-                    >
-                      {t.name}
-                    </h4>
-                    <p
-                      style={{
-                        color: '#64748b',
-                        fontSize: '14px',
-                        fontWeight: 500,
-                      }}
-                    >
-                      {t.role}
-                    </p>
-                  </div>
+                  <p className={styles.marqueeQuote}>&quot;{t.text}&quot;</p>
+                  <p className={styles.marqueeName}>{t.name}</p>
+                  <p className={styles.marqueeRole}>{t.role}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
-          {/* Bottom Banner Section */}
-          <div
-            className="bottom-banner"
-            style={{
-              marginTop: '80px',
-              textAlign: 'center',
-              padding: '60px 0',
-              borderTop: '1px solid #e2e8f0',
-            }}
-          >
-            <h2
-              className="bottom-banner-title"
-              style={{
-                fontSize: '32px',
-                fontWeight: 700,
-                marginBottom: '24px',
-                color: '#0f172a',
-              }}
-            >
+          <section className={`bottom-banner ${styles.bottomBanner}`}>
+            <h2 className={`bottom-banner-title ${styles.bottomTitle}`}>
               Ready to take control of your deadlines?
             </h2>
-            <p
-              className="bottom-banner-desc"
-              style={{
-                color: '#64748b',
-                fontSize: '18px',
-                marginBottom: '40px',
-              }}
-            >
-              Join thousands of students and professionals using RemindKaro.
+            <p className={`bottom-banner-desc ${styles.bottomDesc}`}>
+              Join students and professionals using RemindKaro to stay ahead.
             </p>
-            <Link
-              href="/signup"
-              style={{
-                padding: '16px 40px',
-                backgroundColor: '#0f172a',
-                color: '#fff',
-                borderRadius: '30px',
-                fontWeight: 600,
-                fontSize: '16px',
-                display: 'inline-block',
-                textDecoration: 'none',
-              }}
-            >
-              Create Your Free Account
+            <Link href="/signup" className={styles.bottomCta}>
+              Create your free account
             </Link>
-          </div>
+          </section>
         </main>
+        <Footer />
       </div>
     </>
   );

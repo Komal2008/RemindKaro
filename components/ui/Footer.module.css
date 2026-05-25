@@ -1,0 +1,116 @@
+.footer {
+  background: var(--landing-card-bg);
+  border-top: 1px solid var(--landing-divider);
+  padding: clamp(48px, 8vw, 80px) clamp(20px, 5vw, 5%) 40px;
+  margin-top: auto;
+  color: var(--landing-ink);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: clamp(32px, 6vw, 60px);
+}
+
+.brandCol {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .brandCol {
+    grid-column: span 2;
+  }
+}
+
+.logo {
+  display: block;
+  margin-bottom: 16px;
+  color: var(--landing-ink);
+}
+
+.brandDesc {
+  color: var(--landing-ink-subtle);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 320px;
+  font-family: var(--font-body);
+}
+
+.colTitle {
+  font-size: 13px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--landing-ink-muted);
+}
+
+.linkList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.linkList a {
+  color: var(--landing-ink-subtle);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.linkList a:hover {
+  color: var(--landing-ink);
+}
+
+.contactBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--landing-ink);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 18px;
+  background: var(--landing-section-alt);
+  border-radius: var(--linear-radius-md);
+  border: 1px solid var(--landing-divider);
+  text-decoration: none;
+  transition: border-color var(--transition-fast);
+}
+
+.contactBtn:hover {
+  border-color: var(--linear-hairline-strong);
+  color: var(--landing-ink);
+}
+
+.contactBtn svg {
+  color: var(--landing-accent);
+  flex-shrink: 0;
+}
+
+.bottom {
+  max-width: 1200px;
+  margin: clamp(40px, 6vw, 80px) auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--landing-divider);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.copyright {
+  color: var(--landing-ink-subtle);
+  font-size: 14px;
+  font-family: var(--font-body);
+}

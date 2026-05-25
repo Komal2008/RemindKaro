@@ -3,11 +3,13 @@
 import { useState, useMemo, useEffect } from "react";
 import styles from "./page.module.css";
 import Button from "@/components/ui/Button";
+import { Plus } from "lucide-react";
 import TaskCard from "@/components/tasks/TaskCard";
 import CalendarView from "@/components/ui/CalendarView";
 import VoiceMic from "@/components/ui/VoiceMic";
 import TaskForm from "@/components/tasks/TaskForm";
 import useEscalationEngine from "@/components/hooks/useEscalationEngine";
+import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton";
 
 export default function DashboardPage() {
   const [tasks, setTasks] = useState([]);
@@ -147,6 +149,10 @@ export default function DashboardPage() {
     return `${diffD}d left`;
   };
 
+  if (loading) {
+    return <DashboardSkeleton />;
+  }
+
   return (
     <div className={styles.container}>
       {/* ── Page Header ── */}
@@ -157,8 +163,15 @@ export default function DashboardPage() {
         </div>
         <div className={styles.headerActions}>
           <VoiceMic onResult={handleVoiceInput} />
-          <Button variant="primary" onClick={() => setIsFormOpen(true)}>
-            New Task
+          <Button
+            variant="primary"
+            size="md"
+            onClick={() => setIsFormOpen(true)}
+          >
+            <>
+              <Plus size={16} strokeWidth={2.5} aria-hidden />
+              New Task
+            </>
           </Button>
         </div>
       </header>
@@ -266,16 +279,7 @@ export default function DashboardPage() {
           </div>
 
           <div className={styles.taskList}>
-            {loading ? (
-              <div className={styles.loadingGrid}>
-                {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className={`${styles.skeletonCard} skeleton-shimmer`}
-                  />
-                ))}
-              </div>
-            ) : filteredTasks.length > 0 ? (
+            {filteredTasks.length > 0 ? (
               filteredTasks.map((task) => (
                 <TaskCard
                   key={task.id}

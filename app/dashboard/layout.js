@@ -2,6 +2,8 @@
 import styles from "./layout.module.css";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import BrandLogo from "@/components/ui/BrandLogo";
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
@@ -21,18 +23,19 @@ export default function DashboardLayout({ children }) {
   return (
     <div className={styles.layout}>
       <header className={styles.topbar}>
-        <Link href="/dashboard" className={styles.logo}>
-          <span className={styles.logoDot} />
-          RemindKaro
-        </Link>
+        <BrandLogo href="/dashboard" size="sm" className={styles.logo} />
 
         <nav className={styles.nav}>
           <Link
             href="/dashboard"
             className={`${styles.navLink} ${pathname === "/dashboard" ? styles.active : ""}`}
           >
-            Dashboard
+            <span className={styles.navLinkFull}>Dashboard</span>
+            <span className={styles.navLinkShort} aria-hidden>
+              Home
+            </span>
           </Link>
+          <ThemeToggle compact />
           <div className={styles.navDivider} />
           <button onClick={handleLogout} className={styles.logoutBtn}>
             Sign out
