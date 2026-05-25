@@ -3,21 +3,21 @@
 /* Google Fonts Import for Display & Body Typography */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap");
 
-:root {
-  /* ===== COLOR SYSTEM: DARK THEME FIRST ===== */
-  --color-bg-primary: #08070f; /* Ultra-dark canvas background */
-  --color-bg-secondary: #11101e; /* Premium container surface card background */
-  --color-bg-tertiary: #191829; /* Elevated control / hover background state */
-  --color-bg-quaternary: #24223a; /* Distinct highlight/active background state */
+:root,
+[data-theme="dark"] {
+  /* ===== COLOR SYSTEM — aligned with Linear / DESIGN.md ===== */
+  --color-bg-primary: #010102;
+  --color-bg-secondary: #0f1011;
+  --color-bg-tertiary: #141516;
+  --color-bg-quaternary: #18191a;
 
-  /* ===== TEXT SYSTEM ===== */
-  --color-text-primary: #fafafa; /* Highly legible body text (off-white) */
-  --color-text-secondary: #afafc6; /* Description & details text */
-  --color-text-tertiary: #6e6d8a; /* Disabled / placeholder hints */
+  --color-text-primary: #f7f8f8;
+  --color-text-secondary: #d0d6e0;
+  --color-text-tertiary: #8a8f98;
 
   /* ===== SEMANTIC STATE COLORS ===== */
   --color-success: #10b981; /* Balanced Emerald for completed states */
-  --color-info: #6366f1; /* Vibrant Indigo for system/primary info */
+  --color-info: #5e6ad2;
   --color-warning: #f59e0b; /* Honey Amber for neutral warnings */
   --color-error: #ef4444; /* Coral Red for exceptions */
 
@@ -50,9 +50,9 @@
   --color-low-900: #064e3b;
 
   /* ===== BORDERS & SEPARATORS ===== */
-  --color-border-light: rgba(255, 255, 255, 0.04);
-  --color-border-medium: rgba(255, 255, 255, 0.08);
-  --color-border-strong: rgba(255, 255, 255, 0.15);
+  --color-border-light: #23252a;
+  --color-border-medium: #34343a;
+  --color-border-strong: #3e3e44;
 
   /* ===== SHADOW SYSTEM ===== */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
@@ -89,6 +89,153 @@
   /* ===== TRANSITION TIMES ===== */
   --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-normal: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ===== LINEAR DESIGN SYSTEM (DESIGN.md) — auth & onboarding ===== */
+  --linear-canvas: #010102;
+  --linear-surface-1: #0f1011;
+  --linear-surface-2: #141516;
+  --linear-surface-3: #18191a;
+  --linear-surface-4: #191a1b;
+  --linear-hairline: #23252a;
+  --linear-hairline-strong: #34343a;
+  --linear-hairline-tertiary: #3e3e44;
+  --linear-ink: #f7f8f8;
+  --linear-ink-muted: #d0d6e0;
+  --linear-ink-subtle: #8a8f98;
+  --linear-ink-tertiary: #62666d;
+  --linear-primary: #5e6ad2;
+  --linear-primary-hover: #828fff;
+  --linear-primary-focus: #5e69d1;
+  --linear-on-primary: #ffffff;
+  --linear-semantic-success: #27a644;
+  --linear-radius-sm: 4px;
+  --linear-radius-md: 8px;
+  --linear-radius-lg: 12px;
+  --linear-radius-xl: 16px;
+  --linear-radius-pill: 9999px;
+
+  /* Theme toggle */
+  --toggle-track: var(--linear-surface-2);
+  --toggle-border: var(--linear-hairline);
+  --toggle-border-hover: var(--linear-hairline-strong);
+  --toggle-glow: rgba(94, 106, 210, 0.2);
+  --toggle-thumb-bg: var(--linear-surface-4);
+  --toggle-thumb-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --toggle-icon: var(--linear-ink-tertiary);
+  --toggle-icon-active: var(--linear-ink);
+
+  /* Landing / marketing */
+  --landing-outer-bg: #010102;
+  --landing-card-bg: #0f1011;
+  --landing-card-border: var(--linear-hairline);
+  --landing-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --landing-ink: var(--linear-ink);
+  --landing-ink-muted: var(--linear-ink-muted);
+  --landing-ink-subtle: var(--linear-ink-subtle);
+  --landing-accent: var(--linear-primary);
+  --landing-accent-hover: var(--linear-primary-hover);
+  --landing-bg-text: rgba(94, 106, 210, 0.12);
+  --landing-section-alt: #141516;
+  --landing-testimonial-card: #18191a;
+  --landing-cta-solid: var(--linear-primary);
+  --landing-divider: var(--linear-hairline);
+}
+
+[data-theme="light"] {
+  --color-bg-primary: #f1f5f9;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #e2e8f0;
+  --color-bg-quaternary: #cbd5e1;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #94a3b8;
+  --color-border-light: rgba(15, 23, 42, 0.06);
+  --color-border-medium: rgba(15, 23, 42, 0.1);
+  --color-border-strong: rgba(15, 23, 42, 0.18);
+  --color-info: #3b82f6;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.1);
+
+  --linear-canvas: #f1f5f9;
+  --linear-surface-1: #ffffff;
+  --linear-surface-2: #f8fafc;
+  --linear-surface-3: #f1f5f9;
+  --linear-surface-4: #e2e8f0;
+  --linear-hairline: #e2e8f0;
+  --linear-hairline-strong: #cbd5e1;
+  --linear-hairline-tertiary: #94a3b8;
+  --linear-ink: #0f172a;
+  --linear-ink-muted: #334155;
+  --linear-ink-subtle: #64748b;
+  --linear-ink-tertiary: #94a3b8;
+  --linear-primary: #4f46e5;
+  --linear-primary-hover: #6366f1;
+  --linear-primary-focus: #4338ca;
+
+  --toggle-track: #e2e8f0;
+  --toggle-border: #cbd5e1;
+  --toggle-border-hover: #94a3b8;
+  --toggle-glow: rgba(79, 70, 229, 0.15);
+  --toggle-thumb-bg: #ffffff;
+  --toggle-thumb-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+  --toggle-icon: #94a3b8;
+  --toggle-icon-active: #0f172a;
+
+  --landing-outer-bg: #eef1f6;
+  --landing-card-bg: #ffffff;
+  --landing-card-border: #e2e8f0;
+  --landing-card-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.12);
+  --landing-bg-text: rgba(59, 130, 246, 0.08);
+  --landing-section-alt: #f8fafc;
+  --landing-testimonial-card: #ffffff;
+  --landing-cta-solid: #0f172a;
+  --landing-divider: #e2e8f0;
+}
+
+[data-theme="dark"] .glass-panel {
+  background: rgba(17, 16, 30, 0.7);
+}
+
+[data-theme="light"] .glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* Site header mobile nav (Header.js + landing) */
+.site-nav-open {
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .nav-links-panel {
+    display: none;
+  }
+
+  .nav-links-panel.isOpen {
+    display: flex !important;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 24px 20px;
+    background: var(--color-bg-primary);
+    border-top: 1px solid var(--color-border-medium);
+    z-index: 99;
+  }
+
+  .nav-menu-btn {
+    display: inline-flex !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .nav-menu-btn {
+    display: none !important;
+  }
 }
 
 /* Base Body Styles */
@@ -127,7 +274,25 @@ a {
   transition: color var(--transition-fast);
 }
 a:hover {
-  color: #818cf8;
+  color: var(--linear-primary-hover);
+}
+
+/* Native buttons inherit readable colors (fixes white pill nav in dark mode) */
+button {
+  font-family: inherit;
+  color: inherit;
+}
+
+button:not([class]) {
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-medium);
+}
+
+.landing-page button.navLink,
+.landing-page button.pricingTab {
+  background: transparent;
+  border: none;
+  color: var(--landing-ink-subtle);
 }
 
 /* Custom Scrollbars */
@@ -249,17 +414,26 @@ a:hover {
   box-shadow: var(--shadow-lg);
 }
 
-/* Shimmer Loading Skeleton */
+/* Legacy shimmer class — prefer <Skeleton /> from components/ui/Skeleton */
 .skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--linear-radius-md);
+}
+
+.skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   background: linear-gradient(
     90deg,
-    var(--color-bg-secondary) 25%,
-    var(--color-bg-tertiary) 50%,
-    var(--color-bg-secondary) 75%
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 100%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.5s infinite linear;
-  border-radius: var(--radius-md);
+  animation: shimmer 1.4s ease-in-out infinite;
 }
 
 @keyframes marquee {
@@ -350,5 +524,49 @@ a:hover {
   }
   .hero-desc-divider {
     margin: 0 auto !important;
+  }
+
+  .pricing-section {
+    margin-top: 60px !important;
+    padding: 20px 0 !important;
+  }
+
+  .pricing-title {
+    font-size: 32px !important;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .landing-header-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .marquee-card {
+    width: min(300px, 85vw) !important;
+  }
+
+  .landing-bg-text {
+    font-size: clamp(48px, 12vw, 80px) !important;
+    opacity: 0.06 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    margin: 12px !important;
+    padding: 16px !important;
+  }
+
+  .pricing-tabs {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .pricing-tab {
+    width: 100%;
+    text-align: center;
   }
 }
