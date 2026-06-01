@@ -80,6 +80,34 @@ function run() {
 
   console.log(`🚀 Found ${issues.length} structured issues in ISSUES.md.\n`);
 
+  // Ensure all unique labels exist on GitHub before creating issues
+  const allLabels = new Set();
+  issues.forEach((issue) => issue.labels.forEach((l) => allLabels.add(l)));
+  console.log(
+    `🏷️  Ensuring GitHub labels exist: ${Array.from(allLabels).join(', ')}`
+  );
+
+  for (const label of allLabels) {
+    try {
+      let color = '5e6ad2'; // Default lavender
+      if (label === 'easy' || label === 'good first issue')
+        color = '0e8a16'; // Green
+      else if (label === 'medium')
+        color = 'fbca04'; // Yellow
+      else if (label === 'hard')
+        color = 'd93f0b'; // Red
+      else if (label === 'ssoc2026') color = 'ffd700'; // Gold
+
+      execSync(
+        `gh label create "${label}" --color "${color}" --description "Label for SSOC 2026 / Contributor task" 2>/dev/null`,
+        { stdio: 'ignore' }
+      );
+    } catch (e) {
+      // Already exists, ignore
+    }
+  }
+  console.log('✅ GitHub labels ensured!\n');
+
   for (const issue of issues) {
     const labelString = issue.labels.join(',');
     console.log(`📦 Preparing: "${issue.title}" [Labels: ${labelString}]`);
