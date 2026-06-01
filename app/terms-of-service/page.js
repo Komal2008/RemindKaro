@@ -13,7 +13,7 @@ export const metadata = {
     title: "Terms of Service — RemindKaro",
     description:
       "Read our terms of service. By using RemindKaro, you agree to our terms for managing schedules, voice tasks, and urgency escalation alerts.",
-    url: "https://remindkaro.in/terms-of-service",
+    url: "https://remindkro.in/terms-of-service",
   },
   twitter: {
     title: "Terms of Service — RemindKaro",

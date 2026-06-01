@@ -10,7 +10,7 @@ export const metadata = {
     title: "Pricing Plans — RemindKaro",
     description:
       "Affordable plans for students and power users. Subscribe to RemindKaro Pro for AI-driven urgency escalation, WhatsApp & Telegram reminders, and native voice entry.",
-    url: "https://remindkaro.in/pricing",
+    url: "https://remindkro.in/pricing",
   },
   twitter: {
     title: "Pricing Plans — RemindKaro",

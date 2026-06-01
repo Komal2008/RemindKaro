@@ -6,7 +6,7 @@ export default function StructuredData() {
     name: 'RemindKaro',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
-    url: 'https://remindkaro.in',
+    url: 'https://remindkro.in',
     description:
       'Intelligent AI-powered deadline scheduler and reminder assistant. Track coding tests, assignments, interviews, and hackathons with native voice entry and smart urgency escalation.',
     offers: {

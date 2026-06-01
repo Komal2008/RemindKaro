@@ -13,7 +13,7 @@ export const metadata = {
     title: "Privacy Policy — RemindKaro",
     description:
       "Learn how RemindKaro protects your data. We use industry-standard encryption to keep your tasks, schedules, and notifications secure and private.",
-    url: "https://remindkaro.in/privacy-policy",
+    url: "https://remindkro.in/privacy-policy",
   },
   twitter: {
     title: "Privacy Policy — RemindKaro",

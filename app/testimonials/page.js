@@ -12,7 +12,7 @@ export const metadata = {
     title: "User Testimonials & Reviews — RemindKaro",
     description:
       "Read what students, developers, and freelancers have to say about RemindKaro. See how our AI-powered reminders help them stay on top of coding tests, hackathons, and deadlines.",
-    url: "https://remindkaro.in/testimonials",
+    url: "https://remindkro.in/testimonials",
   },
   twitter: {
     title: "User Testimonials & Reviews — RemindKaro",

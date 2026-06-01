@@ -16,6 +16,6 @@ export default function robots() {
         ],
       },
     ],
-    sitemap: "https://remindkaro.in/sitemap.xml",
+    sitemap: "https://remindkro.in/sitemap.xml",
   };
 }

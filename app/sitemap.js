@@ -1,6 +1,6 @@
 // app/sitemap.js
 export default async function sitemap() {
-  const baseUrl = "https://remindkaro.in";
+  const baseUrl = "https://remindkro.in";
 
   // Public indexable routes
   const routes = [

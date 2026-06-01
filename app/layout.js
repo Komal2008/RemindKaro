@@ -6,7 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
-  metadataBase: new URL("https://remindkaro.in"),
+  metadataBase: new URL("https://remindkro.in"),
   title: {
     default: "RemindKaro — Smart AI Deadline & Reminders Dashboard",
     template: "%s | RemindKaro",
@@ -33,7 +33,7 @@ export const metadata = {
     title: "RemindKaro — Smart AI Deadline & Reminders Dashboard",
     description:
       "Intelligent AI-powered deadline scheduler and reminder assistant. Track coding tests, assignments, interviews, and hackathons with native voice entry and smart urgency escalation.",
-    url: "https://remindkaro.in",
+    url: "https://remindkro.in",
     siteName: "RemindKaro",
     locale: "en_IN",
     type: "website",
