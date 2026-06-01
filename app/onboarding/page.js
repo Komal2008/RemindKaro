@@ -12,6 +12,7 @@ import {
   ArrowRight,
   CheckCircle2,
   ChevronDown,
+  Phone,
 } from "lucide-react";
 import styles from "@/app/styles/auth-flow.module.css";
 import AuthThemeBar from "@/components/auth/AuthThemeBar";
@@ -64,6 +65,7 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(1);
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedTimezone, setSelectedTimezone] = useState("Asia/Kolkata");
+  const [whatsappNumber, setWhatsappNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -78,6 +80,7 @@ export default function OnboardingPage() {
         body: JSON.stringify({
           role: selectedRole,
           timezone: selectedTimezone,
+          whatsappNumber: whatsappNumber ? whatsappNumber : null,
         }),
       });
       const data = await res.json();
@@ -235,6 +238,54 @@ export default function OnboardingPage() {
                     Your current selection:{" "}
                     <strong>{selectedTimezone.replace("_", " ")}</strong>
                   </span>
+                </div>
+
+                {/* Optional WhatsApp Number field */}
+                <div style={{ marginTop: "24px" }}>
+                  <label
+                    className={styles.progressLabel}
+                    style={{
+                      display: "block",
+                      marginBottom: "8px",
+                      textAlign: "left",
+                      color: "var(--linear-ink-muted)",
+                      fontSize: "13px",
+                    }}
+                  >
+                    WhatsApp Number (Optional)
+                  </label>
+                  <div className={styles.selectWrap}>
+                    <Phone
+                      size={16}
+                      className={styles.selectIcon}
+                      style={{ color: "var(--linear-primary)" }}
+                      aria-hidden
+                    />
+                    <input
+                      type="text"
+                      placeholder="e.g. 919876543210 (with country code)"
+                      value={whatsappNumber}
+                      onChange={(e) => setWhatsappNumber(e.target.value)}
+                      className={styles.select}
+                      style={{
+                        cursor: "text",
+                        paddingLeft: "44px",
+                        paddingRight: "16px",
+                      }}
+                      aria-label="Enter WhatsApp Number"
+                    />
+                  </div>
+                  <p
+                    className={styles.stepDesc}
+                    style={{
+                      fontSize: "12px",
+                      marginTop: "8px",
+                      marginBottom: 0,
+                    }}
+                  >
+                    Provide country code (e.g., 91 for India, 1 for US) with no
+                    plus (+), spaces, or dashes.
+                  </p>
                 </div>
 
                 {error && (

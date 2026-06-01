@@ -1,9 +1,14 @@
 // app/layout.js
 import "./globals.css";
 import AppProviders from "@/components/providers/AppProviders";
+import StructuredData from "@/components/ui/StructuredData";
 
 export const metadata = {
-  title: "RemindKaro — Smart AI Deadline & Reminders Dashboard",
+  metadataBase: new URL("https://remindkaro.in"),
+  title: {
+    default: "RemindKaro — Smart AI Deadline & Reminders Dashboard",
+    template: "%s | RemindKaro",
+  },
   description:
     "Intelligent AI-powered deadline scheduler and reminder assistant. Track coding tests, assignments, interviews, and hackathons with native voice entry and smart urgency escalation.",
   keywords: [
@@ -13,8 +18,50 @@ export const metadata = {
     "ai scheduler",
     "assignment reminder",
     "hackathon submission tracker",
+    "reminders in india",
+    "whatsapp reminders",
+    "telegram reminders",
+    "voice task scheduler",
   ],
   authors: [{ name: "RemindKaro Team" }],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "RemindKaro — Smart AI Deadline & Reminders Dashboard",
+    description:
+      "Intelligent AI-powered deadline scheduler and reminder assistant. Track coding tests, assignments, interviews, and hackathons with native voice entry and smart urgency escalation.",
+    url: "https://remindkaro.in",
+    siteName: "RemindKaro",
+    locale: "en_IN",
+    type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "RemindKaro — Smart AI Deadline & Reminders Dashboard",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "RemindKaro — Smart AI Deadline & Reminders Dashboard",
+    description:
+      "Intelligent AI-powered deadline scheduler and reminder assistant. Track coding tests, assignments, and interviews with smart urgency escalation.",
+    images: ["/opengraph-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export const viewport = {
@@ -29,6 +76,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
+        <StructuredData />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>

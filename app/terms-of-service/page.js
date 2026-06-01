@@ -2,6 +2,26 @@ import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import { cookies } from "next/headers";
 
+export const metadata = {
+  title: "Terms of Service",
+  description:
+    "Read our terms of service. By using RemindKaro, you agree to our terms for managing schedules, voice tasks, and urgency escalation alerts.",
+  alternates: {
+    canonical: "/terms-of-service",
+  },
+  openGraph: {
+    title: "Terms of Service — RemindKaro",
+    description:
+      "Read our terms of service. By using RemindKaro, you agree to our terms for managing schedules, voice tasks, and urgency escalation alerts.",
+    url: "https://remindkaro.in/terms-of-service",
+  },
+  twitter: {
+    title: "Terms of Service — RemindKaro",
+    description:
+      "Read our terms of service. By using RemindKaro, you agree to our terms for managing schedules, voice tasks, and urgency escalation alerts.",
+  },
+};
+
 export default async function TermsOfServicePage() {
   const cookieStore = await cookies();
   const isLoggedIn = !!cookieStore.get("auth_token")?.value;
