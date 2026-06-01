@@ -2,6 +2,8 @@
 import "./globals.css";
 import AppProviders from "@/components/providers/AppProviders";
 import StructuredData from "@/components/ui/StructuredData";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   metadataBase: new URL("https://remindkaro.in"),
@@ -83,6 +85,8 @@ export default function RootLayout({ children }) {
         <AppProviders>
           <main>{children}</main>
         </AppProviders>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
