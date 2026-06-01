@@ -2,6 +2,26 @@ import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import { cookies } from "next/headers";
 
+export const metadata = {
+  title: "Privacy Policy",
+  description:
+    "Learn how RemindKaro protects your data. We use industry-standard encryption to keep your tasks, schedules, and notifications secure and private.",
+  alternates: {
+    canonical: "/privacy-policy",
+  },
+  openGraph: {
+    title: "Privacy Policy — RemindKaro",
+    description:
+      "Learn how RemindKaro protects your data. We use industry-standard encryption to keep your tasks, schedules, and notifications secure and private.",
+    url: "https://remindkaro.in/privacy-policy",
+  },
+  twitter: {
+    title: "Privacy Policy — RemindKaro",
+    description:
+      "Learn how RemindKaro protects your data. We use industry-standard encryption to keep your tasks, schedules, and notifications secure and private.",
+  },
+};
+
 export default async function PrivacyPolicy() {
   const cookieStore = await cookies();
   const isLoggedIn = !!cookieStore.get("auth_token")?.value;

@@ -247,6 +247,9 @@ export default function LandingClient({ isLoggedIn }) {
         </div>
 
         <main className={`main-container ${styles.main}`}>
+          <h1 className="sr-only">
+            RemindKaro — Smart AI Deadline & Reminders Dashboard
+          </h1>
           <header className={`main-header ${styles.header}`}>
             <BrandLogo href="/" size="md" className={styles.logo} />
             <div className={`landing-header-actions ${styles.headerActions}`}>
