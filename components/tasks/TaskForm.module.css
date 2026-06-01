@@ -84,9 +84,22 @@
 }
 
 .voiceActive {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--color-info);
   font-weight: 500;
   animation: pulseText 1.5s ease-in-out infinite;
+}
+
+.voiceSpinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(99, 102, 241, 0.25);
+  border-top-color: var(--color-info);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
 }
 
 /* ── Form body ── */
@@ -161,5 +174,11 @@
   }
   50% {
     opacity: 0.4;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

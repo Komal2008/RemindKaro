@@ -92,10 +92,18 @@ export default function TaskForm({
 
         {!initialData && (
           <div className={styles.voiceSection}>
-            <VoiceMic onResult={processVoiceInput} />
+            <VoiceMic
+              onResult={processVoiceInput}
+              disabled={isProcessingVoice}
+            />
             <div className={styles.voiceHint}>
               {isProcessingVoice ? (
-                <span className={styles.voiceActive}>
+                <span
+                  className={styles.voiceActive}
+                  role="status"
+                  aria-live="polite"
+                >
+                  <span className={styles.voiceSpinner} aria-hidden="true" />
                   Parsing your request with AI...
                 </span>
               ) : voiceInput ? (
