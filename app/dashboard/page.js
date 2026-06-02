@@ -95,6 +95,26 @@ export default function DashboardPage() {
     }
   };
 
+  const handleClearCompleted = async () => {
+    try {
+      const completedIds = tasks
+        .filter((t) => t.status === "completed")
+        .map((t) => t.id);
+
+      for (const id of completedIds) {
+        await fetch(`/api/tasks/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: "archived" }),
+        });
+      }
+
+      setTasks((prev) => prev.filter((t) => t.status !== "completed"));
+    } catch (err) {
+      console.error("Failed to clear completed tasks:", err);
+    }
+  };
+
   const handleVoiceInput = (text) => {
     setInitialVoiceText(text);
     setIsFormOpen(true);
@@ -276,6 +296,15 @@ export default function DashboardPage() {
               {filteredTasks.length}{" "}
               {filteredTasks.length === 1 ? "task" : "tasks"}
             </span>
+
+            {stats.completed > 0 && (
+              <button
+                className={styles.clearBtn}
+                onClick={handleClearCompleted}
+              >
+                Clear Completed
+              </button>
+            )}
           </div>
 
           <div className={styles.taskList}>

@@ -378,3 +378,17 @@
   color: var(--color-text-tertiary);
   padding: 8px 0;
 }
+
+.clearBtn {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.clearBtn:hover {
+  background-color: #d9363e;
+}

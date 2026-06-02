@@ -1,11 +1,10 @@
-#  RemindKaro
+# RemindKaro
 
 > **The Active AI-Powered Reminder & Intelligent Urgency Escalation Assistant**
 
-RemindKaro is a next-generation deadline assistant designed to help developers, students, freelancers, and professionals capture, prioritize, and complete critical tasks before they become overdue. Unlike traditional productivity tools that send easily dismissible notifications, RemindKaro implements **active engagement** using custom voice/text parsing and an aggressive **urgency escalation** system.
----
+## RemindKaro is a next-generation deadline assistant designed to help developers, students, freelancers, and professionals capture, prioritize, and complete critical tasks before they become overdue. Unlike traditional productivity tools that send easily dismissible notifications, RemindKaro implements **active engagement** using custom voice/text parsing and an aggressive **urgency escalation** system.
 
-##  Product Showcases
+## Product Showcases
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/ce05e1c3-21d9-4d7f-b40b-858985a57951" alt="RemindKaro Dark-Canvas Dashboard View" width="100%" />
@@ -17,17 +16,17 @@ RemindKaro is a next-generation deadline assistant designed to help developers, 
 
 ---
 
-##  Key Features
+## Key Features
 
--  **Frictionless Voice & NLP Entry:** Speak or type natural language inputs (e.g., _"remind me to review the pull request tomorrow at 3 PM"_). The system extracts title, category, priority, and parsed deadline timestamps instantly.
--  **Intelligent Urgency Escalation:** If you ignore notifications, the dashboard's design transitions automatically across severity states (`Upcoming` ➔ `Today` ➔ `Urgent` ➔ `Critical` ➔ `Overdue`) with elevating color indicators, typography alerts, and increased alert frequencies.
--  **Premium Dark-Canvas Aesthetics:** Linear-inspired interfaces utilizing bespoke HSL slate-canvas tones, hairline borders, smooth micro-animations, and subtle glowing gradients.
--  **Seamless Payments:** Integrated Razorpay / Stripe checkout flow supporting monthly, yearly, and lifetime premium licenses.
+- **Frictionless Voice & NLP Entry:** Speak or type natural language inputs (e.g., _"remind me to review the pull request tomorrow at 3 PM"_). The system extracts title, category, priority, and parsed deadline timestamps instantly.
+- **Intelligent Urgency Escalation:** If you ignore notifications, the dashboard's design transitions automatically across severity states (`Upcoming` ➔ `Today` ➔ `Urgent` ➔ `Critical` ➔ `Overdue`) with elevating color indicators, typography alerts, and increased alert frequencies.
+- **Premium Dark-Canvas Aesthetics:** Linear-inspired interfaces utilizing bespoke HSL slate-canvas tones, hairline borders, smooth micro-animations, and subtle glowing gradients.
+- **Seamless Payments:** Integrated Razorpay / Stripe checkout flow supporting monthly, yearly, and lifetime premium licenses.
 - **Multi-Channel Nudges:** Capable of triggering fallback nudges across email, SMS, WhatsApp, and Telegram bots when a critical task is ignored.
 
 ---
 
-##  Technology Stack
+## Technology Stack
 
 | Layer                   | Technologies                | Role & Purpose                                                                       |
 | :---------------------- | :-------------------------- | :----------------------------------------------------------------------------------- |
@@ -40,7 +39,7 @@ RemindKaro is a next-generation deadline assistant designed to help developers, 
 
 ---
 
-##  Local Development Setup
+## Local Development Setup
 
 To run the web interface locally, follow these steps:
 
@@ -104,7 +103,7 @@ RemindKaro is built on strict design rules inspired by premium dark-theme layout
 
 ---
 
-##  Contribution Guidelines
+## Contribution Guidelines
 
 We welcome community contributions! Whether you are fixing a small CSS layout issue, translating components, or introducing major API integrations, please follow these guidelines:
 
@@ -117,7 +116,7 @@ For any security vulnerabilities or confidential disclosure, please refer to our
 
 ---
 
-##  License & Attribution
+## License & Attribution
 
 This project is open-source and released under the **MIT License**. See [LICENSE](LICENSE) for full details.
 
