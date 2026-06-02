@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import styles from "./page.module.css";
 import Button from "@/components/ui/Button";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Volume2, VolumeX } from "lucide-react";
 import TaskCard from "@/components/tasks/TaskCard";
 import dynamic from "next/dynamic";
 import useEscalationEngine from "@/components/hooks/useEscalationEngine";
@@ -32,6 +32,7 @@ export default function DashboardPage() {
   const [initialVoiceText, setInitialVoiceText] = useState("");
   const [loading, setLoading] = useState(true);
   const [isClearingCompleted, setIsClearingCompleted] = useState(false);
+  const [muted, setMuted] = useState(false);
 
   useEscalationEngine(tasks);
 
@@ -50,6 +51,14 @@ export default function DashboardPage() {
       }
     };
     fetchTasks();
+  }, []);
+
+  useEffect(() => {
+    const saved =
+      typeof window !== "undefined" &&
+      localStorage.getItem("notificationsMuted") === "true";
+
+    setMuted(saved);
   }, []);
 
   const stats = useMemo(
@@ -146,6 +155,14 @@ export default function DashboardPage() {
     setIsFormOpen(true);
   };
 
+  const toggleMute = () => {
+    const newValue = !muted;
+
+    setMuted(newValue);
+
+    localStorage.setItem("notificationsMuted", newValue.toString());
+  };
+
   const handleSaveTask = async (taskData) => {
     try {
       if (editingTask) {
@@ -208,6 +225,38 @@ export default function DashboardPage() {
           <h1 className={styles.title}>Your Tasks</h1>
         </div>
         <div className={styles.headerActions}>
+          <Button
+            variant="ghost"
+            size="md"
+            onClick={toggleMute}
+            aria-label={
+              muted ? "Unmute notification sounds" : "Mute notification sounds"
+            }
+          >
+            {muted ? (
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                <VolumeX size={16} strokeWidth={2} aria-hidden />
+                Muted
+              </span>
+            ) : (
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                <Volume2 size={16} strokeWidth={2} aria-hidden />
+                Sound
+              </span>
+            )}
+          </Button>
           <VoiceMic onResult={handleVoiceInput} />
           <Button
             variant="primary"
