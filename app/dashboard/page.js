@@ -101,13 +101,15 @@ export default function DashboardPage() {
         .filter((t) => t.status === "completed")
         .map((t) => t.id);
 
-      for (const id of completedIds) {
-        await fetch(`/api/tasks/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: "archived" }),
-        });
-      }
+      await Promise.all(
+        completedIds.map((id) =>
+          fetch(`/api/tasks/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: "archived" }),
+          })
+        )
+      );
 
       setTasks((prev) => prev.filter((t) => t.status !== "completed"));
     } catch (err) {
