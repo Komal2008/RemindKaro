@@ -65,7 +65,11 @@ export default function useEscalationEngine(tasks) {
         }
       });
 
-      if (shouldPlayChime) {
+      const muted =
+        typeof window !== 'undefined' &&
+        localStorage.getItem('notificationsMuted') === 'true';
+
+      if (shouldPlayChime && !muted) {
         // Try to play a generic system beep or loaded sound
         try {
           const audioCtx = new (

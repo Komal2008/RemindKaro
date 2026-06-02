@@ -18,6 +18,7 @@ export default function DashboardPage() {
   const [editingTask, setEditingTask] = useState(null);
   const [initialVoiceText, setInitialVoiceText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [muted, setMuted] = useState(false);
 
   useEscalationEngine(tasks);
 
@@ -36,6 +37,14 @@ export default function DashboardPage() {
       }
     };
     fetchTasks();
+  }, []);
+
+  useEffect(() => {
+    const saved =
+      typeof window !== "undefined" &&
+      localStorage.getItem("notificationsMuted") === "true";
+
+    setMuted(saved);
   }, []);
 
   const stats = useMemo(
@@ -120,6 +129,14 @@ export default function DashboardPage() {
     setIsFormOpen(true);
   };
 
+  const toggleMute = () => {
+    const newValue = !muted;
+
+    setMuted(newValue);
+
+    localStorage.setItem("notificationsMuted", newValue.toString());
+  };
+
   const handleSaveTask = async (taskData) => {
     try {
       if (editingTask) {
@@ -182,6 +199,16 @@ export default function DashboardPage() {
           <h1 className={styles.title}>Your Tasks</h1>
         </div>
         <div className={styles.headerActions}>
+          <Button
+            variant="ghost"
+            size="md"
+            onClick={toggleMute}
+            aria-label={
+              muted ? "Unmute notification sounds" : "Mute notification sounds"
+            }
+          >
+            {muted ? "🔇 Muted" : "🔊 Sound"}
+          </Button>
           <VoiceMic onResult={handleVoiceInput} />
           <Button
             variant="primary"
