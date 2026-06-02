@@ -90,13 +90,51 @@ _Perfect for first-time contributors or developers getting familiar with the Nex
   - Button only displays if there are tasks with a completed status.
   - Clicking triggers a bulk update API request to change status to `archived` or soft-delete.
 
+### 9. ssoc-e9: Contributor Guidelines & Code of Conduct Quick Link
+
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `documentation`
+- **Description:** New contributors often miss the repository guidelines inside `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`. We want to make them highly visible and accessible.
+- **Goal:** Add a sleek footer link bar or a sidebar section under the user dashboard menu that provides direct clickable links to local documentation files (`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`).
+- **Acceptance Criteria:**
+  - Modern slate typography matching the core design system.
+  - Direct links opening safely in new tabs.
+  - Smooth hover transitions.
+
+### 10. ssoc-e10: Interactive FAQ Modal
+
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `documentation`, `ui`
+- **Description:** First-time users often have questions about voice parsing commands and categories.
+- **Goal:** Add an interactive FAQ modal triggered by a small question mark icon (`❔`) next to the "Your Tasks" header.
+- **Acceptance Criteria:**
+  - Explains voice command keywords (e.g., "today", "tomorrow", "urgent").
+  - Fully responsive dialog adhering to the Escape key dismiss listener.
+
+### 11. ssoc-e11: Mobile Layout Adjustments & Touch Navigation
+
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `responsive`, `ui`
+- **Description:** The dashboard navigation and list panels currently look cramped on screens below `640px`.
+- **Goal:** Address mobile responsiveness across the dashboard workspace using Tailwind/Vanilla CSS media queries. Ensure the side panels collapse nicely and action buttons remain fully touch-accessible.
+- **Acceptance Criteria:**
+  - Task cards resize cleanly to full width on screens `< 768px`.
+  - Header grid stacks vertically under `640px` to prevent text truncation.
+  - Action buttons (edit, delete, copy) increase active touch hit-box sizes to at least `44px` on mobile.
+
+### 12. ssoc-e12: Dark/Light Mode Theme Transition Smoothness
+
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `ui`
+- **Description:** Changing the theme causes sudden flashing on slow browser loading.
+- **Goal:** Add CSS transition rules for background, border, and text colors to the globals selector when swapping between dark and light modes.
+- **Acceptance Criteria:**
+  - Smooth `0.3s ease` transition animations for background colors, text colors, and borders site-wide.
+  - Prevents flashing during server-side initial page hydration.
+
 ---
 
 ## 🟡 Medium Issues (`ssoc2026` | `medium`)
 
 _Requires intermediate familiarity with React hooks, local state synchronization, API proxies, and DB queries._
 
-### 9. ssoc-m1: Batch/Bulk Task Actions
+### 13. ssoc-m1: Batch/Bulk Task Actions
 
 - **Tags:** `ssoc2026`, `medium`, `feature`
 - **Description:** Managing tasks one-by-one is slow when cleaning up.
@@ -106,7 +144,7 @@ _Requires intermediate familiarity with React hooks, local state synchronization
   - The bar lets users bulk-delete or bulk-change priority levels in a single action.
   - Smooth entry/exit animations for the floating action bar.
 
-### 10. ssoc-m2: Task Completion Streak Tracker
+### 14. ssoc-m2: Task Completion Streak Tracker
 
 - **Tags:** `ssoc2026`, `medium`, `gamification`
 - **Description:** To incentivize consistency, users want a gamified habit/task completion streak counter.
@@ -115,7 +153,7 @@ _Requires intermediate familiarity with React hooks, local state synchronization
   - Streak calculation logic is robust and runs on the dashboard dashboard load.
   - Shows fire emoji with a glowing animation when a streak is active.
 
-### 11. ssoc-m3: Weekly Digest Email System
+### 15. ssoc-m3: Weekly Digest Email System
 
 - **Tags:** `ssoc2026`, `medium`, `backend`
 - **Description:** Send users a periodic roundup of their task productivity.
@@ -124,7 +162,7 @@ _Requires intermediate familiarity with React hooks, local state synchronization
   - Respects email notification opt-in/opt-out settings.
   - Utilizes clean, premium-designed transactional email templates.
 
-### 12. ssoc-m4: Deadline Heatmap Chart
+### 16. ssoc-m4: Deadline Heatmap Chart
 
 - **Tags:** `ssoc2026`, `medium`, `ui`
 - **Description:** Users want to visually understand which days are heavily congested.
@@ -133,7 +171,7 @@ _Requires intermediate familiarity with React hooks, local state synchronization
   - Renders cleanly on a `/dashboard/analytics` panel.
   - Blocks light up with deeper tints of lavender or amber for days containing multiple critical deadlines.
 
-### 13. ssoc-m5: Keyboard Navigation Shortcuts
+### 17. ssoc-m5: Keyboard Navigation Shortcuts
 
 - **Tags:** `ssoc2026`, `medium`, `a11y`
 - **Description:** Power-users want mouse-free task management.
@@ -142,7 +180,7 @@ _Requires intermediate familiarity with React hooks, local state synchronization
   - Key bindings do not trigger when typing inside active inputs/forms.
   - Accessible dialog explains available keyboard combinations on `Shift + ?`.
 
-### 14. ssoc-m6: Offline Mode Cache & Sync
+### 18. ssoc-m6: Offline Mode Cache & Sync
 
 - **Tags:** `ssoc2026`, `medium`, `pwa`
 - **Description:** If the network drops, creating a task currently causes database failures.
@@ -151,7 +189,7 @@ _Requires intermediate familiarity with React hooks, local state synchronization
   - Displays a "Working Offline" banner when offline.
   - Tasks created offline sync automatically with the backend when the browser status changes to `online`.
 
-### 15. ssoc-m7: Custom Category Builder
+### 19. ssoc-m7: Custom Category Builder
 
 - **Tags:** `ssoc2026`, `medium`, `database`
 - **Description:** Users are restricted to predefined categories (Work, Personal, General).
@@ -166,7 +204,7 @@ _Requires intermediate familiarity with React hooks, local state synchronization
 
 _Advanced tasks that require implementing web audio hooks, direct external bot webhooks, calendar syncing APIs, or third-party integrations._
 
-### 16. ssoc-h1: Google Calendar Event Sync
+### 20. ssoc-h1: Google Calendar Event Sync
 
 - **Tags:** `ssoc2026`, `hard`, `integration`
 - **Description:** Deadlines should reflect in the user's primary calendar dashboard.
@@ -175,7 +213,7 @@ _Advanced tasks that require implementing web audio hooks, direct external bot w
   - OAuth authorization request runs smoothly under a Settings tab.
   - Mutating task details (time, title) updates the Google Calendar event in real-time.
 
-### 17. ssoc-h2: Web Audio Native Microphone Voice Capture
+### 21. ssoc-h2: Web Audio Native Microphone Voice Capture
 
 - **Tags:** `ssoc2026`, `hard`, `voice`
 - **Description:** The voice MIC component currently uses mock API transcripts or relies on basic typing.
@@ -185,7 +223,7 @@ _Advanced tasks that require implementing web audio hooks, direct external bot w
   - Renders a premium audio frequency waveform animation while recording.
   - Parses the final speech transcript into a structured task.
 
-### 18. ssoc-h3: Telegram Bot Webhook Integration
+### 22. ssoc-h3: Telegram Bot Webhook Integration
 
 - **Tags:** `ssoc2026`, `hard`, `bot`
 - **Description:** Direct task creation should be accessible on mobile messaging apps.
@@ -194,7 +232,7 @@ _Advanced tasks that require implementing web audio hooks, direct external bot w
   - Securely connects a Telegram chat ID with a RemindKaro account.
   - Parses incoming messages using the voice/NLP service and responds with confirmation messages.
 
-### 19. ssoc-h4: Monthly/Weekly Calendar Planner View
+### 23. ssoc-h4: Monthly/Weekly Calendar Planner View
 
 - **Tags:** `ssoc2026`, `hard`, `ui`
 - **Description:** The dashboard currently lists tasks sequentially. Users need a visual monthly grid interface.
@@ -203,7 +241,7 @@ _Advanced tasks that require implementing web audio hooks, direct external bot w
   - Users can click on specific day blocks to launch the `AddTaskForm` pre-populated with that day's date.
   - Tasks display inside day blocks with priority colors.
 
-### 20. ssoc-h5: Shared Shared Tasks & Collaboration
+### 24. ssoc-h5: Shared Shared Tasks & Collaboration
 
 - **Tags:** `ssoc2026`, `hard`, `realtime`
 - **Description:** RemindKaro is strictly single-player.
