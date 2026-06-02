@@ -113,7 +113,13 @@ We welcome community contributions! Whether you are fixing a small CSS layout is
 4.  **Keep it Clean:** Maintain our ESLint configuration, run `npm run format` before staging, and make sure files remain highly cohesive (under 300 lines).
 
 For any security vulnerabilities or confidential disclosure, please refer to our [SECURITY.md](SECURITY.md) guidelines.
+## ❤️ Contributors
 
+Thanks to all contributors who helped build RemindKaro!
+
+<a href="https://github.com/Remind-Karo/RemindKaro/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Remind-Karo/RemindKaro" />
+</a>
 ---
 
 ## License & Attribution
