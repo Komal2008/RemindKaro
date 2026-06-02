@@ -5,11 +5,24 @@ import styles from "./page.module.css";
 import Button from "@/components/ui/Button";
 import { Plus } from "lucide-react";
 import TaskCard from "@/components/tasks/TaskCard";
-import CalendarView from "@/components/ui/CalendarView";
-import VoiceMic from "@/components/ui/VoiceMic";
-import TaskForm from "@/components/tasks/TaskForm";
+import dynamic from "next/dynamic";
 import useEscalationEngine from "@/components/hooks/useEscalationEngine";
 import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton";
+
+const CalendarView = dynamic(() => import("@/components/ui/CalendarView"), {
+  ssr: false,
+  loading: () => (
+    <div style={{ height: 300 }} className="calendar-placeholder" />
+  ),
+});
+
+const VoiceMic = dynamic(() => import("@/components/ui/VoiceMic"), {
+  ssr: false,
+});
+
+const TaskForm = dynamic(() => import("@/components/tasks/TaskForm"), {
+  ssr: false,
+});
 
 export default function DashboardPage() {
   const [tasks, setTasks] = useState([]);

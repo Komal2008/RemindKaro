@@ -1,8 +1,5 @@
 /* app/globals.css */
 
-/* Google Fonts Import for Display & Body Typography */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap");
-
 :root,
 [data-theme="dark"] {
   /* ===== COLOR SYSTEM — aligned with Linear / DESIGN.md ===== */
@@ -65,8 +62,8 @@
   --shadow-glow-low: 0 0 15px rgba(16, 185, 129, 0.1);
 
   /* ===== FONTS ===== */
-  --font-display: "Outfit", "Segoe UI", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-outfit), "Segoe UI", system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
 
   /* ===== SPACING (8px GRID) ===== */
   --space-1: 4px;

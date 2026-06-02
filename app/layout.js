@@ -1,9 +1,24 @@
 // app/layout.js
 import "./globals.css";
+import { Inter, Outfit } from "next/font/google";
 import AppProviders from "@/components/providers/AppProviders";
 import StructuredData from "@/components/ui/StructuredData";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-outfit",
+  display: "swap",
+});
 
 export const metadata = {
   metadataBase: new URL("https://remindkro.in"),
@@ -75,7 +90,11 @@ const themeInitScript = `(function(){try{var t=localStorage.getItem('remindkaro-
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${outfit.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <link rel="icon" href="/favicon.ico" />
         <StructuredData />
