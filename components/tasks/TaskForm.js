@@ -7,6 +7,29 @@ import Button from '@/components/ui/Button';
 import VoiceMic from '@/components/ui/VoiceMic';
 import { SkeletonField } from '@/components/ui/Skeleton';
 
+const DEADLINE_ERROR = 'Deadline must be in the future';
+
+// Format current client time
+const toLocalDateTimeValue = (date) => {
+  const pad = (value) => String(value).padStart(2, '0');
+
+  return `${[
+    date.getFullYear(),
+    pad(date.getMonth() + 1),
+    pad(date.getDate()),
+  ].join('-')}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
+
+// Compare deadline against user local time
+const isDeadlineInPast = (value) => {
+  if (!value) return false;
+
+  const now = new Date();
+  now.setSeconds(0, 0);
+
+  return new Date(value).getTime() < now.getTime();
+};
+
 export default function TaskForm({
   initialData = null,
   onClose,
@@ -22,6 +45,12 @@ export default function TaskForm({
       ? new Date(initialData.deadline).toISOString().slice(0, 16)
       : ''
   );
+
+  const [deadlineWarning, setDeadlineWarning] = useState('');
+  const minDeadline = toLocalDateTimeValue(new Date());
+  const isPastDeadline = isDeadlineInPast(deadline);
+  const deadlineError = isPastDeadline ? DEADLINE_ERROR : deadlineWarning;
+
   const [priority, setPriority] = useState(initialData?.priority || 'medium');
   const [category, setCategory] = useState(initialData?.category || 'General');
 
@@ -68,6 +97,9 @@ export default function TaskForm({
 
       setTitle(data.title);
       setDeadline(data.deadline.slice(0, 16));
+      setDeadlineWarning(
+        isDeadlineInPast(data.deadline.slice(0, 16)) ? DEADLINE_ERROR : ''
+      );
       setPriority(data.priority);
       setCategory(data.category);
     } catch (err) {
@@ -81,6 +113,13 @@ export default function TaskForm({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Final date/time validation before saving
+    if (isDeadlineInPast(deadline)) {
+      setDeadlineWarning(DEADLINE_ERROR);
+      return;
+    }
+
     onSave({
       id: initialData?.id || Date.now().toString(),
       title,
@@ -173,7 +212,19 @@ export default function TaskForm({
                 label="Deadline"
                 type="datetime-local"
                 value={deadline}
-                onChange={(e) => setDeadline(e.target.value)}
+                onChange={(e) => {
+                  setDeadline(e.target.value);
+                  setDeadlineWarning(
+                    isDeadlineInPast(e.target.value) ? DEADLINE_ERROR : ''
+                  );
+                }}
+                onInvalid={(e) => {
+                  if (isDeadlineInPast(e.currentTarget.value)) {
+                    setDeadlineWarning(DEADLINE_ERROR);
+                  }
+                }}
+                min={minDeadline}
+                error={deadlineError}
                 required
                 fullWidth
               />
