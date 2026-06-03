@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import styles from "./page.module.css";
 import Button from "@/components/ui/Button";
-import { Plus, Volume2, VolumeX } from "lucide-react";
+import { Plus, Trash2, Volume2, VolumeX } from "lucide-react";
 import TaskCard from "@/components/tasks/TaskCard";
 import dynamic from "next/dynamic";
 import useEscalationEngine from "@/components/hooks/useEscalationEngine";
@@ -31,6 +31,7 @@ export default function DashboardPage() {
   const [editingTask, setEditingTask] = useState(null);
   const [initialVoiceText, setInitialVoiceText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isClearingCompleted, setIsClearingCompleted] = useState(false);
   const [sortBy, setSortBy] = useState("priority");
   const [muted, setMuted] = useState(false);
 
@@ -141,24 +142,39 @@ export default function DashboardPage() {
   };
 
   const handleClearCompleted = async () => {
-    try {
-      const completedIds = tasks
-        .filter((t) => t.status === "completed")
-        .map((t) => t.id);
+    // Gather all completed task IDs
+    const completedIds = tasks
+      .filter((t) => t.status === "completed" || t.status === "Done")
+      .map((t) => t.id);
 
-      await Promise.all(
-        completedIds.map((id) =>
-          fetch(`/api/tasks/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ status: "archived" }),
-          })
-        )
+    if (completedIds.length === 0) return;
+
+    setIsClearingCompleted(true);
+    try {
+      // Update each task's status to archived individually in parallel
+      const updatePromises = completedIds.map((id) =>
+        fetch(`/api/tasks/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: "archived" }),
+        })
       );
 
-      setTasks((prev) => prev.filter((t) => t.status !== "completed"));
+      const responses = await Promise.all(updatePromises);
+      const allSuccessful = responses.every((res) => res.ok);
+
+      if (allSuccessful) {
+        // Update local state to remove the archived tasks from the screen
+        setTasks((prev) =>
+          prev.filter((t) => t.status !== "completed" && t.status !== "Done")
+        );
+      } else {
+        console.error("Some clear completed requests failed");
+      }
     } catch (err) {
       console.error("Failed to clear completed tasks:", err);
+    } finally {
+      setIsClearingCompleted(false);
     }
   };
 
@@ -395,12 +411,20 @@ export default function DashboardPage() {
             </span>
 
             {stats.completed > 0 && (
-              <button
-                className={styles.clearBtn}
+              <Button
+                id="clear-completed-btn"
+                variant="ghost"
+                size="sm"
                 onClick={handleClearCompleted}
+                loading={isClearingCompleted}
+                disabled={isClearingCompleted}
+                aria-label={`Clear all ${stats.completed} completed task${stats.completed === 1 ? "" : "s"}`}
               >
-                Clear Completed
-              </button>
+                <>
+                  <Trash2 size={13} strokeWidth={2} aria-hidden />
+                  Clear Completed
+                </>
+              </Button>
             )}
           </div>
 
