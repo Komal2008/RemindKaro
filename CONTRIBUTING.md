@@ -33,7 +33,7 @@ If you've noticed a bug or have a feature request, please make sure to check if 
 
 Want to see how your contributions stack up? Check out the live contributor scoreboard for RemindKaro:
 
- **[View Contribution Leaderboard](https://github.com/Remind-Karo/RemindKaro/graphs/contributors)**
+**[View Contribution Leaderboard](https://github.com/Remind-Karo/RemindKaro/graphs/contributors)**
 
 This leaderboard is powered by GitHub's native contribution metrics and updates automatically with every merged commit. Climb the ranks by fixing bugs, adding features, or improving documentation!
 
