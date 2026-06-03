@@ -11,7 +11,6 @@ import {
   Clock,
   Mail,
   Lock,
-  ArrowLeft,
   X,
   Check,
   Ticket,

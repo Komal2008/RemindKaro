@@ -69,7 +69,7 @@ export default function ProfilePage() {
         } else {
           setError("Failed to fetch user data");
         }
-      } catch (err) {
+      } catch {
         setError("Network error");
       } finally {
         setLoading(false);

@@ -1,5 +1,4 @@
 import styles from './SupportSkeleton.module.css';
-import ContentPageSkeleton from './ContentPageSkeleton'; // Has the global skeleton base styles
 
 export default function SupportSkeleton() {
   return (

@@ -1,5 +1,4 @@
 import styles from './ProfileSkeleton.module.css';
-import ContentPageSkeleton from './ContentPageSkeleton';
 
 export default function ProfileSkeleton() {
   return (
