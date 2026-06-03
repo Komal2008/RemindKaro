@@ -65,8 +65,8 @@ export default function Footer() {
         </div>
 
         <div className={styles.bottom}>
-          <p className={styles.copyright}>
-            © {new Date().getFullYear()} RemindKaro. All rights reserved.
+          <p className={styles.copyright} suppressHydrationWarning>
+            &copy; {new Date().getFullYear()} RemindKaro. All rights reserved.
           </p>
           <p className={styles.copyright}>Built with Next.js</p>
         </div>
