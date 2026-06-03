@@ -392,3 +392,22 @@
 .clearBtn:hover {
   background-color: #d9363e;
 }
+
+.sortSelect {
+  background: #141516;
+  border: 1px solid #23252a;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.sortSelect:hover {
+  border-color: #5e6ad2;
+}
+
+.sortSelect:focus {
+  border-color: #5e6ad2;
+}

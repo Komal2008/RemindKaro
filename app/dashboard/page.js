@@ -31,6 +31,7 @@ export default function DashboardPage() {
   const [editingTask, setEditingTask] = useState(null);
   const [initialVoiceText, setInitialVoiceText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState("priority");
   const [muted, setMuted] = useState(false);
 
   useEscalationEngine(tasks);
@@ -79,8 +80,30 @@ export default function DashboardPage() {
         if (filter === "completed") return t.status === "completed";
         return true;
       })
-      .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
-  }, [tasks, filter]);
+      .sort((a, b) => {
+        if (sortBy === "priority") {
+          const priorityOrder = {
+            high: 3,
+            medium: 2,
+            low: 1,
+          };
+
+          return (
+            (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0)
+          );
+        }
+
+        if (sortBy === "category") {
+          return a.category.localeCompare(b.category);
+        }
+
+        if (sortBy === "created") {
+          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        }
+
+        return new Date(a.deadline) - new Date(b.deadline);
+      });
+  }, [tasks, filter, sortBy]);
 
   const upcomingTasks = useMemo(() => {
     return tasks
@@ -355,6 +378,16 @@ export default function DashboardPage() {
               >
                 Done
               </button>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className={styles.sortSelect}
+                aria-label="Sort tasks"
+              >
+                <option value="priority">Priority</option>
+                <option value="category">Category</option>
+                <option value="created">Date Created</option>
+              </select>
             </div>
             <span className={styles.taskCount}>
               {filteredTasks.length}{" "}
