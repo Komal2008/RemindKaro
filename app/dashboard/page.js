@@ -128,20 +128,25 @@ export default function DashboardPage() {
 
     setIsClearingCompleted(true);
     try {
-      // Make a SINGLE bulk API request instead of looping
-      const res = await fetch(`/api/tasks/bulk-archive`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ taskIds: completedIds }),
-      });
+      // Update each task's status to archived individually in parallel
+      const updatePromises = completedIds.map((id) =>
+        fetch(`/api/tasks/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: "archived" }),
+        })
+      );
 
-      if (res.ok) {
+      const responses = await Promise.all(updatePromises);
+      const allSuccessful = responses.every((res) => res.ok);
+
+      if (allSuccessful) {
         // Update local state to remove the archived tasks from the screen
         setTasks((prev) =>
           prev.filter((t) => t.status !== "completed" && t.status !== "Done")
         );
       } else {
-        console.error("Bulk archive request failed:", res.status);
+        console.error("Some clear completed requests failed");
       }
     } catch (err) {
       console.error("Failed to clear completed tasks:", err);
