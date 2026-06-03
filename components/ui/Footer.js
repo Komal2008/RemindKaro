@@ -56,6 +56,38 @@ export default function Footer() {
           </div>
 
           <div>
+            <h3 className={styles.colTitle}>Project Guidelines</h3>
+            <ul className={styles.linkList}>
+              <li>
+                <a
+                  href="https://github.com/Remind-Karo/RemindKaro/blob/main/CONTRIBUTING.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Contributing Guidelines
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/Remind-Karo/RemindKaro/blob/main/CODE_OF_CONDUCT.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Code of Conduct
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/Remind-Karo/RemindKaro/blob/main/SECURITY.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Security Policy
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
             <h3 className={styles.colTitle}>Contact</h3>
             <a href="mailto:hello@remindkaro.com" className={styles.contactBtn}>
               <Mail size={16} aria-hidden />
