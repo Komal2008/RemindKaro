@@ -4,6 +4,7 @@ import AppProviders from "@/components/providers/AppProviders";
 import StructuredData from "@/components/ui/StructuredData";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 
 export const metadata = {
   metadataBase: new URL("https://remindkro.in"),
@@ -85,6 +86,7 @@ export default function RootLayout({ children }) {
         <AppProviders>
           <main>{children}</main>
         </AppProviders>
+        <ScrollToTop />
         <Analytics />
         <SpeedInsights />
       </body>
