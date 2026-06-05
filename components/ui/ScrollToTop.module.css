@@ -1,0 +1,22 @@
+.scrollBtn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #5e6ad2;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
