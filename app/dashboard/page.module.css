@@ -392,3 +392,32 @@
 .clearBtn:hover {
   background-color: #d9363e;
 }
+
+.searchWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 36px 8px 12px;
+  background: var(--linear-surface-1);
+  border: 1px solid var(--linear-hairline);
+  border-radius: 8px;
+  color: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.searchClear {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #aaa;
+  font-size: 14px;
+  transition: opacity 0.2s ease;
+}

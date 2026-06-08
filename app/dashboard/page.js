@@ -18,6 +18,7 @@ export default function DashboardPage() {
   const [editingTask, setEditingTask] = useState(null);
   const [initialVoiceText, setInitialVoiceText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEscalationEngine(tasks);
 
@@ -57,6 +58,7 @@ export default function DashboardPage() {
         if (filter === "completed") return t.status === "completed";
         return true;
       })
+      .filter((t) => t.title.toLowerCase().includes(searchQuery.toLowerCase()))
       .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
   }, [tasks, filter]);
 
@@ -269,6 +271,25 @@ export default function DashboardPage() {
         {/* ── Task panel ── */}
         <div className={styles.mainPanel}>
           <div className={styles.controls}>
+            <div className={styles.searchWrap}>
+              <input
+                type="text"
+                placeholder="Search tasks..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+              {searchQuery && (
+                <button
+                  className={styles.searchClear}
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear Search"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+
             <div className={styles.filterGroup}>
               <button
                 className={styles.filterBtn}
