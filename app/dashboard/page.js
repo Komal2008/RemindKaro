@@ -3,13 +3,26 @@
 import { useState, useMemo, useEffect } from "react";
 import styles from "./page.module.css";
 import Button from "@/components/ui/Button";
-import { Plus } from "lucide-react";
+import { Plus, Trash2, Volume2, VolumeX } from "lucide-react";
 import TaskCard from "@/components/tasks/TaskCard";
-import CalendarView from "@/components/ui/CalendarView";
-import VoiceMic from "@/components/ui/VoiceMic";
-import TaskForm from "@/components/tasks/TaskForm";
+import dynamic from "next/dynamic";
 import useEscalationEngine from "@/components/hooks/useEscalationEngine";
 import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton";
+
+const CalendarView = dynamic(() => import("@/components/ui/CalendarView"), {
+  ssr: false,
+  loading: () => (
+    <div style={{ height: 300 }} className="calendar-placeholder" />
+  ),
+});
+
+const VoiceMic = dynamic(() => import("@/components/ui/VoiceMic"), {
+  ssr: false,
+});
+
+const TaskForm = dynamic(() => import("@/components/tasks/TaskForm"), {
+  ssr: false,
+});
 
 export default function DashboardPage() {
   const [tasks, setTasks] = useState([]);
@@ -19,6 +32,10 @@ export default function DashboardPage() {
   const [initialVoiceText, setInitialVoiceText] = useState("");
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isClearingCompleted, setIsClearingCompleted] = useState(false);
+  const [sortBy, setSortBy] = useState("priority");
+  const [muted, setMuted] = useState(false);
+  
 
   useEscalationEngine(tasks);
 
@@ -37,6 +54,14 @@ export default function DashboardPage() {
       }
     };
     fetchTasks();
+  }, []);
+
+  useEffect(() => {
+    const saved =
+      typeof window !== "undefined" &&
+      localStorage.getItem("notificationsMuted") === "true";
+
+    setMuted(saved);
   }, []);
 
   const stats = useMemo(
@@ -61,6 +86,30 @@ export default function DashboardPage() {
       .filter((t) => t.title.toLowerCase().includes(searchQuery.toLowerCase()))
       .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
   }, [tasks, filter]);
+      .sort((a, b) => {
+        if (sortBy === "priority") {
+          const priorityOrder = {
+            high: 3,
+            medium: 2,
+            low: 1,
+          };
+
+          return (
+            (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0)
+          );
+        }
+
+        if (sortBy === "category") {
+          return a.category.localeCompare(b.category);
+        }
+
+        if (sortBy === "created") {
+          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        }
+
+        return new Date(a.deadline) - new Date(b.deadline);
+      });
+  }, [tasks, filter, sortBy, searchQuery]);
 
   const upcomingTasks = useMemo(() => {
     return tasks
@@ -98,28 +147,53 @@ export default function DashboardPage() {
   };
 
   const handleClearCompleted = async () => {
-    try {
-      const completedIds = tasks
-        .filter((t) => t.status === "completed")
-        .map((t) => t.id);
+    // Gather all completed task IDs
+    const completedIds = tasks
+      .filter((t) => t.status === "completed" || t.status === "Done")
+      .map((t) => t.id);
 
-      for (const id of completedIds) {
-        await fetch(`/api/tasks/${id}`, {
+    if (completedIds.length === 0) return;
+
+    setIsClearingCompleted(true);
+    try {
+      // Update each task's status to archived individually in parallel
+      const updatePromises = completedIds.map((id) =>
+        fetch(`/api/tasks/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ status: "archived" }),
-        });
-      }
+        })
+      );
 
-      setTasks((prev) => prev.filter((t) => t.status !== "completed"));
+      const responses = await Promise.all(updatePromises);
+      const allSuccessful = responses.every((res) => res.ok);
+
+      if (allSuccessful) {
+        // Update local state to remove the archived tasks from the screen
+        setTasks((prev) =>
+          prev.filter((t) => t.status !== "completed" && t.status !== "Done")
+        );
+      } else {
+        console.error("Some clear completed requests failed");
+      }
     } catch (err) {
       console.error("Failed to clear completed tasks:", err);
+    } finally {
+      setIsClearingCompleted(false);
     }
   };
 
   const handleVoiceInput = (text) => {
     setInitialVoiceText(text);
     setIsFormOpen(true);
+  };
+
+  const toggleMute = () => {
+    const newValue = !muted;
+
+    setMuted(newValue);
+
+    localStorage.setItem("notificationsMuted", newValue.toString());
   };
 
   const handleSaveTask = async (taskData) => {
@@ -184,6 +258,38 @@ export default function DashboardPage() {
           <h1 className={styles.title}>Your Tasks</h1>
         </div>
         <div className={styles.headerActions}>
+          <Button
+            variant="ghost"
+            size="md"
+            onClick={toggleMute}
+            aria-label={
+              muted ? "Unmute notification sounds" : "Mute notification sounds"
+            }
+          >
+            {muted ? (
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                <VolumeX size={16} strokeWidth={2} aria-hidden />
+                Muted
+              </span>
+            ) : (
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                <Volume2 size={16} strokeWidth={2} aria-hidden />
+                Sound
+              </span>
+            )}
+          </Button>
           <VoiceMic onResult={handleVoiceInput} />
           <Button
             variant="primary"
@@ -312,6 +418,16 @@ export default function DashboardPage() {
               >
                 Done
               </button>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className={styles.sortSelect}
+                aria-label="Sort tasks"
+              >
+                <option value="priority">Priority</option>
+                <option value="category">Category</option>
+                <option value="created">Date Created</option>
+              </select>
             </div>
             <span className={styles.taskCount}>
               {filteredTasks.length}{" "}
@@ -319,12 +435,20 @@ export default function DashboardPage() {
             </span>
 
             {stats.completed > 0 && (
-              <button
-                className={styles.clearBtn}
+              <Button
+                id="clear-completed-btn"
+                variant="ghost"
+                size="sm"
                 onClick={handleClearCompleted}
+                loading={isClearingCompleted}
+                disabled={isClearingCompleted}
+                aria-label={`Clear all ${stats.completed} completed task${stats.completed === 1 ? "" : "s"}`}
               >
-                Clear Completed
-              </button>
+                <>
+                  <Trash2 size={13} strokeWidth={2} aria-hidden />
+                  Clear Completed
+                </>
+              </Button>
             )}
           </div>
 

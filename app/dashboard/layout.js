@@ -2,8 +2,15 @@
 import styles from "./layout.module.css";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import ThemeToggle from "@/components/ui/ThemeToggle";
+import dynamic from "next/dynamic";
 import BrandLogo from "@/components/ui/BrandLogo";
+
+const ThemeToggle = dynamic(() => import("@/components/ui/ThemeToggle"), {
+  ssr: false,
+  loading: () => (
+    <div style={{ width: 44, height: 24 }} className="toggle-placeholder" />
+  ),
+});
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();

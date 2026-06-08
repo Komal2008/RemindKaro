@@ -114,6 +114,70 @@ We welcome community contributions! Whether you are fixing a small CSS layout is
 
 For any security vulnerabilities or confidential disclosure, please refer to our [SECURITY.md](SECURITY.md) guidelines.
 
+## ❤️ Contributors
+
+Thanks to all contributors who helped build RemindKaro!
+
+<!-- START_CONTRIBUTORS -->
+
+<table align="center">
+  <tr>
+    <td align="center" valign="top" width="14%">
+      <a href="https://github.com/Pantkartik">
+        <img src="https://avatars.githubusercontent.com/u/181591353?v=4&s=100" width="80px" style="border-radius: 50%;" alt="Pantkartik"/>
+        <br />
+        <sub><b>Pantkartik</b></sub>
+      </a>
+      <br />
+      <sub>Contributions: 66</sub>
+    </td>
+    <td align="center" valign="top" width="14%">
+      <a href="https://github.com/Jyotiiii3003">
+        <img src="https://avatars.githubusercontent.com/u/170449154?v=4&s=100" width="80px" style="border-radius: 50%;" alt="Jyotiiii3003"/>
+        <br />
+        <sub><b>Jyotiiii3003</b></sub>
+      </a>
+      <br />
+      <sub>Contributions: 2</sub>
+    </td>
+    <td align="center" valign="top" width="14%">
+      <a href="https://github.com/ayushi-wq">
+        <img src="https://avatars.githubusercontent.com/u/179132370?v=4&s=100" width="80px" style="border-radius: 50%;" alt="ayushi-wq"/>
+        <br />
+        <sub><b>ayushi-wq</b></sub>
+      </a>
+      <br />
+      <sub>Contributions: 1</sub>
+    </td>
+    <td align="center" valign="top" width="14%">
+      <a href="https://github.com/darad124">
+        <img src="https://avatars.githubusercontent.com/u/70760702?v=4&s=100" width="80px" style="border-radius: 50%;" alt="darad124"/>
+        <br />
+        <sub><b>darad124</b></sub>
+      </a>
+      <br />
+      <sub>Contributions: 1</sub>
+    </td>
+    <td align="center" valign="top" width="14%">
+      <a href="https://github.com/Sryh-srm">
+        <img src="https://avatars.githubusercontent.com/u/181099012?v=4&s=100" width="80px" style="border-radius: 50%;" alt="Sryh-srm"/>
+        <br />
+        <sub><b>Sryh-srm</b></sub>
+      </a>
+      <br />
+      <sub>Contributions: 1</sub>
+    </td>
+  </tr>
+</table>
+
+<!-- END_CONTRIBUTORS -->
+
+---
+
+## 📈 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Remind-Karo/RemindKaro&type=Date)](https://star-history.com/#Remind-Karo/RemindKaro&Date)
+
 ---
 
 ## License & Attribution

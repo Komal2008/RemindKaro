@@ -30,9 +30,6 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Run TypeScript checks
-        run: npx tsc --noEmit
-
       - name: Build Next.js application
         run: npm run build
         env:

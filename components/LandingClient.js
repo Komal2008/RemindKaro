@@ -1,12 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import {
-  motion,
-  useScroll,
-  useTransform,
-  AnimatePresence,
-} from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   Search,
   MessageSquare,
@@ -23,12 +18,32 @@ import {
   Check,
 } from 'lucide-react';
 import Link from 'next/link';
-import Clock from './ui/Clock';
-import PhoneMockup from './ui/PhoneMockup';
-import ThemeToggle from './ui/ThemeToggle';
+import dynamic from 'next/dynamic';
 import Footer from './ui/Footer';
 import BrandLogo from './ui/BrandLogo';
 import styles from './LandingClient.module.css';
+
+const Clock = dynamic(() => import('./ui/Clock'), {
+  ssr: false,
+  loading: () => <div style={{ height: 100 }} className="clock-placeholder" />,
+});
+
+const PhoneMockup = dynamic(() => import('./ui/PhoneMockup'), {
+  ssr: false,
+  loading: () => (
+    <div
+      style={{ width: 300, height: 630 }}
+      className="phone-mockup-placeholder"
+    />
+  ),
+});
+
+const ThemeToggle = dynamic(() => import('./ui/ThemeToggle'), {
+  ssr: false,
+  loading: () => (
+    <div style={{ width: 44, height: 24 }} className="toggle-placeholder" />
+  ),
+});
 
 const TESTIMONIALS = [
   {
@@ -59,7 +74,6 @@ const TESTIMONIALS = [
 ];
 
 export default function LandingClient({ isLoggedIn }) {
-  const [loading, setLoading] = useState(true);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [billing, setBilling] = useState('monthly');
   const { scrollYProgress } = useScroll();
@@ -71,11 +85,6 @@ export default function LandingClient({ isLoggedIn }) {
   const floatY1 = useTransform(scrollYProgress, [0, 1], [0, -300]);
   const floatY2 = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const floatY3 = useTransform(scrollYProgress, [0, 1], [0, -400]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2800);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     document.body.classList.toggle('site-nav-open', mobileNavOpen);
@@ -189,34 +198,6 @@ export default function LandingClient({ isLoggedIn }) {
 
   return (
     <>
-      <AnimatePresence>
-        {loading && (
-          <motion.div
-            className={styles.loader}
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: 'easeInOut' }}
-          >
-            <motion.div
-              className={styles.loaderTitle}
-              initial={{ opacity: 0, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, filter: 'blur(0px)' }}
-              transition={{ duration: 1.2, delay: 0.2 }}
-            >
-              RemindKaro
-            </motion.div>
-            <motion.div
-              className={styles.loaderSub}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-            >
-              Your ultimate companion for success
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <div className={`landing-page ${styles.page}`}>
         {/* Parallax Floating Shapes */}
         <div className={styles.parallaxContainer} aria-hidden>

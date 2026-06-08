@@ -7,8 +7,12 @@ import Input from "@/components/ui/Input";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import styles from "@/app/styles/auth-flow.module.css";
-import AuthThemeBar from "@/components/auth/AuthThemeBar";
 import BrandLogo from "@/components/ui/BrandLogo";
+import dynamic from "next/dynamic";
+
+const AuthThemeBar = dynamic(() => import("@/components/auth/AuthThemeBar"), {
+  ssr: false,
+});
 
 export default function LoginPage() {
   const router = useRouter();
