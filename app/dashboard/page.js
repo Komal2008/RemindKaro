@@ -19,6 +19,7 @@ export default function DashboardPage() {
   const [initialVoiceText, setInitialVoiceText] = useState("");
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState("deadline");
 
   useEscalationEngine(tasks);
 
@@ -59,8 +60,15 @@ export default function DashboardPage() {
         return true;
       })
       .filter((t) => t.title.toLowerCase().includes(searchQuery.toLowerCase()))
-      .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
-  }, [tasks, filter, searchQuery]);
+      .sort((a, b) => {
+        if (sortBy === "priority") {
+          const order = { high: 1, medium: 2, low: 3 };
+          return order[a.priority] - order[b.priority];
+        }
+        if (sortBy === "category") return a.category.localeCompare(b.category);
+        return new Date(a.deadline) - new Date(b.deadline);
+      });
+  }, [tasks, filter, searchQuery, sortBy]);
 
   const upcomingTasks = useMemo(() => {
     return tasks
@@ -313,6 +321,15 @@ export default function DashboardPage() {
                 Done
               </button>
             </div>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className={styles.sortSelect}
+            >
+              <option value="deadline">Date Created</option>
+              <option value="priority">Priority</option>
+              <option value="category">Category</option>
+            </select>
             <span className={styles.taskCount}>
               {filteredTasks.length}{" "}
               {filteredTasks.length === 1 ? "task" : "tasks"}
