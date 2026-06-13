@@ -4,26 +4,13 @@ import { useState, useMemo, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "./page.module.css";
 import Button from "@/components/ui/Button";
-import { Plus, Trash2, Volume2, VolumeX } from "lucide-react";
+import { Plus } from "lucide-react";
 import TaskCard from "@/components/tasks/TaskCard";
-import dynamic from "next/dynamic";
+import CalendarView from "@/components/ui/CalendarView";
+import VoiceMic from "@/components/ui/VoiceMic";
+import TaskForm from "@/components/tasks/TaskForm";
 import useEscalationEngine from "@/components/hooks/useEscalationEngine";
 import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton";
-
-const CalendarView = dynamic(() => import("@/components/ui/CalendarView"), {
-  ssr: false,
-  loading: () => (
-    <div style={{ height: 300 }} className="calendar-placeholder" />
-  ),
-});
-
-const VoiceMic = dynamic(() => import("@/components/ui/VoiceMic"), {
-  ssr: false,
-});
-
-const TaskForm = dynamic(() => import("@/components/tasks/TaskForm"), {
-  ssr: false,
-});
 
 export default function DashboardPage() {
   const [tasks, setTasks] = useState([]);
@@ -33,9 +20,8 @@ export default function DashboardPage() {
   const [editingTask, setEditingTask] = useState(null);
   const [initialVoiceText, setInitialVoiceText] = useState("");
   const [loading, setLoading] = useState(true);
-  const [isClearingCompleted, setIsClearingCompleted] = useState(false);
-  const [sortBy, setSortBy] = useState("priority");
-  const [muted, setMuted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState("deadline");
 
   const handleSelect = (taskId) => {
     setSelectedTasks((prev) =>
@@ -66,14 +52,6 @@ export default function DashboardPage() {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    const saved =
-      typeof window !== "undefined" &&
-      localStorage.getItem("notificationsMuted") === "true";
-
-    setMuted(saved);
-  }, []);
-
   const stats = useMemo(
     () => ({
       total: tasks.length,
@@ -93,30 +71,16 @@ export default function DashboardPage() {
         if (filter === "completed") return t.status === "completed";
         return true;
       })
+      .filter((t) => t.title.toLowerCase().includes(searchQuery.toLowerCase()))
       .sort((a, b) => {
         if (sortBy === "priority") {
-          const priorityOrder = {
-            high: 3,
-            medium: 2,
-            low: 1,
-          };
-
-          return (
-            (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0)
-          );
+          const order = { high: 1, medium: 2, low: 3 };
+          return order[a.priority] - order[b.priority];
         }
-
-        if (sortBy === "category") {
-          return a.category.localeCompare(b.category);
-        }
-
-        if (sortBy === "created") {
-          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
-        }
-
+        if (sortBy === "category") return a.category.localeCompare(b.category);
         return new Date(a.deadline) - new Date(b.deadline);
       });
-  }, [tasks, filter, sortBy]);
+  }, [tasks, filter, searchQuery, sortBy]);
 
   const upcomingTasks = useMemo(() => {
     return tasks
@@ -154,53 +118,28 @@ export default function DashboardPage() {
   };
 
   const handleClearCompleted = async () => {
-    // Gather all completed task IDs
-    const completedIds = tasks
-      .filter((t) => t.status === "completed" || t.status === "Done")
-      .map((t) => t.id);
-
-    if (completedIds.length === 0) return;
-
-    setIsClearingCompleted(true);
     try {
-      // Update each task's status to archived individually in parallel
-      const updatePromises = completedIds.map((id) =>
-        fetch(`/api/tasks/${id}`, {
+      const completedIds = tasks
+        .filter((t) => t.status === "completed")
+        .map((t) => t.id);
+
+      for (const id of completedIds) {
+        await fetch(`/api/tasks/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ status: "archived" }),
-        })
-      );
-
-      const responses = await Promise.all(updatePromises);
-      const allSuccessful = responses.every((res) => res.ok);
-
-      if (allSuccessful) {
-        // Update local state to remove the archived tasks from the screen
-        setTasks((prev) =>
-          prev.filter((t) => t.status !== "completed" && t.status !== "Done")
-        );
-      } else {
-        console.error("Some clear completed requests failed");
+        });
       }
+
+      setTasks((prev) => prev.filter((t) => t.status !== "completed"));
     } catch (err) {
       console.error("Failed to clear completed tasks:", err);
-    } finally {
-      setIsClearingCompleted(false);
     }
   };
 
   const handleVoiceInput = (text) => {
     setInitialVoiceText(text);
     setIsFormOpen(true);
-  };
-
-  const toggleMute = () => {
-    const newValue = !muted;
-
-    setMuted(newValue);
-
-    localStorage.setItem("notificationsMuted", newValue.toString());
   };
 
   const handleSaveTask = async (taskData) => {
@@ -265,38 +204,6 @@ export default function DashboardPage() {
           <h1 className={styles.title}>Your Tasks</h1>
         </div>
         <div className={styles.headerActions}>
-          <Button
-            variant="ghost"
-            size="md"
-            onClick={toggleMute}
-            aria-label={
-              muted ? "Unmute notification sounds" : "Mute notification sounds"
-            }
-          >
-            {muted ? (
-              <span
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
-              >
-                <VolumeX size={16} strokeWidth={2} aria-hidden />
-                Muted
-              </span>
-            ) : (
-              <span
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
-              >
-                <Volume2 size={16} strokeWidth={2} aria-hidden />
-                Sound
-              </span>
-            )}
-          </Button>
           <VoiceMic onResult={handleVoiceInput} />
           <Button
             variant="primary"
@@ -384,6 +291,25 @@ export default function DashboardPage() {
         {/* ── Task panel ── */}
         <div className={styles.mainPanel}>
           <div className={styles.controls}>
+            <div className={styles.searchWrap}>
+              <input
+                type="text"
+                placeholder="Search tasks..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+              {searchQuery && (
+                <button
+                  className={styles.searchClear}
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear Search"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+
             <div className={styles.filterGroup}>
               <button
                 className={styles.filterBtn}
@@ -406,37 +332,28 @@ export default function DashboardPage() {
               >
                 Done
               </button>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className={styles.sortSelect}
-                aria-label="Sort tasks"
-              >
-                <option value="priority">Priority</option>
-                <option value="category">Category</option>
-                <option value="created">Date Created</option>
-              </select>
             </div>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className={styles.sortSelect}
+            >
+              <option value="deadline">Date Created</option>
+              <option value="priority">Priority</option>
+              <option value="category">Category</option>
+            </select>
             <span className={styles.taskCount}>
               {filteredTasks.length}{" "}
               {filteredTasks.length === 1 ? "task" : "tasks"}
             </span>
 
             {stats.completed > 0 && (
-              <Button
-                id="clear-completed-btn"
-                variant="ghost"
-                size="sm"
+              <button
+                className={styles.clearBtn}
                 onClick={handleClearCompleted}
-                loading={isClearingCompleted}
-                disabled={isClearingCompleted}
-                aria-label={`Clear all ${stats.completed} completed task${stats.completed === 1 ? "" : "s"}`}
               >
-                <>
-                  <Trash2 size={13} strokeWidth={2} aria-hidden />
-                  Clear Completed
-                </>
-              </Button>
+                Clear Completed
+              </button>
             )}
           </div>
           <AnimatePresence>
