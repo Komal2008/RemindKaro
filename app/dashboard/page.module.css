@@ -426,3 +426,18 @@
   font-size: 14px;
   transition: opacity 0.2s ease;
 }
+
+.sortSelect {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-medium);
+  color: var(--color-text-primary);
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+
+.sortSelect:hover {
+  border-color: var(--color-border-strong);
+}
