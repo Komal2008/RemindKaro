@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import styles from "./page.module.css";
 import Button from "@/components/ui/Button";
 import { Plus, Trash2, Volume2, VolumeX } from "lucide-react";
@@ -26,6 +27,7 @@ const TaskForm = dynamic(() => import("@/components/tasks/TaskForm"), {
 
 export default function DashboardPage() {
   const [tasks, setTasks] = useState([]);
+  const [selectedTasks, setSelectedTasks] = useState([]);
   const [filter, setFilter] = useState("all");
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
@@ -35,23 +37,33 @@ export default function DashboardPage() {
   const [sortBy, setSortBy] = useState("priority");
   const [muted, setMuted] = useState(false);
 
+  const handleSelect = (taskId) => {
+    setSelectedTasks((prev) =>
+      prev.includes(taskId)
+        ? prev.filter((id) => id !== taskId)
+        : [...prev, taskId]
+    );
+  };
+  const bulkDelete = () => {
+    setTasks((prev) => prev.filter((task) => !selectedTasks.includes(task.id)));
+
+    setSelectedTasks([]);
+  };
+
+  const bulkUpdatePriority = (priority) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        selectedTasks.includes(task.id) ? { ...task, priority } : task
+      )
+    );
+
+    setSelectedTasks([]);
+  };
+
   useEscalationEngine(tasks);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const res = await fetch("/api/tasks");
-        if (res.ok) {
-          const data = await res.json();
-          setTasks(data.tasks);
-        }
-      } catch (err) {
-        console.error("Failed to fetch tasks:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTasks();
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -427,6 +439,52 @@ export default function DashboardPage() {
               </Button>
             )}
           </div>
+          <AnimatePresence>
+            {selectedTasks.length > 0 && (
+              <motion.div
+                className={styles.bulkBar}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.25 }}
+              >
+                <div className={styles.bulkInfo}>
+                  ✓ {selectedTasks.length} Task
+                  {selectedTasks.length > 1 ? "s" : ""} Selected
+                </div>
+
+                <div className={styles.bulkActions}>
+                  <button
+                    className={`${styles.bulkBtn} ${styles.deleteBtn}`}
+                    onClick={bulkDelete}
+                  >
+                    🗑 Delete
+                  </button>
+
+                  <button
+                    className={`${styles.bulkBtn} ${styles.highBtn}`}
+                    onClick={() => bulkUpdatePriority("high")}
+                  >
+                    High
+                  </button>
+
+                  <button
+                    className={`${styles.bulkBtn} ${styles.mediumBtn}`}
+                    onClick={() => bulkUpdatePriority("medium")}
+                  >
+                    Medium
+                  </button>
+
+                  <button
+                    className={`${styles.bulkBtn} ${styles.lowBtn}`}
+                    onClick={() => bulkUpdatePriority("low")}
+                  >
+                    Low
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <div className={styles.taskList}>
             {filteredTasks.length > 0 ? (
@@ -434,6 +492,8 @@ export default function DashboardPage() {
                 <TaskCard
                   key={task.id}
                   task={task}
+                  selected={selectedTasks.includes(task.id)}
+                  onSelect={handleSelect}
                   onStatusChange={handleStatusChange}
                   onDelete={handleDelete}
                   onEdit={(t) => {

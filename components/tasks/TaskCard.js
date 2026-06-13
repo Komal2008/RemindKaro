@@ -2,7 +2,14 @@
 import { useState, useMemo } from 'react';
 import styles from './TaskCard.module.css';
 
-export default function TaskCard({ task, onStatusChange, onDelete, onEdit }) {
+export default function TaskCard({
+  task,
+  onStatusChange,
+  onDelete,
+  onEdit,
+  selected,
+  onSelect,
+}) {
   const [hovered, setHovered] = useState(false);
   const [completing, setCompleting] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -70,6 +77,7 @@ export default function TaskCard({ task, onStatusChange, onDelete, onEdit }) {
   };
   const cardCls = [
     styles.card,
+    selected ? styles.selectedCard : '',
     styles[`priority--${task.priority}`],
     styles[`urgency--${urgency.state}`],
     task.status === 'completed' ? styles.completed : '',
@@ -86,7 +94,21 @@ export default function TaskCard({ task, onStatusChange, onDelete, onEdit }) {
     >
       <div className={styles.body}>
         <div className={styles.topRow}>
-          <h3 className={styles.title}>{task.title}</h3>
+          <div className={styles.titleRow}>
+            <div className={styles.checkboxWrapper}>
+              <input
+                type="checkbox"
+                checked={selected}
+                onChange={() => onSelect?.(task.id)}
+                aria-label={`Select ${task.title}`}
+              />
+            </div>
+
+            <h3 className={styles.title}>{task.title}</h3>
+          </div>
+          <div className={styles.badges}>
+            {selected && <span className={styles.selectedBadge}>Selected</span>}
+          </div>
           <span
             className={`${styles.urgencyBadge} ${styles[`badge--${urgency.color}`]}`}
           >

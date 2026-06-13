@@ -259,3 +259,32 @@
     flex-direction: column;
   }
 }
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkboxWrapper {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+
+  accent-color: #6366f1;
+
+  border-radius: 6px;
+  transform: scale(1.1);
+
+  transition: all 0.2s ease;
+}
+.checkboxWrapper input[type='checkbox']:hover {
+  transform: scale(1.2);
+}
+
+.title {
+  margin: 0;
+}
+.selectedCard {
+  border: 2px solid #6366f1;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+}
