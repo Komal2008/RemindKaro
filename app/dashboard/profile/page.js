@@ -18,6 +18,7 @@ import {
   X,
   CheckCircle2,
   AlertCircle,
+  Download,
 } from "lucide-react";
 
 import ProfileSkeleton from "@/components/skeletons/ProfileSkeleton";
@@ -52,6 +53,7 @@ export default function ProfilePage() {
   const [timezone, setTimezone] = useState("");
   const [whatsappNumber, setWhatsappNumber] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState("");
   const [saveError, setSaveError] = useState("");
 
@@ -120,6 +122,58 @@ export default function ProfilePage() {
     }
     setIsEditing(false);
     setSaveError("");
+  };
+
+  const handleExportTasks = async () => {
+    setIsExporting(true);
+    setSaveSuccess("");
+    setSaveError("");
+
+    try {
+      const res = await fetch("/api/tasks");
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || "Failed to fetch tasks");
+
+      const activeTasks = (data.tasks || [])
+        .filter((task) => !["archived", "deleted"].includes(task.status))
+        .map((task) => ({
+          title: task.title || "",
+          deadline: task.deadline || null,
+          priority: task.priority || "",
+          status: task.status || "",
+        }));
+
+      const exportDate = new Date().toISOString().slice(0, 10);
+      const fileName = `remindkaro-export-${exportDate}.json`;
+      const fileContent = JSON.stringify(
+        {
+          exportedAt: new Date().toISOString(),
+          taskCount: activeTasks.length,
+          tasks: activeTasks,
+        },
+        null,
+        2
+      );
+
+      const blob = new Blob([fileContent], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+
+      setSaveSuccess(`Downloaded ${activeTasks.length} active tasks.`);
+      setTimeout(() => setSaveSuccess(""), 4000);
+    } catch (err) {
+      setSaveError(err.message || "Failed to export tasks");
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   if (loading) {
@@ -374,6 +428,38 @@ export default function ProfilePage() {
         >
           View Security Policy <ArrowRight size={18} />
         </a>
+
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h2 className={styles.cardTitle}>
+            <Download size={24} className={styles.cardTitleIcon} />
+            Data Export
+          </h2>
+          <button
+            onClick={handleExportTasks}
+            className={styles.exportBtn}
+            disabled={isExporting}
+          >
+            {isExporting ? (
+              <span
+                className={styles.spinner}
+                style={{
+                  width: "16px",
+                  height: "16px",
+                  borderWidth: "2px",
+                  marginRight: "4px",
+                }}
+              />
+            ) : (
+              <Download size={16} />
+            )}
+            Export Tasks
+          </button>
+        </div>
+        <p className={styles.exportDescription}>
+          Download your active tasks as a formatted JSON backup with titles,
+          deadlines, priorities, and statuses.
+        </p>
       </div>
     </div>
   );
