@@ -247,7 +247,9 @@
   color: var(--linear-on-primary);
   border: 1px solid var(--linear-primary-hover);
   box-shadow: 0 0 8px 2px rgba(94, 106, 210, 0.5);
-  transition: box-shadow var(--transition-fast), border var(--transition-fast);
+  transition:
+    box-shadow var(--transition-fast),
+    border var(--transition-fast);
 }
 
 .taskCount {
