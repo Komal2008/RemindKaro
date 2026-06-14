@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import Link from "next/link";
 import styles from "./page.module.css";
 import Button from "@/components/ui/Button";
-import { Plus, Trash2, Volume2, VolumeX } from "lucide-react";
+import { CalendarDays, Plus, Trash2, Volume2, VolumeX } from "lucide-react";
 import TaskCard from "@/components/tasks/TaskCard";
 import dynamic from "next/dynamic";
 import useEscalationEngine from "@/components/hooks/useEscalationEngine";
+import useTasks from "@/components/hooks/useTasks";
 import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton";
 
 const CalendarView = dynamic(() => import("@/components/ui/CalendarView"), {
@@ -25,34 +27,24 @@ const TaskForm = dynamic(() => import("@/components/tasks/TaskForm"), {
 });
 
 export default function DashboardPage() {
-  const [tasks, setTasks] = useState([]);
+  const {
+    tasks,
+    loading,
+    createTask,
+    updateTask,
+    updateTaskStatus,
+    deleteTask,
+    archiveTasks,
+  } = useTasks();
   const [filter, setFilter] = useState("all");
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [initialVoiceText, setInitialVoiceText] = useState("");
-  const [loading, setLoading] = useState(true);
   const [isClearingCompleted, setIsClearingCompleted] = useState(false);
   const [sortBy, setSortBy] = useState("priority");
   const [muted, setMuted] = useState(false);
 
   useEscalationEngine(tasks);
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const res = await fetch("/api/tasks");
-        if (res.ok) {
-          const data = await res.json();
-          setTasks(data.tasks);
-        }
-      } catch (err) {
-        console.error("Failed to fetch tasks:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTasks();
-  }, []);
 
   useEffect(() => {
     const saved =
@@ -115,16 +107,7 @@ export default function DashboardPage() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      const res = await fetch(`/api/tasks/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus }),
-      });
-      if (res.ok) {
-        setTasks((prev) =>
-          prev.map((t) => (t.id === id ? { ...t, status: newStatus } : t))
-        );
-      }
+      await updateTaskStatus(id, newStatus);
     } catch (err) {
       console.error(err);
     }
@@ -132,10 +115,7 @@ export default function DashboardPage() {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`/api/tasks/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        setTasks((prev) => prev.filter((t) => t.id !== id));
-      }
+      await deleteTask(id);
     } catch (err) {
       console.error(err);
     }
@@ -151,26 +131,7 @@ export default function DashboardPage() {
 
     setIsClearingCompleted(true);
     try {
-      // Update each task's status to archived individually in parallel
-      const updatePromises = completedIds.map((id) =>
-        fetch(`/api/tasks/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: "archived" }),
-        })
-      );
-
-      const responses = await Promise.all(updatePromises);
-      const allSuccessful = responses.every((res) => res.ok);
-
-      if (allSuccessful) {
-        // Update local state to remove the archived tasks from the screen
-        setTasks((prev) =>
-          prev.filter((t) => t.status !== "completed" && t.status !== "Done")
-        );
-      } else {
-        console.error("Some clear completed requests failed");
-      }
+      await archiveTasks(completedIds);
     } catch (err) {
       console.error("Failed to clear completed tasks:", err);
     } finally {
@@ -194,25 +155,9 @@ export default function DashboardPage() {
   const handleSaveTask = async (taskData) => {
     try {
       if (editingTask) {
-        const res = await fetch(`/api/tasks/${taskData.id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(taskData),
-        });
-        if (res.ok) {
-          const { task } = await res.json();
-          setTasks((prev) => prev.map((t) => (t.id === task.id ? task : t)));
-        }
+        await updateTask(taskData);
       } else {
-        const res = await fetch("/api/tasks", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(taskData),
-        });
-        if (res.ok) {
-          const { task } = await res.json();
-          setTasks((prev) => [...prev, task]);
-        }
+        await createTask(taskData);
       }
       closeForm();
     } catch (err) {
@@ -286,6 +231,10 @@ export default function DashboardPage() {
             )}
           </Button>
           <VoiceMic onResult={handleVoiceInput} />
+          <Link href="/dashboard/calendar" className={styles.calendarLink}>
+            <CalendarDays size={16} strokeWidth={2.4} aria-hidden />
+            Calendar View
+          </Link>
           <Button
             variant="primary"
             size="md"
