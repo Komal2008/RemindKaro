@@ -366,7 +366,7 @@ export default function ProfilePage() {
         <p style={{ color: "var(--linear-muted, #888)", marginBottom: "12px" }}>
           Found a vulnerability? Read our responsible disclosure policy.
         </p>
-        
+        <a
           href="https://github.com/Remind-Karo/RemindKaro/blob/main/SECURITY.md"
           target="_blank"
           rel="noopener noreferrer"
