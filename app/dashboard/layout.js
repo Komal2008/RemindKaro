@@ -4,8 +4,16 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import BrandLogo from "@/components/ui/BrandLogo";
+import { useHoverSound } from "@/components/hooks/useHoverSound";
 
 const ThemeToggle = dynamic(() => import("@/components/ui/ThemeToggle"), {
+  ssr: false,
+  loading: () => (
+    <div style={{ width: 44, height: 24 }} className="toggle-placeholder" />
+  ),
+});
+
+const SoundToggle = dynamic(() => import("@/components/ui/SoundToggle"), {
   ssr: false,
   loading: () => (
     <div style={{ width: 44, height: 24 }} className="toggle-placeholder" />
@@ -15,6 +23,7 @@ const ThemeToggle = dynamic(() => import("@/components/ui/ThemeToggle"), {
 export default function DashboardLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
+  const playHoverSound = useHoverSound();
 
   const handleLogout = async () => {
     try {
@@ -35,6 +44,7 @@ export default function DashboardLayout({ children }) {
         <nav className={styles.nav}>
           <Link
             href="/dashboard"
+            onMouseEnter={playHoverSound}
             className={`${styles.navLink} ${pathname === "/dashboard" ? styles.active : ""}`}
           >
             <span className={styles.navLinkFull}>Dashboard</span>
@@ -53,6 +63,7 @@ export default function DashboardLayout({ children }) {
           </Link>
           <Link
             href="/dashboard/profile"
+            onMouseEnter={playHoverSound}
             className={`${styles.navLink} ${pathname === "/dashboard/profile" ? styles.active : ""}`}
           >
             <span className={styles.navLinkFull}>Profile</span>
@@ -62,6 +73,7 @@ export default function DashboardLayout({ children }) {
           </Link>
           <Link
             href="/dashboard/support"
+            onMouseEnter={playHoverSound}
             className={`${styles.navLink} ${pathname.startsWith("/dashboard/support") ? styles.active : ""}`}
           >
             <span className={styles.navLinkFull}>Support</span>
@@ -71,6 +83,7 @@ export default function DashboardLayout({ children }) {
           </Link>
           <Link
             href="/pricing"
+            onMouseEnter={playHoverSound}
             className={`${styles.navLink} ${pathname === "/pricing" ? styles.active : ""}`}
           >
             <span className={styles.navLinkFull}>Pricing</span>
@@ -79,6 +92,7 @@ export default function DashboardLayout({ children }) {
             </span>
           </Link>
           <ThemeToggle compact />
+          <SoundToggle compact />
           <div className={styles.navDivider} />
           <button onClick={handleLogout} className={styles.logoutBtn}>
             Sign out
