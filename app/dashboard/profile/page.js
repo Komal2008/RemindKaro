@@ -428,6 +428,7 @@ export default function ProfilePage() {
         >
           View Security Policy <ArrowRight size={18} />
         </a>
+      </div>
 
       <div className={styles.card}>
         <div className={styles.cardHeader}>
