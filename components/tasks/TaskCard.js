@@ -2,7 +2,13 @@
 import { useState, useMemo } from 'react';
 import styles from './TaskCard.module.css';
 
-export default function TaskCard({ task, onStatusChange, onDelete, onEdit }) {
+export default function TaskCard({
+  task,
+  onStatusChange,
+  onDelete,
+  onEdit,
+  onClick,
+}) {
   const [hovered, setHovered] = useState(false);
   const [completing, setCompleting] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -83,6 +89,8 @@ export default function TaskCard({ task, onStatusChange, onDelete, onEdit }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       aria-label={`Task: ${task.title}`}
+      onClick={() => onClick?.(task)}
+      style={{ cursor: onClick ? 'pointer' : 'default' }}
     >
       <div className={styles.body}>
         <div className={styles.topRow}>

@@ -1,0 +1,225 @@
+/* components/tasks/KanbanBoard.module.css */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  align-items: start;
+  min-height: 500px;
+}
+
+.column {
+  background: var(--col-bg, rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: all 0.2s ease;
+  min-height: 450px;
+  backdrop-filter: blur(8px);
+}
+
+.columnDragOver {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--col-color, var(--linear-primary));
+  box-shadow: 0 0 15px var(--col-bg);
+  transform: translateY(-2px);
+}
+
+.columnHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: 12px;
+}
+
+.columnTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.columnIcon {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.columnCount {
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-light);
+}
+
+.columnBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 350px;
+}
+
+.emptyCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border: 2px dashed var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: 40px 20px;
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ── Kanban Card ── */
+.card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  cursor: grab;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.card:hover {
+  background: var(--color-bg-tertiary);
+  border-color: var(--color-border-medium);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.cardOverdue {
+  border-color: rgba(244, 63, 94, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(244, 63, 94, 0.03) 0%,
+    var(--color-bg-secondary) 100%
+  );
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priorityDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cardCategory {
+  font-size: 9px;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  background: var(--color-bg-quaternary);
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-light);
+}
+
+.cardTitle {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.cardDesc {
+  font-size: 11.5px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.cardTime {
+  font-size: 10.5px;
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+}
+
+.cardTimeOverdue {
+  color: var(--color-urgent-400);
+  font-weight: 600;
+}
+
+.assigneeChip {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--linear-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+  .board {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .column {
+    min-height: auto;
+  }
+
+  .columnBody {
+    min-height: auto;
+  }
+}
