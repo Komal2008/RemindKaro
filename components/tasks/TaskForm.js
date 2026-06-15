@@ -43,7 +43,12 @@ export default function TaskForm({
   const [deadline, setDeadline] = useState(
     initialData?.deadline
       ? new Date(initialData.deadline).toISOString().slice(0, 16)
-      : ''
+      : (() => {
+          const nextHour = new Date();
+          nextHour.setHours(nextHour.getHours() + 1);
+          nextHour.setMinutes(0, 0, 0);
+          return toLocalDateTimeValue(nextHour);
+        })()
   );
 
   const [deadlineWarning, setDeadlineWarning] = useState('');
