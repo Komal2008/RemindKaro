@@ -35,6 +35,9 @@ export default function TaskForm({
   onClose,
   onSave,
   initialVoiceText = '',
+  workspaceId = null,
+  workspaceMembers = [],
+  currentUser = null,
 }) {
   const [title, setTitle] = useState(initialData?.title || '');
   const [description, setDescription] = useState(
@@ -43,7 +46,12 @@ export default function TaskForm({
   const [deadline, setDeadline] = useState(
     initialData?.deadline
       ? new Date(initialData.deadline).toISOString().slice(0, 16)
-      : ''
+      : (() => {
+          const nextHour = new Date();
+          nextHour.setHours(nextHour.getHours() + 1);
+          nextHour.setMinutes(0, 0, 0);
+          return toLocalDateTimeValue(nextHour);
+        })()
   );
 
   const [deadlineWarning, setDeadlineWarning] = useState('');
@@ -53,6 +61,7 @@ export default function TaskForm({
 
   const [priority, setPriority] = useState(initialData?.priority || 'medium');
   const [category, setCategory] = useState(initialData?.category || 'General');
+  const [assigneeId, setAssigneeId] = useState(initialData?.assigneeId || '');
 
   const [isProcessingVoice, setIsProcessingVoice] = useState(false);
   const [voiceInput, setVoiceInput] = useState(initialVoiceText);
@@ -121,13 +130,15 @@ export default function TaskForm({
     }
 
     onSave({
-      id: initialData?.id || Date.now().toString(),
+      id: initialData?.id,
       title,
       description,
       deadline: new Date(deadline).toISOString(),
       priority,
       category,
       status: initialData?.status || 'pending',
+      workspaceId: workspaceId ? Number(workspaceId) : null,
+      assigneeId: assigneeId ? Number(assigneeId) : null,
     });
   };
 
@@ -266,6 +277,31 @@ export default function TaskForm({
                   </select>
                 </div>
               </div>
+
+              {workspaceId && workspaceMembers.length > 0 && (
+                <div className={styles.row}>
+                  <div className={styles.selectWrap} style={{ width: '100%' }}>
+                    <label htmlFor="assignee" className={styles.label}>
+                      Assignee
+                    </label>
+                    <select
+                      id="assignee"
+                      aria-label="Assign task to member"
+                      className={styles.select}
+                      value={assigneeId}
+                      onChange={(e) => setAssigneeId(e.target.value)}
+                    >
+                      <option value="">Unassigned</option>
+                      {workspaceMembers.map((m) => (
+                        <option key={m.userId} value={m.userId}>
+                          {m.user.name || m.user.email}{' '}
+                          {m.userId === currentUser?.id ? ' (You)' : ''}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
             </>
           )}
 

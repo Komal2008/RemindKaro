@@ -409,6 +409,26 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+      {/* Security Disclosure */}
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h2 className={styles.cardTitle}>
+            <Shield size={24} className={styles.cardTitleIcon} />
+            Security
+          </h2>
+        </div>
+        <p style={{ color: "var(--linear-muted, #888)", marginBottom: "12px" }}>
+          Found a vulnerability? Read our responsible disclosure policy.
+        </p>
+        <a
+          href="https://github.com/Remind-Karo/RemindKaro/blob/main/SECURITY.md"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.upgradeBtn}
+        >
+          View Security Policy <ArrowRight size={18} />
+        </a>
+      </div>
 
       <div className={styles.card}>
         <div className={styles.cardHeader}>

@@ -9,6 +9,7 @@ export default function TaskCard({
   onEdit,
   selected,
   onSelect,
+  onClick,
 }) {
   const [hovered, setHovered] = useState(false);
   const [completing, setCompleting] = useState(false);
@@ -91,6 +92,8 @@ export default function TaskCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       aria-label={`Task: ${task.title}`}
+      onClick={() => onClick?.(task)}
+      style={{ cursor: onClick ? 'pointer' : 'default' }}
     >
       <div className={styles.body}>
         <div className={styles.topRow}>
