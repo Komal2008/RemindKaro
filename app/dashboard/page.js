@@ -10,9 +10,14 @@ import TaskCard from "@/components/tasks/TaskCard";
 import CalendarView from "@/components/ui/CalendarView";
 import VoiceMic from "@/components/ui/VoiceMic";
 import TaskForm from "@/components/tasks/TaskForm";
+import WorkspaceSelector from "@/components/ui/WorkspaceSelector";
+import WorkspaceModal from "@/components/ui/WorkspaceModal";
+import TaskDetailModal from "@/components/ui/TaskDetailModal";
 import useEscalationEngine from "@/components/hooks/useEscalationEngine";
 import useTasks from "@/components/hooks/useTasks";
 import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton";
+import KanbanBoard from "@/components/tasks/KanbanBoard";
+import WorkspaceActivityFeed from "@/components/ui/WorkspaceActivityFeed";
 
 export default function DashboardPage() {
   const {
@@ -34,9 +39,52 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("deadline");
+  const [viewMode, setViewMode] = useState("list"); // 'list' | 'board'
+
+  // Workspace state
+  const [workspaces, setWorkspaces] = useState([]);
+  const [activeWorkspace, setActiveWorkspace] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [workspaceModalMode, setWorkspaceModalMode] = useState(null); // null | 'create' | 'manage'
+
+  // Task detail modal
+  const [selectedTask, setSelectedTask] = useState(null);
 
   useEscalationEngine(tasks);
 
+  // Fetch current user
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/auth/me");
+        if (res.ok) {
+          const data = await res.json();
+          setCurrentUser(data.user);
+        }
+      } catch (err) {
+        console.error("Failed to fetch user:", err);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  // Fetch workspaces
+  useEffect(() => {
+    const fetchWorkspaces = async () => {
+      try {
+        const res = await fetch("/api/workspaces");
+        if (res.ok) {
+          const data = await res.json();
+          setWorkspaces(data.workspaces || []);
+        }
+      } catch (err) {
+        console.error("Failed to fetch workspaces:", err);
+      }
+    };
+    fetchWorkspaces();
+  }, []);
+
+  // Fetch tasks (personal or workspace-specific)
   useEffect(() => {
     const saved =
       typeof window !== "undefined" &&
@@ -44,11 +92,12 @@ export default function DashboardPage() {
 
     setMuted(saved);
     const fetchTasks = async () => {
+      setLoading(true);
       try {
         const res = await fetch("/api/tasks");
         if (res.ok) {
           const data = await res.json();
-          setTasks(data.tasks);
+          setTasks(data.tasks || []);
         }
       } catch (err) {
         console.error("Failed to fetch tasks:", err);
@@ -57,7 +106,8 @@ export default function DashboardPage() {
       }
     };
     fetchTasks();
-  }, []);
+    setViewMode("list");
+  }, [activeWorkspace]);
 
   const stats = useMemo(
     () => ({
@@ -70,8 +120,17 @@ export default function DashboardPage() {
     [tasks]
   );
 
+  // Filter tasks by active workspace (or show personal tasks only)
   const filteredTasks = useMemo(() => {
     return tasks
+      .filter((t) => {
+        // Workspace filter: show workspace tasks if workspace active, else personal
+        if (activeWorkspace) {
+          return t.workspaceId === activeWorkspace.id;
+        } else {
+          return !t.workspaceId; // Personal tasks only
+        }
+      })
       .filter((t) => {
         if (filter === "high")
           return t.priority === "high" && t.status !== "completed";
@@ -87,18 +146,27 @@ export default function DashboardPage() {
         if (sortBy === "category") return a.category.localeCompare(b.category);
         return new Date(a.deadline) - new Date(b.deadline);
       });
-  }, [tasks, filter, searchQuery, sortBy]);
+  }, [tasks, filter, searchQuery, sortBy, activeWorkspace]);
 
   const upcomingTasks = useMemo(() => {
-    return tasks
+    return filteredTasks
       .filter((t) => t.status !== "completed")
       .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
       .slice(0, 4);
-  }, [tasks]);
+  }, [filteredTasks]);
 
   const handleStatusChange = async (id, newStatus) => {
     try {
       await updateTaskStatus(id, newStatus);
+      const res = await fetch(`/api/tasks/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      if (res.ok) {
+        const { task } = await res.json();
+        setTasks((prev) => prev.map((t) => (t.id === id ? task : t)));
+      }
     } catch (err) {
       console.error(err);
     }
@@ -116,6 +184,7 @@ export default function DashboardPage() {
     try {
       await archiveTasks(completedIds);
       const completedIds = tasks
+      const completedIds = filteredTasks
         .filter((t) => t.status === "completed")
         .map((t) => t.id);
 
@@ -127,7 +196,11 @@ export default function DashboardPage() {
         });
       }
 
-      setTasks((prev) => prev.filter((t) => t.status !== "completed"));
+      setTasks((prev) =>
+        prev.filter(
+          (t) => t.status !== "completed" || !completedIds.includes(t.id)
+        )
+      );
     } catch (err) {
       console.error("Failed to clear completed tasks:", err);
     }
@@ -157,6 +230,27 @@ export default function DashboardPage() {
     setInitialVoiceText("");
   };
 
+  const handleWorkspaceCreated = (newWorkspace) => {
+    setWorkspaces((prev) => [...prev, newWorkspace]);
+    setActiveWorkspace(newWorkspace);
+  };
+
+  const handleWorkspaceUpdated = (updatedWorkspace) => {
+    setWorkspaces((prev) =>
+      prev.map((ws) => (ws.id === updatedWorkspace.id ? updatedWorkspace : ws))
+    );
+    if (activeWorkspace?.id === updatedWorkspace.id) {
+      setActiveWorkspace(updatedWorkspace);
+    }
+  };
+
+  const handleWorkspaceDeleted = (workspaceId) => {
+    setWorkspaces((prev) => prev.filter((ws) => ws.id !== workspaceId));
+    if (activeWorkspace?.id === workspaceId) {
+      setActiveWorkspace(null);
+    }
+  };
+
   const formatRelativeTime = (dateStr) => {
     const now = new Date();
     const date = new Date(dateStr);
@@ -171,6 +265,13 @@ export default function DashboardPage() {
     return `${diffD}d left`;
   };
 
+  // The active workspace's member list (for the task form assignee picker)
+  const activeWorkspaceMembers = useMemo(() => {
+    if (!activeWorkspace) return [];
+    const ws = workspaces.find((w) => w.id === activeWorkspace.id);
+    return ws?.members || activeWorkspace.members || [];
+  }, [activeWorkspace, workspaces]);
+
   if (loading) {
     return <DashboardSkeleton />;
   }
@@ -181,9 +282,23 @@ export default function DashboardPage() {
       <header className={styles.header}>
         <div className={styles.headerLeft}>
           <p className={styles.greeting}>Overview</p>
-          <h1 className={styles.title}>Your Tasks</h1>
+          <h1 className={styles.title}>
+            {activeWorkspace ? activeWorkspace.name : "Your Tasks"}
+          </h1>
+          {activeWorkspace?.description && (
+            <p className={styles.workspaceDescription}>
+              {activeWorkspace.description}
+            </p>
+          )}
         </div>
         <div className={styles.headerActions}>
+          <WorkspaceSelector
+            workspaces={workspaces}
+            activeWorkspace={activeWorkspace}
+            onSelect={setActiveWorkspace}
+            onCreateClick={() => setWorkspaceModalMode("create")}
+            onManageClick={() => setWorkspaceModalMode("manage")}
+          />
           <VoiceMic onResult={handleVoiceInput} />
           <Link href="/dashboard/calendar" className={styles.calendarLink}>
             <CalendarDays size={16} strokeWidth={2.4} aria-hidden />
@@ -222,7 +337,7 @@ export default function DashboardPage() {
             </svg>
           </div>
           <div className={styles.statBody}>
-            <span className={styles.statValue}>{stats.total}</span>
+            <span className={styles.statValue}>{filteredTasks.length}</span>
             <span className={styles.statLabel}>Total Tasks</span>
           </div>
         </div>
@@ -268,6 +383,35 @@ export default function DashboardPage() {
             <span className={styles.statLabel}>Completed</span>
           </div>
         </div>
+
+        {activeWorkspace && (
+          <div className={styles.statCard}>
+            <div
+              className={`${styles.statIcon} ${styles["statIcon--default"]}`}
+            >
+              <svg
+                className={styles.statIconSvg}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+            <div className={styles.statBody}>
+              <span className={styles.statValue}>
+                {activeWorkspaceMembers.length}
+              </span>
+              <span className={styles.statLabel}>Members</span>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ── Main content + sidebar ── */}
@@ -317,6 +461,26 @@ export default function DashboardPage() {
                 Done
               </button>
             </div>
+
+            {(activeWorkspace || tasks.length > 0) && (
+              <div className={styles.filterGroup} style={{ marginLeft: 8 }}>
+                <button
+                  className={styles.filterBtn}
+                  aria-pressed={viewMode === "list"}
+                  onClick={() => setViewMode("list")}
+                >
+                  List
+                </button>
+                <button
+                  className={styles.filterBtn}
+                  aria-pressed={viewMode === "board"}
+                  onClick={() => setViewMode("board")}
+                >
+                  Board
+                </button>
+              </div>
+            )}
+
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -331,7 +495,7 @@ export default function DashboardPage() {
               {filteredTasks.length === 1 ? "task" : "tasks"}
             </span>
 
-            {stats.completed > 0 && (
+            {filteredTasks.some((t) => t.status === "completed") && (
               <button
                 className={styles.clearBtn}
                 onClick={handleClearCompleted}
@@ -341,33 +505,51 @@ export default function DashboardPage() {
             )}
           </div>
 
-          <div className={styles.taskList}>
-            {filteredTasks.length > 0 ? (
-              filteredTasks.map((task) => (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                  onStatusChange={handleStatusChange}
-                  onDelete={handleDelete}
-                  onEdit={(t) => {
-                    setEditingTask(t);
-                    setIsFormOpen(true);
-                  }}
-                />
-              ))
-            ) : (
-              <div className={styles.emptyState}>
-                <h3>No tasks found</h3>
-                <p>You are all caught up. Add a new task to get started.</p>
-              </div>
-            )}
-          </div>
+          {viewMode === "board" ? (
+            <KanbanBoard
+              tasks={filteredTasks}
+              onStatusChange={handleStatusChange}
+              onEdit={(t) => {
+                setEditingTask(t);
+                setIsFormOpen(true);
+              }}
+              onDelete={handleDelete}
+              onCardClick={(t) => setSelectedTask(t)}
+            />
+          ) : (
+            <div className={styles.taskList}>
+              {filteredTasks.length > 0 ? (
+                filteredTasks.map((task) => (
+                  <TaskCard
+                    key={task.id}
+                    task={task}
+                    onStatusChange={handleStatusChange}
+                    onDelete={handleDelete}
+                    onEdit={(t) => {
+                      setEditingTask(t);
+                      setIsFormOpen(true);
+                    }}
+                    onClick={(t) => setSelectedTask(t)}
+                  />
+                ))
+              ) : (
+                <div className={styles.emptyState}>
+                  <h3>No tasks found</h3>
+                  <p>
+                    {activeWorkspace
+                      ? `No tasks in ${activeWorkspace.name}. Create one to get started.`
+                      : "You are all caught up. Add a new task to get started."}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* ── Sidebar ── */}
         <aside className={styles.sidePanel}>
           <div className={styles.calendarWidget}>
-            <CalendarView tasks={tasks} />
+            <CalendarView tasks={filteredTasks} />
           </div>
 
           <div className={styles.sideCard}>
@@ -390,15 +572,44 @@ export default function DashboardPage() {
               <p className={styles.upcomingEmpty}>No upcoming tasks.</p>
             )}
           </div>
+
+          {activeWorkspace && (
+            <WorkspaceActivityFeed workspaceId={activeWorkspace.id} />
+          )}
         </aside>
       </div>
 
+      {/* ── Task Form Modal ── */}
       {isFormOpen && (
         <TaskForm
           initialData={editingTask}
           initialVoiceText={initialVoiceText}
           onClose={closeForm}
           onSave={handleSaveTask}
+          workspaceId={activeWorkspace?.id || null}
+          workspaceMembers={activeWorkspaceMembers}
+          currentUser={currentUser}
+        />
+      )}
+
+      {/* ── Task Detail + Comments Modal ── */}
+      {selectedTask && (
+        <TaskDetailModal
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+        />
+      )}
+
+      {/* ── Workspace Create / Manage Modal ── */}
+      {workspaceModalMode && (
+        <WorkspaceModal
+          mode={workspaceModalMode}
+          workspace={activeWorkspace}
+          currentUser={currentUser}
+          onClose={() => setWorkspaceModalMode(null)}
+          onWorkspaceCreated={handleWorkspaceCreated}
+          onWorkspaceUpdated={handleWorkspaceUpdated}
+          onWorkspaceDeleted={handleWorkspaceDeleted}
         />
       )}
     </div>
